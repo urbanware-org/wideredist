@@ -36,7 +36,7 @@ $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
 $Definitions = Read-Config "DefinitionPath"
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
-$RemoveDirectoryWhenFinished = 0
+$RemoveDirectoryWhenFinished = Read-Config "DeleteDefinitionPathWhenFinished"
 
 # Network related
 $DefinitionHostIP = Read-Config "DefinitionHostIP"
