@@ -104,7 +104,7 @@ and copy the files `DefenderUpdate.ps1` as well as `Update.ini` into `C:\Tools\W
 
 Edit the file `Update.ini` and adjust the network settings (web server IP address and port).
 
-Then, run the *PowerShell* with administrative privileges and execute the script as follows:
+Then, run the *PowerShell* with **administrative privileges**. Inside that shell, execute the script as follows:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -Command C:\Tools\WiDeRedist\DefenderUpdate.ps1
@@ -114,7 +114,7 @@ In case the download fails, check the configuration of the web server as well as
 
 #### Scheduled update task
 
-In order to automatically update the *Windows Defender* definitions, you may use the *Windows* task scheduler to setup the update cycles. Notice that the task must be executed with an account that has administrative privileges as well as the preference **Run whether user is logged on or not** enabled.
+In order to automatically update the *Windows Defender* definitions, you may use the *Windows* task scheduler to setup the update cycles. Notice that the task must be executed with an account that has **administrative privileges** as well as the preference **Run whether user is logged on or not** enabled.
 
 For the task scheduler, the command to execute requires the full path to `powershell.exe`, so it looks like this:
 
