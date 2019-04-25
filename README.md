@@ -60,7 +60,7 @@ server {
 }
 ```
 
-When finished, you can test if the web server works by opening a browser and navigating to the corresponding URL, for example `http://192.168.2.1:8080`. You should see a typical index page with the heading `Index of /` there.
+When finished, you can test if the web server works by restarting its service, opening a browser and navigating to the corresponding URL, for example `http://192.168.2.1:8080`. You should see a typical index page with the heading `Index of /` there.
 
 #### *WiDeRedist* script and config
 
