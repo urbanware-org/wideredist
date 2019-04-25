@@ -36,7 +36,7 @@ $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
 $Definitions = Read-Config "DefinitionPath"
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
-$RemoveDirectoryWhenFinished = Read-Config "DeleteDefinitionPathWhenFinished"
+$RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit"
 
 # Network related
 $DefinitionHostIP = Read-Config "DefinitionHostIP"
@@ -97,7 +97,7 @@ If ($? -eq $True) {
 # In order to reduce disk usage, you can automatically remove the local
 # definition directory created by this script. See local path options on
 # top of this file.
-If ($RemoveDirectoryWhenFinished -eq 1) {
+If ($RemoveDefinitionPathOnExit -eq 1) {
     Remove-Item -Path $Definitions -Recurse -Force
 }
 
