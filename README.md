@@ -86,7 +86,7 @@ Finally, you may add a cronjob to `/etc/crontab` to automatically download the l
 
 ```bash
 # Download and redistribute latest Windows Defender definitions
-*/1 * * * * root /opt/wideredist/wideredist.sh &>/dev/null
+* */1 * * * root /opt/wideredist/wideredist.sh &>/dev/null
 ```
 
 ### *Windows* part
