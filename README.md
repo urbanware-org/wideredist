@@ -20,9 +20,9 @@ Special tool to update the *Windows Defender* definitions in the local network w
 
 This project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* definitons (or signatures) in internal environments that are completely separated from the internet.
 
-Nonetheless, this requires at least one system to access the internet, of course.
+Nevertheless, this requires at least one system to access the internet, of course.
 
-This tool currently takes advantage of a *Linux* server which downloads the definition files and redistributes them using a web server and the *PowerShell* on the *Windows* systems to obtain the definition updates from the *Linux* web server.
+This tool currently takes advantage of a *Linux* server which downloads the definition files and redistributes them using a web server and the *PowerShell* on the *Windows* systems to obtain the definition updates from that web server.
 
 This tool is meant for adavanced system administators. Furthermore, the project just contains basic scripts which work so far, but are in need of improvement (e. g. enhanced error handling and log output).
 
@@ -60,11 +60,11 @@ server {
 }
 ```
 
-When finished, you can test if the web server works by opening a browser and navigating to the corresponding URL, for example `http://192.168.2.1:8080`. You should see an index page with the heading `Index of /` there.
+When finished, you can test if the web server works by opening a browser and navigating to the corresponding URL, for example `http://192.168.2.1:8080`. You should see a typical index page with the heading `Index of /` there.
 
 #### *WiDeRedist* script and config
 
-As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` as well as `wideredist.conf` there. The script should already be executable. If not, run the following command to set the executable flag:
+As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` as well as `wideredist.conf` there. The script should already be executable. If not (for whatever reason), run the following command to set the executable flag:
 
 ```bash
 chmod +x /opt/wideredist/wideredist.sh
@@ -134,6 +134,6 @@ You can contact me either by sending an email to <dev@urbanware.org> or by openi
 
 ## Useless facts
 
-*   The project name is an abbreviation for ***Wi**ndows **De**fender Definition **Redist**ribution*.
+*   The project name is an abbreviation for ***Wi**ndows* ***De**fender* *Definition* ***Redist**ribution* (the second and thus repetitive "De" was omitted).
 
 [Top](#wideredist-)
