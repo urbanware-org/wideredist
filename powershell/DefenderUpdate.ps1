@@ -7,8 +7,8 @@
 # GitHub: https://github.com/urbanware-org/wideredist
 # ==============================================================================================
 
-$Version = "1.0.3"
-$TimeStamp = "2019-04-15"
+$Version = "1.0.4"
+$TimeStamp = "2019-04-26"
 
 Function Download-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                        [Int]$FileCount) {

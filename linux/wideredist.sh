@@ -9,8 +9,8 @@
 # GitHub: https://github.com/urbanware-org/wideredist
 # ============================================================================
 
-version="1.0.3"
-timestamp="2019-04-15"
+version="1.0.4"
+timestamp="2019-04-26"
 
 download_file() {
     link_id="$1"
