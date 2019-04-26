@@ -24,7 +24,7 @@ Function Download-File([String]$FileSource, [String]$FileDestination, [Int]$File
 
 Function Read-Config ([String]$ConfigKey) {
     # This is not really an INI-file parser, rather a quick-and-dirty solution
-    $KeyLine = Get-Content -Path "$ScriptPath/Update.ini" `
+    $KeyLine = Get-Content -Path "$ScriptPath\Update.ini" `
                | Where-Object { $_ -match "$ConfigKey = " }
     Return $KeyLine.Split("=")[1].Trim()
 }
