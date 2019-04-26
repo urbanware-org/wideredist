@@ -7,6 +7,7 @@
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
+# GitLab: https://gitlab.com/urbanware-org/wideredist
 # ============================================================================
 
 version="1.0.4"
