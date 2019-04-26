@@ -1,4 +1,4 @@
-﻿# ==============================================================================================
+# ==============================================================================================
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
 # Copyright (C) 2019 by Ralf Kilian and Simon Gauer
