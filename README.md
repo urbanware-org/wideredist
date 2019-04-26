@@ -1,4 +1,4 @@
-# *WiDeRedist*
+# *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="48px" width="48px" align="right"/>
 
 **Table of contents**
 *   [Definition](#definition)
