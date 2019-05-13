@@ -23,10 +23,13 @@ Function Download-File([String]$FileSource, [String]$FileDestination, [Int]$File
     }
 }
 
-Function Read-Config ([String]$ConfigKey) {
+Function Read-Config ([String]$ConfigKey, [String]$Fallback) {
     # This is not really an INI-file parser, rather a quick-and-dirty solution
     $KeyLine = Get-Content -Path "$ScriptPath\Update.ini" `
                | Where-Object { $_ -match "$ConfigKey = " }
+    If ($KeyLine -eq $null) {
+        Return $Fallback
+    }
     Return $KeyLine.Split("=")[1].Trim()
 }
 
@@ -37,7 +40,7 @@ $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
 $Definitions = Read-Config "DefinitionPath"
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
-$RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit"
+$RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit" "0"
 
 # Network related
 $DefinitionHostIP = Read-Config "DefinitionHostIP"
