@@ -8,8 +8,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==============================================================================================
 
-$Version = "1.0.4"
-$TimeStamp = "2019-04-26"
+$Version = "1.0.5"
+$TimeStamp = "2019-05-06"
 
 Function Download-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                        [Int]$FileCount) {
