@@ -119,13 +119,24 @@ Set-MpPreference -SignatureFallbackOrder FileShares
 & 'C:\Program Files\Windows Defender\mpcmdrun.exe' -SignatureUpdate `
                                                    -Path "$Definitions" | Out-Null
 If ($? -eq $True) {
-    Write-Host -ForegroundColor Green "Update successfully completed."
+    Write-Host
+    Write-Host -ForegroundColor Green `
+        "Windows Defender definition update has been successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
     $ExitCode = 0
+    $SleepTime = 3
 } Else {
-    Write-Host -ForegroundColor Red "Update process failed."
-    Write-Host -ForegroundColor Red "See '$DefenderLogFile' for details."
+    Write-Host
+    Write-Host -ForegroundColor Red `
+        "Windows Defender definition update has failed."
+    Write-Host -ForeGroundColor Yellow `
+        "In case the downloads above failed, check the configuration file."
+    Write-Host -ForeGroundColor Yellow `
+        "Otherwise, see the Windows Defender logs inside the Event Viewer"
+    Write-Host -ForegroundColor Yellow `
+        "for details."
     $ExitCode = 1
+    $SleepTime = 10
 }
 
 # In order to reduce disk usage, you can automatically remove the local
@@ -143,5 +154,5 @@ $ElapsedTime = New-TimeSpan $Script:StartTime $EndTime
 Write-Log
 
 Write-Host
-Start-Sleep 3
+Start-Sleep $SleepTime
 Exit $ExitCode
