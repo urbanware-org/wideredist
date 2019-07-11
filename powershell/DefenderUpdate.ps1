@@ -118,7 +118,6 @@ Set-MpPreference -SignatureFallbackOrder FileShares
 # 'Update-MpSignature' did not work properly (not at all to be precise)
 & 'C:\Program Files\Windows Defender\mpcmdrun.exe' -SignatureUpdate `
                                                    -Path "$Definitions" | Out-Null
-Write-Host
 If ($? -eq $True) {
     Write-Host -ForegroundColor Green "Update successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
