@@ -33,6 +33,26 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     Return $KeyLine.Split("=")[1].Trim()
 }
 
+Function Write-Log() {
+    "WiDeRedist log file"                               | Out-File $ScriptLogFile
+    ""                                                  | Out-File $ScriptLogFile -Append
+    "  WiDeRedist version:  $Version ($TimeStamp)"      | Out-File $ScriptLogFile -Append
+    ""                                                  | Out-File $ScriptLogFile -Append
+    "  Start time:          " + $StartTime.DateTime     | Out-File $ScriptLogFile -Append
+    "  End time:            " + $EndTime.DateTime       | Out-File $ScriptLogFile -Append
+    "  Elapsed time:        " + $ElapsedTime            | Out-File $ScriptLogFile -Append
+    ""                                                  | Out-File $ScriptLogFile -Append
+    If ($ExitCode -eq 0) {
+        "  Exit code:           0 (Success)"            | Out-File $ScriptLogFile -Append
+    } Else {
+        "  Exit code:           $ExitCode (Failure)"    | Out-File $ScriptLogFile -Append
+    }
+    ""                                                  | Out-File $ScriptLogFile -Append
+    $("-" * 80)                                         | Out-File $ScriptLogFile -Append
+    (Get-MpComputerStatus | Out-String).Trim()          | Out-File $ScriptLogFile -Append
+    $("-" * 80)                                         | Out-File $ScriptLogFile -Append
+}
+
 # Local paths and options
 $ScriptPath = Split-Path -Parent $PSCommandPath
 $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
