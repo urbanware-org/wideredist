@@ -95,6 +95,14 @@ Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definition
 Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  7 8
 Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 8 8
 
+If ($DownloadError -eq $True) {
+    Write-Host
+    Write-Host -ForegroundColor Yellow `
+        "At least one download has failed. Trying to install available files."
+    Write-Host -ForegroundColor Yellow `
+        "However, this can result in outdated definitions."
+}
+
 Write-Host
 Write-Host "Installing definitions. Please wait, this may take a while."
 
