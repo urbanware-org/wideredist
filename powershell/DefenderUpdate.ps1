@@ -140,11 +140,8 @@ If ($RemoveDefinitionPathOnExit -eq 1) {
 $EndTime = Get-Date
 $ElapsedTime = New-TimeSpan $Script:StartTime $EndTime
 
-# Write (or overwrite previous) simple status file (not a log) which
-# requires some revision. Also, a detailed log file (or one at all)
-# would be nice, but has not been implemented, yet.
-Get-Date | Out-File $ScriptLogFile
-Get-MpComputerStatus | Out-File $ScriptLogFile -Append
+# Write (overwrite previous) the log file which still requires some revision.
+Write-Log
 
 Write-Host
 Start-Sleep 3
