@@ -8,8 +8,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==============================================================================================
 
-$Version = "1.0.5"
-$TimeStamp = "2019-05-06"
+$Version = "1.0.6"
+$TimeStamp = "2019-07-11"
 
 Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                              [Int]$FileCount) {
