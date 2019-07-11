@@ -23,7 +23,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
     }
 }
 
-Function Read-Config ([String]$ConfigKey, [String]$Fallback) {
+Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     # This is not really an INI-file parser, rather a quick-and-dirty solution
     $KeyLine = Get-Content -Path "$ScriptPath\Update.ini" `
                | Where-Object { $_ -match "$ConfigKey = " }
