@@ -11,8 +11,8 @@
 $Version = "1.0.5"
 $TimeStamp = "2019-05-06"
 
-Function Download-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
-                       [Int]$FileCount) {
+Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
+                             [Int]$FileCount) {
 
     Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
     Try {
@@ -66,15 +66,15 @@ New-Item -ItemType Directory -Path $Definitions     -Force | Out-Null
 New-Item -ItemType Directory -Path $Definitions_x86 -Force | Out-Null
 New-Item -ItemType Directory -Path $Definitions_x64 -Force | Out-Null
 
-Download-File "http://$DefinitionHostSource/x86/mpam-d.exe"   "$Definitions_x86\mpam-d.exe"   1 8
-Download-File "http://$DefinitionHostSource/x86/mpam-fe.exe"  "$Definitions_x86\mpam-fe.exe"  2 8
-Download-File "http://$DefinitionHostSource/x86/mpas-fe.exe"  "$Definitions_x86\mpas-fe.exe"  3 8
-Download-File "http://$DefinitionHostSource/x86/nis_full.exe" "$Definitions_x86\nis_full.exe" 4 8
+Get-Definition-File "http://$DefinitionHostSource/x86/mpam-d.exe"   "$Definitions_x86\mpam-d.exe"   1 8
+Get-Definition-File "http://$DefinitionHostSource/x86/mpam-fe.exe"  "$Definitions_x86\mpam-fe.exe"  2 8
+Get-Definition-File "http://$DefinitionHostSource/x86/mpas-fe.exe"  "$Definitions_x86\mpas-fe.exe"  3 8
+Get-Definition-File "http://$DefinitionHostSource/x86/nis_full.exe" "$Definitions_x86\nis_full.exe" 4 8
 
-Download-File "http://$DefinitionHostSource/x64/mpam-d.exe"   "$Definitions_x64\mpam-d.exe"   5 8
-Download-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definitions_x64\mpam-fe.exe"  6 8
-Download-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  7 8
-Download-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 8 8
+Get-Definition-File "http://$DefinitionHostSource/x64/mpam-d.exe"   "$Definitions_x64\mpam-d.exe"   5 8
+Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definitions_x64\mpam-fe.exe"  6 8
+Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  7 8
+Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 8 8
 
 Write-Host
 Write-Host "Installing definitions. Please wait, this may take a while."
