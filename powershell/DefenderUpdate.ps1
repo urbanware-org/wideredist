@@ -27,7 +27,7 @@ Function Read-Config ([String]$ConfigKey, [String]$Fallback) {
     # This is not really an INI-file parser, rather a quick-and-dirty solution
     $KeyLine = Get-Content -Path "$ScriptPath\Update.ini" `
                | Where-Object { $_ -match "$ConfigKey = " }
-    If ($KeyLine -eq $null) {
+    If ($null -eq $KeyLine) {
         Return $Fallback
     }
     Return $KeyLine.Split("=")[1].Trim()
