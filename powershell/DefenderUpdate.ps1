@@ -53,6 +53,9 @@ Function Write-Log() {
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 }
 
+# Script related
+$DownloadError = $False
+
 # Local paths and options
 $ScriptPath = Split-Path -Parent $PSCommandPath
 $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
