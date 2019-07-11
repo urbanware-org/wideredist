@@ -54,6 +54,7 @@ Function Write-Log() {
 }
 
 # Script related
+$StartTime = Get-Date
 $DownloadError = $False
 
 # Local paths and options
@@ -134,6 +135,10 @@ If ($? -eq $True) {
 If ($RemoveDefinitionPathOnExit -eq 1) {
     Remove-Item -Path $Definitions -Recurse -Force
 }
+
+# Get timestamp and elapsed time
+$EndTime = Get-Date
+$ElapsedTime = New-TimeSpan $Script:StartTime $EndTime
 
 # Write (or overwrite previous) simple status file (not a log) which
 # requires some revision. Also, a detailed log file (or one at all)
