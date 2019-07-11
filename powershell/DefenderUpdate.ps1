@@ -34,7 +34,6 @@ Function Read-Config ([String]$ConfigKey, [String]$Fallback) {
 }
 
 # Local paths and options
-$DefenderLogFile = "C:\Users\ADMINI~1\AppData\Local\Temp\MpCmdRun.log"
 $ScriptPath = Split-Path -Parent $PSCommandPath
 $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
 $Definitions = Read-Config "DefinitionPath"
