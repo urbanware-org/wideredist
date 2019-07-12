@@ -109,14 +109,14 @@ Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definition
 Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  7 8
 Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 8 8
 
-If ($DownloadErrorss -eq 8) {
+If ($DownloadErrors -eq 8) {
     Write-Host
     Write-Host -ForegroundColor Red `
         "All definition downloads have failed. Process canceled."
     Write-Host -ForegroundColor Yellow `
         "Please check your network configuration for accessing the source."
     Exit-Script 1 10
-} ElseIf ($DownloadErrorss -gt 0) {
+} ElseIf ($DownloadErrors -gt 0) {
     Write-Host
     Write-Host -ForegroundColor Yellow `
         "At least one download has failed. Trying to install available files."
