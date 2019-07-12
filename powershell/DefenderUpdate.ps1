@@ -23,7 +23,6 @@ Function Exit-Script([Int]$ExitCode, [Int]$SleepTime) {
 
 Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                              [Int]$FileCount) {
-
     Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
     Try {
         Invoke-WebRequest -Uri $FileSource -OutFile "$FileDestination"
@@ -166,9 +165,9 @@ If ($RemoveDefinitionPathOnExit -eq 1) {
 
 # Get timestamp and elapsed time
 $EndTime = Get-Date
-$ElapsedTime = New-TimeSpan $Script:StartTime $EndTime
+$ElapsedTime = New-TimeSpan $StartTime $EndTime
 
-# Write (overwrite previous) the log file which still requires some revision.
+# Write (overwrite previous) the log file (which still requires some revision)
 Write-Log
 
 Write-Host
