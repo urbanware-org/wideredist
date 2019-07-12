@@ -29,7 +29,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
         Write-Host -ForegroundColor Green "Download completed."
     } Catch [System.Exception] {
         Write-Host -ForegroundColor Red "Download failed."
-        $DownloadErrors += 1
+        $Script:DownloadErrors += 1
     }
 }
 
