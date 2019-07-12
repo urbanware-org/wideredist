@@ -30,7 +30,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
         Write-Host -ForegroundColor Green "Download completed."
     } Catch [System.Exception] {
         Write-Host -ForegroundColor Red "Download failed."
-        $DownloadError = $True
+        $DownloadErrors += 1
     }
 }
 
@@ -66,7 +66,7 @@ Function Write-Log() {
 
 # Script related
 $StartTime = Get-Date
-$DownloadError = $False
+$DownloadErrors = 0
 
 # Local paths and options
 $ScriptPath = Split-Path -Parent $PSCommandPath
@@ -110,7 +110,14 @@ Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definition
 Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  7 8
 Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 8 8
 
-If ($DownloadError -eq $True) {
+If ($DownloadErrorss -eq 8) {
+    Write-Host
+    Write-Host -ForegroundColor Red `
+        "All definition downloads have failed. Process canceled."
+    Write-Host -ForegroundColor Yellow `
+        "Please check your network configuration for accessing the source."
+    Exit-Script 1 10
+} ElseIf ($DownloadErrorss -gt 0) {
     Write-Host
     Write-Host -ForegroundColor Yellow `
         "At least one download has failed. Trying to install available files."
