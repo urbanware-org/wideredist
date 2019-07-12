@@ -170,6 +170,4 @@ $ElapsedTime = New-TimeSpan $StartTime $EndTime
 # Write (overwrite previous) the log file (which still requires some revision)
 Write-Log
 
-Write-Host
-Start-Sleep $SleepTime
-Exit $ExitCode
+Exit-Script $ExitCode $SleepTime
