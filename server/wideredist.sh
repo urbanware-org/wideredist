@@ -102,7 +102,9 @@ rsync -a $update_path/* $definition_path/
 rm -fR $update_path
 
 if [ $route -eq 1 ]; then
-    ip route delete $route_target via $route_gateway
+    if [ $route_remove -eq 1 ]; then
+        ip route delete $route_target via $route_gateway
+    fi
 fi
 
 # No need to check if proxy address is set, as non-existing environment
