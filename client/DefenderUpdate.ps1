@@ -12,8 +12,8 @@ $Version = "1.0.6"
 $TimeStamp = "2019-07-11"
 
 Function Exit-Script([Int]$ExitCode, [Int]$SleepTime) {
-    # In case the script is being executed outside a PowerShell window,
-    # use a delay to prevent the window from disappearing immediately
+    # In case the script is being executed outside a PowerShell window, use
+    # some delay to prevent the window from disappearing immediately
     Write-Host
     Write-Host -ForegroundColor Cyan "Waiting $SleepTime seconds to exit."
     Write-Host
@@ -44,6 +44,8 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
 }
 
 Function Write-Log() {
+    # Write the log file (which still requires some revision). This will simply
+    # overwrite the previous one (if already existing).
     "WiDeRedist log file"                               | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
     "  WiDeRedist version:  $Version ($TimeStamp)"      | Out-File $ScriptLogFile -Append
@@ -167,7 +169,5 @@ If ($RemoveDefinitionPathOnExit -eq 1) {
 $EndTime = Get-Date
 $ElapsedTime = New-TimeSpan $StartTime $EndTime
 
-# Write (overwrite previous) the log file (which still requires some revision)
 Write-Log
-
 Exit-Script $ExitCode $SleepTime
