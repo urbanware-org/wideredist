@@ -89,8 +89,8 @@ echo -e "Downloading \e[96mplatform independent\e[0m definition files."
 download_file "211054"                      $update_path_x86/mpam-d.exe   1 1
 
 # The file 'mpam-d.exe' is also required in the definition directory for
-# 64-bit environments. Obviously, the file seems to be platform independent,
-# so it simply can be copied to 'x64' (no need to download twice).
+# 64-bit environments. The file is platform independent, so it simply can
+# be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 
 echo
