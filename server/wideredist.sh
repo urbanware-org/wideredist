@@ -70,7 +70,6 @@ echo -e "Version $version ($timestamp)"
 echo -e "Copyright (C) 2019 by Ralf Kilian"
 echo -e "\e[0m"
 
-echo
 echo "Starting definition download. Please wait, this may take a while."
 
 echo
