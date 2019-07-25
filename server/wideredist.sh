@@ -96,7 +96,7 @@ cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 echo
 echo "Proceeding with update of the definition files for redistribution."
 
-# Update the definitions and remove temporary data
+# Update the actual definitions and remove temporary data
 rsync -a $update_path/* $definition_path/
 rm -fR $update_path
 
