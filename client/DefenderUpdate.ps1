@@ -87,8 +87,8 @@ $Definitions_x64 = "$Definitions\x64"
 $RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit" "0"
 
 # Network related
-$DefinitionHostIP = Read-Config "DefinitionHostIP"
-$DefinitionHostPort = Read-Config "DefinitionHostPort"
+$DefinitionHostIP = Read-Config "DefinitionHostIP" "192.168.2.1"
+$DefinitionHostPort = Read-Config "DefinitionHostPort" "8080"
 $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
 
 # Suppressing the shell progress output speeds up the whole process
