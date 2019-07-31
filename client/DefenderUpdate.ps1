@@ -72,7 +72,16 @@ $DownloadErrors = 0
 # Local paths and options
 $ScriptPath = Split-Path -Parent $PSCommandPath
 $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
-$Definitions = Read-Config "DefinitionPath"
+$Definitions = Read-Config "DefinitionPath" "C:\Defender"
+$RemoveSingleQuotesFromPath = Read-Config "RemoveSingleQuotesFromPath" "0"
+If ($RemoveSingleQuotesFromPath -eq 1) {
+    # Required in case the path inside the config file is enclosed with
+    # single quotes. However, this will also remove all of the single
+    # quotes in the path itself (if existing). Due to this, it is
+    # recommended to use double quotes for enclosing the string.
+    $Definitions = $Definitions.Replace("'", "")
+}
+$Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
 $RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit" "0"
