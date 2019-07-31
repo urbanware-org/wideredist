@@ -12,8 +12,8 @@ $Version = "1.0.6"
 $TimeStamp = "2019-07-11"
 
 Function Exit-Script([Int]$ExitCode, [Int]$SleepTime) {
-    # In case the script is being executed outside a PowerShell window, use
-    # some delay to prevent the window from disappearing immediately
+    # In case the script is being executed outside a PowerShell window,
+    # use a delay to prevent the window from disappearing immediately
     Write-Host
     Write-Host -ForegroundColor Cyan "Waiting $SleepTime seconds to exit."
     Write-Host
