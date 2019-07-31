@@ -91,6 +91,9 @@ $DefinitionHostIP = Read-Config "DefinitionHostIP" "192.168.2.1"
 $DefinitionHostPort = Read-Config "DefinitionHostPort" "8080"
 $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
 
+# Windows Defender preferences
+$SetDefinitionSource = Read-Config "SetDefinitionSource" "1"
+
 # Suppressing the shell progress output speeds up the whole process
 # significantly and also takes way less CPU load
 $ProgressPreference = "SilentlyContinue"
@@ -138,9 +141,10 @@ If ($DownloadErrors -eq 8) {
 Write-Host
 Write-Host "Installing definitions. Please wait, this may take a while."
 
-# Setting this once should be enough, but what the heck
-Set-MpPreference -SignatureDefinitionUpdateFileSharesSources "$Definitions"
-Set-MpPreference -SignatureFallbackOrder FileShares
+If ($SetDefinitionSource -eq 1) {
+    Set-MpPreference -SignatureDefinitionUpdateFileSharesSources "$Definitions"
+    Set-MpPreference -SignatureFallbackOrder FileShares
+}
 
 # Use this external command to update the definitions as the cmdlet called
 # 'Update-MpSignature' did not work properly (not at all to be precise)
