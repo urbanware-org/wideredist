@@ -11,13 +11,13 @@
 $Version = "1.0.6"
 $TimeStamp = "2019-07-11"
 
-Function Exit-Script([Int]$ExitCode, [Int]$SleepTime) {
+Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     # In case the script is being executed outside a PowerShell window,
     # use a delay to prevent the window from disappearing immediately
     Write-Host
-    Write-Host -ForegroundColor Cyan "Waiting $SleepTime seconds to exit."
+    Write-Host -ForegroundColor Cyan "Waiting $ExitDelay seconds to exit."
     Write-Host
-    Start-Sleep $SleepTime
+    Start-Sleep $ExitDelay
     Exit $ExitCode
 }
 
@@ -94,6 +94,10 @@ $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
 # Windows Defender preferences
 $SetDefinitionSource = Read-Config "SetDefinitionSource" "1"
 
+# Delays
+$WaitOnSuccess = Read-Config "WaitOnSuccess" "3"
+$WaitOnError = Read-Config "WaitOnError" "10"
+
 # Suppressing the shell progress output speeds up the whole process
 # significantly and also takes way less CPU load
 $ProgressPreference = "SilentlyContinue"
@@ -156,7 +160,7 @@ If ($? -eq $True) {
         "Windows Defender definition update has been successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
     $ExitCode = 0
-    $SleepTime = 3
+    $ExitDelay = $WaitOnSuccess
 } Else {
     Write-Host
     Write-Host -ForegroundColor Red `
@@ -168,7 +172,7 @@ If ($? -eq $True) {
     Write-Host -ForegroundColor Yellow `
         "for details."
     $ExitCode = 1
-    $SleepTime = 10
+    $ExitDelay = $WaitOnError
 }
 
 # In order to reduce disk usage, you can automatically remove the local
@@ -183,4 +187,4 @@ $EndTime = Get-Date
 $ElapsedTime = New-TimeSpan $StartTime $EndTime
 
 Write-Log
-Exit-Script $ExitCode $SleepTime
+Exit-Script $ExitCode $ExitDelay
