@@ -107,7 +107,7 @@ Write-Host -ForegroundColor Yellow `
     "WiDeRedist - Windows Defender definition download and redistribution tool"
 Write-Host -ForegroundColor Yellow `
     "Local definition update script for Windows servers and clients"
-Write-Host -ForegroundColor Yellow "Version $Version ($TimeStamp)"
+Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
 Write-Host -ForegroundColor Yellow "Copyright (C) 2019 by Ralf Kilian and Simon Gauer"
 Write-Host
 Write-Host "Downloading definitions from update source."

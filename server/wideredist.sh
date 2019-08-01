@@ -66,7 +66,7 @@ echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
 echo -e "Definition download and local redistribution script"
-echo -e "Version $version ($timestamp)"
+echo -e "Version $version (Released $timestamp)"
 echo -e "Copyright (C) 2019 by Ralf Kilian"
 echo -e "\e[0m"
 
