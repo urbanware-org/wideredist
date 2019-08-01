@@ -10,8 +10,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ============================================================================
 
-version="1.0.6"
-timestamp="2019-07-11"
+version="1.0.7"
+timestamp="2019-08-01"
 
 download_file() {
     link_id="$1"
