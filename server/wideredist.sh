@@ -85,6 +85,7 @@ if [ -e "$definition_path" ]; then
             error "Access denied on '$object', please set correct permissions"
         fi
     done
+fi
 
 # Remove temprary path (if already existing) just to get sure that there are
 # no incomplete downloads present or whatever
