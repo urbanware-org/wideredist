@@ -30,11 +30,30 @@ download_file() {
     fi
 }
 
+error() {
+    message="$1"
+    exit_code="$2"
+
+    # In case of an error the return code must not be zero, even if explicitly
+    # set or not given.
+    if [ "$exit_code" = "" ] || [ $exit_code -eq 0 ]; then
+        exit_code=1
+    fi
+    echo -e "\e[91merror:\e[0m ${message}."
+    exit $exit_code
+}
+
 script_dir=$(dirname $(readlink -f $0))
 source $script_dir/wideredist.conf
+if [ $? -ne 0 ]; then
+    error "No configuration file found"
+fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
     ip route add $route_target via $route_gateway
+    if [ $? -ne 0 ]; then
+        error "Failed to add the given route, maybe a permission issue"
+    fi
     route=1
 else
     route=0
@@ -53,12 +72,29 @@ update_path="$definition_path/update"
 update_path_x86="$update_path/x86"
 update_path_x64="$update_path/x64"
 
+# Check permissions first. As a matter of fact, this script needs write access
+# to the definition path as well as its sub-directories.
+if [ -e "$definition_path" ]; then
+    if [ ! -d "$definition_path" ]; then
+        error "Definition path already exists, but is not a directory"
+    fi
+
+    for object in $(find "$definition_path"); do
+        touch -ca "$object"
+        if [ $? -ne 0 ]; then
+            error "Access denied on '$object', please set correct permissions"
+        fi
+    done
+
 # Remove temprary path (if already existing) just to get sure that there are
 # no incomplete downloads present or whatever
 rm -fR $update_path
 
 # Before downloading anything, ensure the target directories exist
 mkdir -p $definition_path
+if [ $? -ne 0 ]; then
+    error "Failed to create the definition path, maybe a permission issue"
+fi
 mkdir -p $update_path_x86
 mkdir -p $update_path_x64
 
