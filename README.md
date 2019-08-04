@@ -124,7 +124,7 @@ Edit the file `Update.ini` and adjust the network settings (web server IP addres
 
 Then, run the *PowerShell* with **administrative privileges**. Inside that shell, execute the script as follows:
 
-```powershell
+```cmd
 powershell -ExecutionPolicy Bypass -Command C:\Tools\WiDeRedist\DefenderUpdate.ps1
 ```
 
@@ -136,7 +136,7 @@ In order to automatically update the *Windows Defender* definitions, you may use
 
 For the task scheduler, the command to execute requires the full path to `powershell.exe`, so it looks like this:
 
-```
+```cmd
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -Command C:\Tools\WiDeRedist\DefenderUpdate.ps1
 ```
 
