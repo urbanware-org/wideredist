@@ -50,7 +50,7 @@ Please do not ask me about the base configuration of a web server, as there are 
 
 Below is a sample site config file for *nginx* listening on port 8080 using `/var/www/html/defender` as document root.
 
-```
+```nginx
 server {
     listen 8080;
     root /var/www/html/defender;
