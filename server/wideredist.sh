@@ -51,10 +51,11 @@ fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
     ip route add $route_target via $route_gateway &>/dev/null
-    if [ $? -ne 0 ]; then
+    if [ $? -ne 1 ]; then
+        route=1
+    else
         error "Failed to add the given route, maybe a permission issue"
     fi
-    route=1
 else
     route=0
 fi
