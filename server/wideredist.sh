@@ -150,8 +150,11 @@ rsync -a $update_path/* $definition_path/
 rm -fR $update_path
 
 if [ $route -eq 1 ]; then
-    if [ $route_remove -eq 1 ]; then
-        ip route delete $route_target via $route_gateway
+    if [ ! -z "$route_remove" ]; then
+        if [ $route_remove -eq 1 ]; then
+            ip route delete $route_target via $route_gateway
+            echo -e "Removed previously added route.\n"
+        fi
     fi
 fi
 
