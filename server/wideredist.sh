@@ -50,7 +50,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
-    ip route add $route_target via $route_gateway
+    ip route add $route_target via $route_gateway &>/dev/null
     if [ $? -ne 0 ]; then
         error "Failed to add the given route, maybe a permission issue"
     fi
