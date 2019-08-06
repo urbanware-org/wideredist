@@ -108,6 +108,14 @@ echo -e "Version $version (Released $timestamp)"
 echo -e "Copyright (C) 2019 by Ralf Kilian"
 echo -e "\e[0m"
 
+if [ $route -eq 1 ]; then
+    echo -e "Added route to \e[96m$route_target\e[0m" \
+            "via \e[96m$route_gateway\e[0m.\n"
+fi
+if [ $proxy -eq 1 ]; then
+    echo -e "Using proxy server \e[96m$http_proxy\e[0m.\n"
+fi
+
 echo "Starting definition download. Please wait, this may take a while."
 
 echo
