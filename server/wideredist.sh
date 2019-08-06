@@ -63,6 +63,9 @@ fi
 if [ ! -z "$proxy_address" ]; then
     export http_proxy="$proxy_address"
     export https_proxy="$proxy_address"
+    proxy=1
+else
+    proxy=0
 fi
 
 # These are temporary path variables. Downloading takes some time, so before
