@@ -119,9 +119,8 @@ if [ $proxy -eq 1 ]; then
     echo -e "Using proxy server \e[96m$http_proxy\e[0m.\n"
 fi
 
-echo "Starting definition download. Please wait, this may take a while."
+echo -e "Starting definition download. Please wait, this may take a while.\n"
 
-echo
 echo -e "Downloading \e[96m32-bit\e[0m definition files."
 download_file "207869"                      $update_path_x86/mpam-fe.exe  1 3
 download_file "70631"                       $update_path_x86/mpas-fe.exe  2 3
@@ -142,8 +141,7 @@ download_file "211054"                      $update_path_x86/mpam-d.exe   1 1
 # be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 
-echo
-echo "Proceeding with update of the definition files for redistribution."
+echo -e "\nProceeding with update of the definition files for redistribution.\n"
 
 # Update the actual definitions and remove temporary data
 rsync -a $update_path/* $definition_path/
@@ -163,8 +161,6 @@ fi
 unset http_proxy
 unset https_proxy
 
-echo
-echo "Process finished."
-echo
+echo -e "Process finished.\n"
 
 # EOF
