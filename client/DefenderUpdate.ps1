@@ -174,11 +174,6 @@ If ($SetDefinitionSource -eq 1) {
 Write-Host
 Write-Host "Installing definitions. Please wait, this may take a while."
 
-If ($SetDefinitionSource -eq 1) {
-    Set-MpPreference -SignatureDefinitionUpdateFileSharesSources "$Definitions"
-    Set-MpPreference -SignatureFallbackOrder FileShares
-}
-
 # Use this external command to update the definitions as the cmdlet called
 # 'Update-MpSignature' did not work properly (not at all to be precise)
 & 'C:\Program Files\Windows Defender\mpcmdrun.exe' -SignatureUpdate `
