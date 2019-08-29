@@ -63,7 +63,14 @@ Function Write-Log() {
     }
     ""                                                  | Out-File $ScriptLogFile -Append
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
-    (Get-MpComputerStatus | Out-String).Trim()          | Out-File $ScriptLogFile -Append
+
+    Try {
+        (Get-MpComputerStatus | Out-String).Trim()      | Out-File $ScriptLogFile -Append
+    } Catch [System.Exception] {
+        "Error while trying to get the Windows Defender status.`n" + `
+        "Ensure that Windows is activated and Windows Defender is running." `
+                                                        | Out-File $ScriptLogFile -Append
+    }
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 }
 
@@ -95,6 +102,7 @@ $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
 
 # Windows Defender preferences
 $SetDefinitionSource = Read-Config "SetDefinitionSource" "1"
+$SetPreferenceError = $False
 
 # Delays
 $WaitOnSuccess = Read-Config "WaitOnSuccess" "3"
@@ -142,6 +150,25 @@ If ($DownloadErrors -eq 8) {
         "At least one download has failed. Trying to install available files."
     Write-Host -ForegroundColor Yellow `
         "However, this can result in outdated definitions."
+}
+
+If ($SetDefinitionSource -eq 1) {
+    Try {
+        Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
+        Set-MpPreference -SignatureFallbackOrder FileShares
+    } Catch [System.Exception] {
+        # This does not affect the exit code of this script, as the exit
+        # code is related to the status of the actual Windows Defender
+        # update status.
+        Write-Host
+        Write-Host -ForegroundColor Red `
+            "Error while trying to set Windows Defender preferences."
+        Write-Host -ForegroundColor Yellow `
+            "Ensure that Windows is activated and Windows Defender is running."
+        Write-Host -ForegroundColor Yellow `
+            "Proceeding anyway."
+        $SetPreferenceError = $True
+    }
 }
 
 Write-Host
