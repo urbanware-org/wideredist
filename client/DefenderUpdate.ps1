@@ -8,8 +8,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==============================================================================================
 
-$Version = "1.0.8"
-$TimeStamp = "2019-08-25"
+$Version = "1.0.8-1"
+$TimeStamp = "2019-08-29"
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     # In case the script is being executed outside a PowerShell window,
