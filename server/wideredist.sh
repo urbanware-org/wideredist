@@ -91,7 +91,7 @@ if [ -e "$definition_path" ]; then
     done
 fi
 
-# Remove temprary path (if already existing) just to get sure that there are
+# Remove temporary path (if already existing) just to get sure that there are
 # no incomplete downloads present or whatever
 rm -fR $update_path
 
