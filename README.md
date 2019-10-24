@@ -66,7 +66,7 @@ When finished, create the corresponding directory
 mkdir -p /var/www/html/defender
 ```
 
-with a `test` file inside it:
+with the temporary file called `test` inside it:
 
 ```bash
 touch /var/www/html/defender/test
@@ -74,7 +74,7 @@ touch /var/www/html/defender/test
 
 Now you can test if the web server works by restarting its service, opening a browser and navigating to the corresponding URL, for example `http://192.168.2.1:8080`. You should see a typical index page with the heading `Index of /` there and the `test` file listed below.
 
-After that, you can remove the `test` file again:
+After that, you can remove the temporary file again:
 
 ```bash
 rm -f /var/www/html/defender/test
