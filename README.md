@@ -33,7 +33,7 @@ This tool is meant for advanced system administators. Furthermore, the project j
 The project does not have many requirements.
 
 *   ***Linux***:
-    *   A web server such as *Apache* or *nginx* (latter has been used in development).
+    *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `wget` package (already pre-installed in most distributions).
 *   ***Windows***:
     *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
