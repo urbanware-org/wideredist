@@ -36,7 +36,7 @@ The project does not have many requirements.
     *   A web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `wget` package (already pre-installed in most distributions).
 *   ***Windows***:
-    *   The *Windows Defender* as well as the *PowerShell* which are both already pre-installed, of course.
+    *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
 
 ## Installation
 
