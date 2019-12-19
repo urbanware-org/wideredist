@@ -35,7 +35,7 @@ The project does not have many requirements.
 *   ***Linux***:
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `wget` package (already pre-installed in most distributions).
-    *   The _Bash_ shell (default and already pre-installed in most distributions).
+    *   The *Bash* shell (default and already pre-installed in most distributions).
 *   ***Windows***:
     *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
 
