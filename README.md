@@ -24,7 +24,7 @@ Nevertheless, this requires at least one system to access the internet, of cours
 
 This tool currently takes advantage of a *Linux* server which downloads the definition files and redistributes them using a web server and the *PowerShell* on the *Windows* systems to obtain the definition updates from that web server.
 
-This tool is meant for advanced system administators. Furthermore, the project just contains basic scripts which work so far, but are in need of improvement (e.g. enhanced error handling and log output).
+The project is meant for advanced system administators. Furthermore, it just contains basic scripts which work so far, but are in need of improvement (e.g. enhanced error handling and log output).
 
 [Top](#wideredist-)
 
