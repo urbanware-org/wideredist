@@ -2,7 +2,7 @@
 
 ***WiDeRedist*** - Windows Defender definition download and redistribution tool
 
-Copyright &copy; 2019 by Ralf Kilian and Simon Gauer
+Copyright &copy; 2020 by Ralf Kilian and Simon Gauer
 
 Distributed under the *MIT License*:
 

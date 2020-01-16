@@ -1,15 +1,15 @@
 # ==============================================================================================
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
-# Copyright (C) 2019 by Ralf Kilian and Simon Gauer
+# Copyright (C) 2020 by Ralf Kilian and Simon Gauer
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==============================================================================================
 
-$Version = "1.0.8-2"
-$TimeStamp = "2020-01-15"
+$Version = "1.0.9"
+$TimeStamp = "2020-01-16"
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     # In case the script is being executed outside a PowerShell window,
@@ -122,7 +122,7 @@ Write-Host -ForegroundColor Yellow `
 Write-Host -ForegroundColor Yellow `
     "Local definition update script for Windows servers and clients"
 Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
-Write-Host -ForegroundColor Yellow "Copyright (C) 2019 by Ralf Kilian and Simon Gauer"
+Write-Host -ForegroundColor Yellow "Copyright (C) 2020 by Ralf Kilian and Simon Gauer"
 Write-Host
 Write-Host "Downloading definitions from update source."
 
