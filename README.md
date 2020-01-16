@@ -35,10 +35,12 @@ The project does not have many requirements.
 *   ***Linux*** (or ***BSD***):
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `rsync` package (already pre-installed in most *Linux* distributions).
-    *   The `wget` package (already pre-installed in most *Linux* distributions).
+    *   The `wget` package (should also already be pre-installed).
     *   The *Bash* shell (default and already pre-installed in most distributions).
 *   ***Windows***:
     *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
+
+x
 
 ## Installation
 
@@ -86,7 +88,11 @@ rm -f /var/www/html/defender/test
 
 #### *WiDeRedist* script and config
 
-As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` as well as `wideredist.conf` there. The script should already be executable. If not (for whatever reason), run the following command to set the executable flag:
+As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` script as well as `wideredist.conf` file there.
+
+In case you are using a *BSD* derivate, you have to edit the script file and adjust the shebang depending on where the `bash` binary is located on your system.
+
+The script should already be executable. If not (for whatever reason), run the following command to set the executable flag:
 
 ```bash
 chmod +x /opt/wideredist/wideredist.sh
@@ -110,8 +116,6 @@ Finally, you may add a cronjob to `/etc/crontab` to automatically download the l
 # Download and redistribute latest Windows Defender definitions
 * */1 * * * root /opt/wideredist/wideredist.sh &>/dev/null
 ```
-
-In case you are using a *BSD* derivate, some modifications are are necessary. For details see the file `bsd.txt` inside the `server` sub-directory.
 
 ### Client side
 
