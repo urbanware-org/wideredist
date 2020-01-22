@@ -88,8 +88,6 @@ rm -f /var/www/html/defender/test
 
 As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` script as well as the `wideredist.conf` file there.
 
-In case you are using a *BSD* derivate, you have to edit the script file and adjust the shebang depending on where the `bash` binary is located on your system.
-
 The script should already be executable. If not (for whatever reason), run the following command to set the executable flag:
 
 ```bash
