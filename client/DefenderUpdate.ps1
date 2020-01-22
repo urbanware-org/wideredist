@@ -17,6 +17,7 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
 
     $Space = "    "
     $WideSpace = $Space * 10
+
     Write-Host
     For ($Count = $ExitDelay; $Count -gt 0; $Count--) {
         If ($Count -eq 1) {
@@ -24,11 +25,14 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
         } Else {
             $Seconds = "seconds"
         }
+
         Write-Host -ForegroundColor Cyan "Waiting $Count $Seconds to exit.$Space`r" -NoNewLine
         Start-Sleep -Seconds 1
     }
+
     Write-Host -ForegroundColor Cyan "Exiting.$WideSpace"
     Write-Host
+
     Exit $ExitCode
 }
 
@@ -51,12 +55,14 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     If ($null -eq $KeyLine) {
         Return $Fallback
     }
+
     Return $KeyLine.Split("=")[1].Trim()
 }
 
 Function Write-Log() {
     # Write the log file (which still requires some revision). This will simply
     # overwrite the previous one (if already existing).
+
     "WiDeRedist log file"                               | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
     "  WiDeRedist version:  $Version ($TimeStamp)"      | Out-File $ScriptLogFile -Append
@@ -193,6 +199,7 @@ If ($? -eq $True) {
     Write-Host -ForegroundColor Green `
       "Windows Defender definition update has been successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
+    
     $ExitCode = 0
     $ExitDelay = $WaitOnSuccess
 } Else {
@@ -205,6 +212,7 @@ If ($? -eq $True) {
       "Otherwise, see the Windows Defender logs inside the Event Viewer"
     Write-Host -ForegroundColor Yellow `
       "for details."
+
     $ExitCode = 1
     $ExitDelay = $WaitOnError
 }
