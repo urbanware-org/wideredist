@@ -14,16 +14,21 @@ $TimeStamp = "2020-01-16"
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     # In case the script is being executed outside a PowerShell window,
     # use a delay to prevent the window from disappearing immediately
-    $Seconds = "seconds"
-    If ($ExitDelay -eq 1) {
-        $Seconds = "second"
+
+    $Space = "    "
+    $WideSpace = $Space * 10
+    Write-Host
+    For ($Count = $ExitDelay; $Count -gt 0; $Count--) {
+        If ($Count -eq 1) {
+            $Seconds = "second"
+        } Else {
+            $Seconds = "seconds"
+        }
+        Write-Host -ForegroundColor Cyan "Waiting $Count $Seconds to exit.$Space`r" -NoNewLine
+        Start-Sleep -Seconds 1
     }
+    Write-Host -ForegroundColor Cyan "Exiting.$WideSpace"
     Write-Host
-
-
-    Write-Host -ForegroundColor Cyan "Waiting $ExitDelay $Seconds to exit."
-    Write-Host
-    Start-Sleep $ExitDelay
     Exit $ExitCode
 }
 
