@@ -8,8 +8,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==========================================================================================================
 
-$Version = "1.0.9"
-$TimeStamp = "2020-01-16"
+$Version = "1.0.9-1"
+$TimeStamp = "2020-01-22"
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     # In case the script is being executed outside a PowerShell window,
@@ -199,7 +199,7 @@ If ($? -eq $True) {
     Write-Host -ForegroundColor Green `
       "Windows Defender definition update has been successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
-    
+
     $ExitCode = 0
     $ExitDelay = $WaitOnSuccess
 } Else {
