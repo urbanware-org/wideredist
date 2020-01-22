@@ -32,7 +32,7 @@ The project is meant for advanced system administators. Furthermore, it just con
 
 The project does not have many requirements.
 
-*   ***Linux*** (or ***BSD***):
+*   ***Linux*** or ***BSD***:
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `rsync` package (already pre-installed in most *Linux* distributions).
     *   The `wget` package (should also already be pre-installed).
@@ -44,7 +44,7 @@ The project does not have many requirements.
 
 ### Server side
 
-First, the steps which are required on the *Linux* (or *BSD*) machine.
+First, the steps which are required on *Linux* or *BSD* machines.
 
 #### Web server
 
