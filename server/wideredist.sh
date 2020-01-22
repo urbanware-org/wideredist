@@ -50,8 +50,9 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
+    ip route delete $route_target via $route_gateway &>/dev/null
     ip route add $route_target via $route_gateway &>/dev/null
-    if [ $? -ne 1 ]; then
+    if [ $? -eq 0 ]; then
         route=1
     else
         error "Failed to add the given route, maybe a permission issue"
@@ -141,7 +142,8 @@ download_file "211054"                      $update_path_x86/mpam-d.exe   1 1
 # be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 
-echo -e "\nProceeding with update of the definition files for redistribution.\n"
+echo -e \
+  "\nProceeding with update of the definition files for redistribution.\n"
 
 # Update the actual definitions and remove temporary data
 rsync -a $update_path/* $definition_path/
