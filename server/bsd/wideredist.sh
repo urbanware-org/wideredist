@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ============================================================================
 # WiDeRedist - Windows Defender definition download and redistribution tool
