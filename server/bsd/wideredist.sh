@@ -50,8 +50,8 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
-    ip route delete $route_target via $route_gateway &>/dev/null
-    ip route add $route_target via $route_gateway &>/dev/null
+    route delete $route_target $route_gateway &>/dev/null
+    route add $route_target $route_gateway &>/dev/null
     if [ $? -eq 0 ]; then
         route=1
     else
@@ -152,7 +152,7 @@ rm -fR $update_path
 if [ $route -eq 1 ]; then
     if [ ! -z "$route_remove" ]; then
         if [ $route_remove -eq 1 ]; then
-            ip route delete $route_target via $route_gateway
+            route delete $route_target $route_gateway
             echo -e "Removed previously added route.\n"
         fi
     fi
