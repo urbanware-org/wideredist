@@ -19,7 +19,9 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
         $Seconds = "second"
     }
     Write-Host
-    Write-Host -ForegroundColor Cyan "Waiting $Seconds seconds to exit."
+
+
+    Write-Host -ForegroundColor Cyan "Waiting $ExitDelay $Seconds to exit."
     Write-Host
     Start-Sleep $ExitDelay
     Exit $ExitCode
