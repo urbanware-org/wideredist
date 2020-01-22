@@ -1,4 +1,4 @@
-# ==============================================================================================
+# ==========================================================================================================
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
 # Copyright (C) 2020 by Ralf Kilian and Simon Gauer
@@ -6,7 +6,7 @@
 #
 # GitHub: https://github.com/urbanware-org/wideredist
 # GitLab: https://gitlab.com/urbanware-org/wideredist
-# ==============================================================================================
+# ==========================================================================================================
 
 $Version = "1.0.9"
 $TimeStamp = "2020-01-16"
@@ -88,10 +88,10 @@ $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
 $Definitions = Read-Config "DefinitionPath" "C:\Defender"
 $RemoveSingleQuotesFromPath = Read-Config "RemoveSingleQuotesFromPath" "0"
 If ($RemoveSingleQuotesFromPath -eq 1) {
-    # Required in case the path inside the config file is enclosed with
-    # single quotes. However, this will also remove all of the single
-    # quotes in the path itself (if existing). Due to this, it is
-    # recommended to use double quotes for enclosing the string.
+    # Required in case the path inside the config file is enclosed with single
+    # quotes. However, this will also remove all of the single quotes in the
+    # path itself (if existing). Due to this, it is recommended to use double
+    # quotes for enclosing the string.
     $Definitions = $Definitions.Replace("'", "")
 }
 $Definitions = $Definitions.Replace("`"", "")
@@ -118,9 +118,9 @@ $ProgressPreference = "SilentlyContinue"
 
 Write-Host
 Write-Host -ForegroundColor Yellow `
-    "WiDeRedist - Windows Defender definition download and redistribution tool"
+  "WiDeRedist - Windows Defender definition download and redistribution tool"
 Write-Host -ForegroundColor Yellow `
-    "Local definition update script for Windows servers and clients"
+  "Local definition update script for Windows servers and clients"
 Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
 Write-Host -ForegroundColor Yellow "Copyright (C) 2020 by Ralf Kilian and Simon Gauer"
 Write-Host
@@ -144,16 +144,16 @@ Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definition
 If ($DownloadErrors -eq 8) {
     Write-Host
     Write-Host -ForegroundColor Red `
-        "All definition downloads have failed. Process canceled."
+      "All definition downloads have failed. Process canceled."
     Write-Host -ForegroundColor Yellow `
-        "Please check your network configuration for accessing the source."
+      "Please check your network configuration for accessing the source."
     Exit-Script 1 10
 } ElseIf ($DownloadErrors -gt 0) {
     Write-Host
     Write-Host -ForegroundColor Yellow `
-        "At least one download has failed. Trying to install available files."
+      "At least one download has failed. Trying to install available files."
     Write-Host -ForegroundColor Yellow `
-        "However, this can result in outdated definitions."
+      "However, this can result in outdated definitions."
 }
 
 If ($SetDefinitionSource -eq 1) {
@@ -161,16 +161,15 @@ If ($SetDefinitionSource -eq 1) {
         Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
         Set-MpPreference -SignatureFallbackOrder FileShares
     } Catch [System.Exception] {
-        # This does not affect the exit code of this script, as the exit
-        # code is related to the status of the actual Windows Defender
-        # update status.
+        # This does not affect the exit code of this script, as it is related
+        # to the status of the actual Windows Defender update status.
         Write-Host
         Write-Host -ForegroundColor Red `
-            "Error while trying to set Windows Defender preferences."
+          "Error while trying to set Windows Defender preferences."
         Write-Host -ForegroundColor Yellow `
-            "Ensure that Windows is activated and Windows Defender is running."
+          "Ensure that Windows is activated and Windows Defender is running."
         Write-Host -ForegroundColor Yellow `
-            "Proceeding anyway."
+          "Proceeding anyway."
         $SetPreferenceError = $True
     }
 }
@@ -185,20 +184,20 @@ Write-Host "Installing definitions. Please wait, this may take a while."
 If ($? -eq $True) {
     Write-Host
     Write-Host -ForegroundColor Green `
-        "Windows Defender definition update has been successfully completed."
+      "Windows Defender definition update has been successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
     $ExitCode = 0
     $ExitDelay = $WaitOnSuccess
 } Else {
     Write-Host
     Write-Host -ForegroundColor Red `
-        "Windows Defender definition update has failed."
+      "Windows Defender definition update has failed."
     Write-Host -ForeGroundColor Yellow `
-        "In case the downloads above failed, check the configuration file."
+      "In case the downloads above failed, check the configuration file."
     Write-Host -ForeGroundColor Yellow `
-        "Otherwise, see the Windows Defender logs inside the Event Viewer"
+      "Otherwise, see the Windows Defender logs inside the Event Viewer"
     Write-Host -ForegroundColor Yellow `
-        "for details."
+      "for details."
     $ExitCode = 1
     $ExitDelay = $WaitOnError
 }
