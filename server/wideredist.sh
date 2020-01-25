@@ -25,8 +25,10 @@ download_file() {
     wget "$fwlink_url/?linkid=$link_id" -q -O $outfile &>/dev/null
     if [ $? -eq 0 ]; then
         echo -e "\e[92mDownload completed.\e[0m"
+        log "notice" "Download completed: '$outfile'"
     else
         echo -e "\e[91mDownload failed.\e[0m"
+        log "warning" "Download failed: '$outfile'"
     fi
 }
 
@@ -40,9 +42,18 @@ error() {
         exit_code=1
     fi
     echo -e "\e[91merror:\e[0m ${message}."
+    log "error" "${message}"
+    log "notice" "Exiting"
     exit $exit_code
 }
 
+log() {
+    prefix="$1"
+    message="$2"
+    logger "wideredist[$$]: [$prefix] ${message}."
+}
+
+log "notice" "Running WiDeRedist $version ($timestamp)"
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
 
@@ -69,6 +80,7 @@ if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
             error "Failed to add the given route, maybe a permission issue"
         fi
     fi
+    log "notice" "Added route to '$route_target' via '$route_gateway'"
 else
     route=0
 fi
@@ -77,6 +89,7 @@ if [ ! -z "$proxy_address" ]; then
     export http_proxy="$proxy_address"
     export https_proxy="$proxy_address"
     proxy=1
+    log "notice" "Using proxy server '$proxy_address'"
 else
     proxy=0
 fi
@@ -133,6 +146,7 @@ if [ $proxy -eq 1 ]; then
 fi
 
 echo -e "Starting definition download. Please wait, this may take a while.\n"
+log "notice" "Starting definition download"
 
 echo -e "Downloading \e[96m32-bit\e[0m definition files."
 download_file "207869"                      $update_path_x86/mpam-fe.exe  1 3
@@ -149,6 +163,9 @@ echo
 echo -e "Downloading \e[96mplatform independent\e[0m definition files."
 download_file "211054"                      $update_path_x86/mpam-d.exe   1 1
 
+log \
+  "notice" "Definition downloads have been finished"
+
 # The file 'mpam-d.exe' is also required in the definition directory for
 # 64-bit environments. The file is platform independent, so it simply can
 # be copied to 'x64'.
@@ -156,10 +173,12 @@ cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 
 echo -e \
   "\nProceeding with update of the definition files for redistribution.\n"
+log "notice" "Updating the definition files for redistribution"
 
 # Update the actual definitions and remove temporary data
 rsync -a $update_path/* $definition_path/
 rm -fR $update_path
+log "notice" "Definition files have been updated"
 
 if [ $route -eq 1 ]; then
     if [ ! -z "$route_remove" ]; then
@@ -170,6 +189,7 @@ if [ $route -eq 1 ]; then
                 route delete $route_target $route_gateway
             fi
             echo -e "Removed previously added route.\n"
+            log "notice" "Removed previously added route"
         fi
     fi
 fi
@@ -180,5 +200,7 @@ unset http_proxy
 unset https_proxy
 
 echo -e "Process finished.\n"
+log "notice" "Process finished. Check log messages above for errors"
+log "notice" "Exiting"
 
 # EOF
