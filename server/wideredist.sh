@@ -2,7 +2,7 @@
 
 # ============================================================================
 # WiDeRedist - Windows Defender definition download and redistribution tool
-# Definition download and local redistribution script for BSD
+# Definition download and local redistribution script for Linux/BSD
 # Copyright (C) 2020 by Ralf Kilian
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
@@ -44,18 +44,30 @@ error() {
 }
 
 script_dir=$(dirname $(readlink -f $0))
+kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
+
 source $script_dir/wideredist.conf
 if [ $? -ne 0 ]; then
     error "No configuration file found"
 fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
-    route delete $route_target $route_gateway &>/dev/null
-    route add $route_target $route_gateway &>/dev/null
-    if [ $? -eq 0 ]; then
-        route=1
-    else
-        error "Failed to add the given route, maybe a permission issue"
+    if [[ $kernel_name =~ linux ]]; then
+        ip route delete $route_target via $route_gateway &>/dev/null
+        ip route add $route_target via $route_gateway &>/dev/null
+        if [ $? -eq 0 ]; then
+            route=1
+        else
+            error "Failed to add the given route, maybe a permission issue"
+        fi
+    else  # BSD
+        route delete $route_target $route_gateway &>/dev/null
+        route add $route_target $route_gateway &>/dev/null
+        if [ $? -eq 0 ]; then
+            route=1
+        else
+            error "Failed to add the given route, maybe a permission issue"
+        fi
     fi
 else
     route=0
@@ -152,7 +164,11 @@ rm -fR $update_path
 if [ $route -eq 1 ]; then
     if [ ! -z "$route_remove" ]; then
         if [ $route_remove -eq 1 ]; then
-            route delete $route_target $route_gateway
+            if [[ $kernel_name =~ linux ]]; then
+                ip route delete $route_target via $route_gateway
+            else
+                route delete $route_target $route_gateway
+            fi
             echo -e "Removed previously added route.\n"
         fi
     fi
