@@ -119,10 +119,10 @@ fi
 
 # Remove temporary path (if already existing) just to get sure that there are
 # no incomplete downloads present or whatever
-rm -fR $update_path
+rm -fR $update_path &>/dev/null
 
 # Before downloading anything, ensure the target directories exist
-mkdir -p $definition_path
+mkdir -p $definition_path &>/dev/null
 if [ $? -ne 0 ]; then
     error "Failed to create the definition path, maybe a permission issue"
 fi
