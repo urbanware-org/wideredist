@@ -8,7 +8,7 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==========================================================================================================
 
-$Version = "1.0.9-2"
+$Version = "1.0.9-3"
 $TimeStamp = "2020-01-25"
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
