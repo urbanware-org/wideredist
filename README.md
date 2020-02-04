@@ -42,7 +42,7 @@ The project does not have many requirements.
 
 ### Server side
 
-First, the steps which are required on *Linux* or *BSD* machines.
+First, the steps which are required on *Linux* or *BSD* machine.
 
 #### Web server
 
