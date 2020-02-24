@@ -166,24 +166,21 @@ if [ $proxy -eq 1 ]; then
     echo -e "Using proxy server \e[96m$http_proxy\e[0m.\n"
 fi
 
-echo -e "Starting definition download. Please wait, this may take a while.\n"
+echo -e "Starting definition download. Please wait, this may take a while."
 log "notice" "Starting definition download"
 
-echo -e "Downloading \e[96m32-bit\e[0m definition files."
+echo -e "\nDownloading \e[96m32-bit\e[0m definition files."
 download_file $mpam_fe_x86      $update_path_x86/mpam-fe.exe  1 3
 download_file $mpas_fe_x86      $update_path_x86/mpas-fe.exe  2 3
 download_file $nis_full_x86     $update_path_x86/nis_full.exe 3 3
 
-echo
-echo -e "Downloading \e[96m64-bit\e[0m definition files."
+echo -e "\nDownloading \e[96m64-bit\e[0m definition files."
 download_file $mpam_fe_x64      $update_path_x64/mpam-fe.exe  1 3
 download_file $mpas_fe_x64      $update_path_x64/mpas-fe.exe  2 3
 download_file $nis_full_x64     $update_path_x64/nis_full.exe 3 3
 
-echo
-echo -e "Downloading \e[96mplatform independent\e[0m definition files."
+echo -e "\nDownloading \e[96mplatform independent\e[0m definition files."
 download_file $mpam_d_ind       $update_path_x86/mpam-d.exe   1 1
-echo
 
 log \
   "notice" "Definition downloads have been finished"
@@ -192,7 +189,7 @@ log \
 # 64-bit environments. The file is platform independent, so it simply can
 # be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
-echo "Duplicated platform independent file for both platforms."
+echo "\nDuplicated platform independent file for both platforms."
 
 if [ $status_verify -eq 1 ]; then
     echo -e "The verification of at least one file \e[91mfailed\e[0m. If" \
