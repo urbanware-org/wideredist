@@ -192,7 +192,7 @@ cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 echo "\nDuplicated platform independent file for both platforms."
 
 if [ $status_verify -eq 1 ]; then
-    echo -e "The verification of at least one file \e[91mfailed\e[0m. If" \
+    echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
             "the problem persists, the\ndownload link may be broken. See" \
             "the config file for details."
 fi
