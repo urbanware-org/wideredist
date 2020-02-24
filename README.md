@@ -1,5 +1,4 @@
---------
-### :warning: **Please update to version 1.2.0, as earlier versions do not work anymore!**
+### :warning: Please update to version 1.2.0, as earlier versions do not work anymore!
 --------
 
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
