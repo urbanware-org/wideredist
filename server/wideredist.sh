@@ -24,13 +24,15 @@ download_file() {
     wget -U "$user_agent" "$weburl" -q -O $outfile &>/dev/null
     status_wget=$?
 
-    # Perform a verfication by file size to ensiure that the downloaded file
+    # Perform a verification by file size to ensure that the downloaded file
     # has actually been downloaded. In case the link is broken, its size will
     # definitely be less than 100 kilobytes.
     status_size=1
+    status_verify=0
     file_size=$(stat -c%s "$outfile")
     if [ $file_size -lt 100000 ]; then
         log "warning" "File verification failed: '$outfile'"
+        status_verify=1
     else
         status_size=0
     fi
@@ -191,6 +193,12 @@ log \
 # be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 echo "Duplicated platform independent file for both platforms."
+
+if [ $status_verify -eq 1 ]; then
+    echo -e "The verification of at least one file \e[91mfailed\e[0m. If" \
+            "the problem persists, the\ndownload link may be broken. See" \
+            "the config file for details."
+fi
 
 echo -e \
   "\nProceeding with update of the definition files for redistribution.\n"
