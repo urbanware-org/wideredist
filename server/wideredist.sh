@@ -162,6 +162,7 @@ download_file "197094"                      $update_path_x64/nis_full.exe 3 3
 echo
 echo -e "Downloading \e[96mplatform independent\e[0m definition files."
 download_file "211054"                      $update_path_x86/mpam-d.exe   1 1
+echo
 
 log \
   "notice" "Definition downloads have been finished"
@@ -170,6 +171,7 @@ log \
 # 64-bit environments. The file is platform independent, so it simply can
 # be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
+echo "Duplicated platform independent file for both platforms."
 
 echo -e \
   "\nProceeding with update of the definition files for redistribution.\n"
