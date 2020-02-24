@@ -182,8 +182,7 @@ download_file $nis_full_x64     $update_path_x64/nis_full.exe 3 3
 echo -e "\nDownloading \e[96mplatform independent\e[0m definition files."
 download_file $mpam_d_ind       $update_path_x86/mpam-d.exe   1 1
 
-log \
-  "notice" "Definition downloads have been finished"
+log "notice" "Definition downloads have been finished"
 
 # The file 'mpam-d.exe' is also required in the definition directory for
 # 64-bit environments. The file is platform independent, so it simply can
