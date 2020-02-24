@@ -14,16 +14,28 @@ version="1.1.0"
 timestamp="2020-01-28"
 
 download_file() {
-    link_id="$1"
+    weburl="$1"
     outfile="$2"
     file_current="$3"
     file_count="$4"
 
-    fwlink_url="https://go.microsoft.com/fwlink"
     echo -e "  File '$(sed -e "s#$update_path##g" <<< $outfile)'" \
                "\t(${file_current} of ${file_count}): \c"
-    wget "$fwlink_url/?linkid=$link_id" -q -O $outfile &>/dev/null
-    if [ $? -eq 0 ]; then
+    wget -U "$user_agent" "$weburl" -q -O $outfile &>/dev/null
+    status_wget=$?
+
+    # Perform a verfication by file size to ensiure that the downloaded file
+    # has actually been downloaded. In case the link is broken, its size will
+    # definitely be less than 100 kilobytes.
+    status_size=1
+    file_size=$(stat -c%s "$outfile")
+    if [ $file_size -lt 100000 ]; then
+        log "warning" "File verification failed: '$outfile'"
+    else
+        status_size=0
+    fi
+
+    if [ $status_size -eq 0 ] && [ $status_wget -eq 0 ]; then
         echo -e "\e[92mDownload completed.\e[0m"
         log "notice" "Download completed: '$outfile'"
     else
@@ -37,7 +49,7 @@ error() {
     exit_code="$2"
 
     # In case of an error the return code must not be zero, even if explicitly
-    # set or not given.
+    # set or not given
     if [ "$exit_code" = "" ] || [ $exit_code -eq 0 ]; then
         exit_code=1
     fi
@@ -156,19 +168,19 @@ echo -e "Starting definition download. Please wait, this may take a while.\n"
 log "notice" "Starting definition download"
 
 echo -e "Downloading \e[96m32-bit\e[0m definition files."
-download_file "207869"                      $update_path_x86/mpam-fe.exe  1 3
-download_file "70631"                       $update_path_x86/mpas-fe.exe  2 3
-download_file "207869"                      $update_path_x86/nis_full.exe 3 3
+download_file $mpam_fe_x86      $update_path_x86/mpam-fe.exe  1 3
+download_file $mpas_fe_x86      $update_path_x86/mpas-fe.exe  2 3
+download_file $nis_full_x86     $update_path_x86/nis_full.exe 3 3
 
 echo
 echo -e "Downloading \e[96m64-bit\e[0m definition files."
-download_file "87341&clcid=0x409"           $update_path_x64/mpam-fe.exe  1 3
-download_file "121721&clcid=0x409&arch=x64" $update_path_x64/mpas-fe.exe  2 3
-download_file "197094"                      $update_path_x64/nis_full.exe 3 3
+download_file $mpam_fe_x64      $update_path_x64/mpam-fe.exe  1 3
+download_file $mpas_fe_x64      $update_path_x64/mpas-fe.exe  2 3
+download_file $nis_full_x64     $update_path_x64/nis_full.exe 3 3
 
 echo
 echo -e "Downloading \e[96mplatform independent\e[0m definition files."
-download_file "211054"                      $update_path_x86/mpam-d.exe   1 1
+download_file $mpam_d_ind       $update_path_x86/mpam-d.exe   1 1
 echo
 
 log \
