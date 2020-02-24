@@ -188,7 +188,7 @@ log "notice" "Definition downloads have been finished"
 # 64-bit environments. The file is platform independent, so it simply can
 # be copied to 'x64'.
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
-echo "\nDuplicated platform independent file for both platforms."
+echo -e "\nDuplicated platform independent file for both platforms."
 
 if [ $status_verify -eq 1 ]; then
     echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
