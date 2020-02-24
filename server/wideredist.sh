@@ -53,6 +53,13 @@ log() {
     logger "wideredist[$$]: [$prefix] ${message}."
 }
 
+# Just check for '--version' argument, everything else will be ignored
+grep "\-\-version" <<< $@ &>/dev/null
+if [ $? -eq 0 ]; then
+    echo "$version"
+    exit 0
+fi
+
 log "notice" "Running WiDeRedist $version ($timestamp)"
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
