@@ -156,19 +156,13 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 In order to be able to continue using *WiDeRedist*, version **1.2.0** must be installed.
 
-All versions below do not work anymore. The reason for that lies inside the server side script file.
+All versions below do not work anymore. The reason for that lies inside the server side script file. When running the server side script, it returns that the downloads have been completed successfully. However, some files are only a few kilobytes in size.
 
-When running the server side script, it returns that the downloads have been completed successfully. However, some files are only a few kilobytes in size.
+The reason why the download is incorrectly considered successful is that the return value of `wget` is checked and if the download is successful, it returns exit code `0` (as usual). So far, the definition files were downloaded directly from *Microsoft* using `wget` without giving any special arguments which has worked fine.
 
-The reason why the download is incorrectly considered successful is that the return value of `wget` is checked and if the download is successful, it returns exit code `0` (as usual).
+Meanwhile the *Microsoft* server expects a user agent string, which was not given in the earlier versions. Instead of returning an HTTP error, the server redirects to a page which tells that the user agent is missing. Therefore `wget` does not download the actual definition file but that page as HTML file. Due to the fact, that the download of the HTML file was successful, `wget` returns exit code `0`. So, it fetches the wrong file which succeeds and this leads to the incorrect output.
 
-So far the definition files were downloaded directly from *Microsoft* using `wget` without giving any special arguments which has worked fine.
-
-Meanwhile the *Microsoft* server expects a user agent string, which was not given in the earlier versions. Instead of returning a HTTP error, the server redirects to a page which tells that the user agent is missing.
-
-Therefore `wget` does not download the actual definition file but that page as HTML file. Due to the fact, that the download of the HTML file was successful, `wget` returns exit code `0`. So, it fetches the wrong file which succeeds and this leads to the incorrect output.
-
-Newer versions contain a user agent string that is customizable inside the corresponding config file, which fixes the problem.
+Newer versions of *WiDeRedist* contain a user agent string that is customizable inside the corresponding config file, which fixes the problem.
 
 [Top](#wideredist-)
 
