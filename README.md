@@ -156,7 +156,7 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 In order to be able to continue using *WiDeRedist*, version **1.2.0** must be installed.
 
-All versions below do not work anymore. The problem lies inside the server side script file.
+All versions below do not work anymore. The reason for that lies inside the server side script file.
 
 When running the server side script, it returns that the downloads have been completed successfully. However, some files are only a few kilobytes in size.
 
