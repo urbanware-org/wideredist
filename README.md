@@ -1,4 +1,4 @@
-### :warning: Please update to version <a href="https://github.com/urbanware-org/wideredist/releases/tag/1.2.0">1.2.0</a>, as earlier versions do not work anymore!
+### :warning: Please update to version <a href="https://github.com/urbanware-org/wideredist/releases/tag/1.2.0">1.2.0</a>, as earlier versions do not work anymore. [Details](#required-update)</a>
 --------
 
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
@@ -8,6 +8,7 @@
 *   [Details](#details)
 *   [Requirements](#requirements)
 *   [Installation](#installation)
+*   [Required update](#required-update)
 *   [Contact](#contact)
 *   [Useless facts](#useless-facts)
 
@@ -148,6 +149,26 @@ For the task scheduler, the command to execute requires the full path to `powers
 ```cmd
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -Command C:\Tools\WiDeRedist\DefenderUpdate.ps1
 ```
+
+[Top](#wideredist-)
+
+## Required update
+
+In order to be able to continue using *WiDeRedist*, version **1.2.0** must be installed.
+
+All versions below do not work anymore. The problem lies inside the server side script file.
+
+When running the server side script, it returns that the downloads have been completed successfully. However, some files are only a few kilobytes in size.
+
+The reason why the download is incorrectly considered successful is that the return value of `wget` is checked and if the download is successful, it returns exit code `0` (as usual).
+
+So far the definition files were downloaded directly from *Microsoft* using `wget` without giving any special arguments which has worked fine.
+
+Meanwhile the *Microsoft* server expects a user agent string, which was not given in the earlier versions. Instead of returning a HTTP error, the server redirects to a page which tells that the user agent is missing.
+
+Therefore `wget` does not download the actual definition file but that page as HTML file. Due to the fact, that the download of the HTML file was successful, `wget` returns exit code `0`. So, it fetches the wrong file which succeeds and this leads to the incorrect output.
+
+Newer versions contain a user agent string that is customizable inside the corresponding config file, which fixes the problem.
 
 [Top](#wideredist-)
 
