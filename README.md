@@ -164,7 +164,7 @@ Before version 1.2.0, the definition files were downloaded from *Microsoft* usin
 
 Instead of returning an HTTP error, the server redirects to a web page which tells that the user agent is missing. Therefore, `wget` downloads that HTML file instead of any definition file. So, it fetches the wrong file which succeeds and this leads to the incorrect output.
 
-Newer versions of *WiDeRedist* provide a user agent string which fixes the problem. Furthermore, it is customizable inside the server side config file.
+Newer versions of *WiDeRedist* provide a user agent string (customizable inside the server side config file) which fixes the problem. Furthermore, there also is a file size verification of the downloaded files.
 
 [Top](#wideredist-)
 
