@@ -46,7 +46,7 @@ The project does not have many requirements.
 
 ### Server side
 
-First, the steps which are required on *Linux* or *BSD* machine.
+First, the steps which are required on a *Linux* or *BSD* machine.
 
 #### Web server
 
@@ -160,11 +160,13 @@ All versions below do not work anymore. The reason for that lies inside the serv
 
 However, some of those files are only a few kilobytes in size and therefore useless. The reason why the download is incorrectly considered successful is that `wget` downloads the wrong file, which succeeds.
 
-Before version 1.2.0, the definition files were downloaded from *Microsoft* using `wget` without giving any special arguments which has worked fine. Meanwhile the *Microsoft* server expects a user agent string, which was not given in the earlier versions.
+Before version 1.2.0, the definition files were downloaded from *Microsoft* using `wget` without giving any special arguments which has worked fine. Meanwhile the *Microsoft* servers do not seem to accept the default `wget` user agent string (e.g. `Wget/1.20.3 (linux-gnu)` anymore.
 
 Instead of returning an HTTP error, the server redirects to a web page which tells that the user agent is missing. Therefore, `wget` downloads that HTML file instead of any definition file. So, it fetches the wrong file which succeeds and this leads to the incorrect output.
 
-Newer versions of *WiDeRedist* provide a user agent string (customizable inside the server side config file) which fixes the problem. Furthermore, there also is a file size verification of the downloaded files.
+Newer versions of *WiDeRedist* provide a corresponding user agent string which fixes the problem. It also is customizable inside the server side config file.
+
+Furthermore, there also is a file size verification of the downloaded files.
 
 [Top](#wideredist-)
 
