@@ -12,13 +12,13 @@ $Version = "1.2.0"
 $TimeStamp = "2020-02-24"
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
-    # In case the script is being executed outside a PowerShell window,
-    # use a delay to prevent the window from disappearing immediately
-
     $Space = "    "
     $WideSpace = $Space * 10
 
     Write-Host
+    # In case the script is being executed outside an already open PowerShell
+    # window (e.g. via shortcut), use a delay to prevent the window from
+    # disappearing immediately
     For ($Count = $ExitDelay; $Count -gt 0; $Count--) {
         If ($Count -eq 1) {
             $Seconds = "second"
