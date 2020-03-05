@@ -84,6 +84,7 @@ if [ $? -ne 0 ]; then
 fi
 
 if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
+    route_target=$(sed -e "s/:.*$//g" <<< $proxy_address)
     if [[ $kernel_name =~ linux ]]; then
         ip route delete $route_target via $route_gateway &>/dev/null
         ip route add $route_target via $route_gateway &>/dev/null
