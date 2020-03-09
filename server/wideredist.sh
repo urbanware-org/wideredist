@@ -29,8 +29,8 @@ download_file() {
     # definitely be less than 100 kilobytes.
     status_size=1
     status_verify=0
-    file_size=$(stat -c%s "$outfile")
-    if [ $file_size -lt 100000 ]; then
+    file_size=$(ls -s "$outfile" | awk '{ print $1 }')
+    if [ $file_size -lt 100 ]; then
         log "warning" "File verification failed: '$outfile'"
         status_verify=1
     else
