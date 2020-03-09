@@ -1,4 +1,4 @@
-### :warning: Please update to version <a href="https://github.com/urbanware-org/wideredist/releases/tag/1.2.0">1.2.0</a>, as earlier versions do not work anymore. [Details](#required-update)</a>
+### :warning: Please update to version <a href="https://github.com/urbanware-org/wideredist/releases/latest">1.2.x</a>, as earlier versions do not work anymore. [Details](#required-update)</a>
 --------
 
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
