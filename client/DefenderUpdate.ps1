@@ -110,6 +110,7 @@ If ($RemoveSingleQuotesFromPath -eq 1) {
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
+$VersionFile = "$Definitions\version.dat"
 $RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit" "0"
 
 # Network related
@@ -227,6 +228,23 @@ If ($RemoveDefinitionPathOnExit -eq 1) {
 # Get timestamp and elapsed time
 $EndTime = Get-Date
 $ElapsedTime = New-TimeSpan $StartTime $EndTime
+
+Try {
+    Invoke-WebRequest -Uri "http://$DefinitionHostSource/version.dat" -OutFile "$VersionFile"
+} Catch [System.Exception] { }
+
+If ([System.IO.File]::Exists($VersionFile)) {
+    $LatestVersion = Get-Content "$VersionFile"
+    If ($Version -ne $LatestVersion) {
+        Write-Host
+        Write-Host "Please update" -NoNewLine
+        Write-Host -ForegroundColor Yellow " WiDeRedist " -NoNewLine
+        Write-Host "as version" -NoNewLine
+        Write-Host -ForegroundColor Yellow " $Version " -NoNewLine
+        Write-Host "is available now."
+        $ExitDelay = $WaitOnError
+    }
+}
 
 Write-Log
 Exit-Script $ExitCode $ExitDelay
