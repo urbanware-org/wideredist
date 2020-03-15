@@ -195,11 +195,11 @@ log "notice" "Definition downloads have been finished"
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 echo -e "\nDuplicated platform independent file for both platforms."
 
-#if [ $status_verify -eq 1 ]; then
-#    echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
-#            "the problem persists, the\ndownload link may be broken. See" \
-#            "the config file for details."
-#fi
+if [ $status_verify -eq 1 ]; then
+    echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
+            "the problem persists, the\ndownload link may be broken. See" \
+            "the config file for details."
+fi
 
 echo -e \
   "\nProceeding with update of the definition files for redistribution.\n"
