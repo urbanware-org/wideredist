@@ -1,4 +1,7 @@
 ### :warning: Please update to version <a href="https://github.com/urbanware-org/wideredist/releases/latest">1.2.x</a>, as earlier versions do not work anymore. [Details](#required-update)</a>
+
+Furthermore, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version available.
+
 --------
 
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
@@ -115,6 +118,8 @@ Finally, you may add a cronjob to `/etc/crontab` to automatically download the l
 0 * * * * root /opt/wideredist/wideredist.sh &>/dev/null
 ```
 
+Nevertheless, it is recommended to run the script manually once in a while as it returns if a newer version available.
+
 ### Client side
 
 Now the steps which are required on the *Windows* machine.
@@ -166,7 +171,9 @@ Instead of returning an HTTP error, the server redirects to a web page which tel
 
 Newer versions of *WiDeRedist* provide a corresponding user agent string which fixes the problem. If necessary, the string can be modified inside the server side config file.
 
-Furthermore, there also is a file size verification of the downloaded files.
+Now there also is a file size verification of the downloaded files.
+
+However, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version available.
 
 [Top](#wideredist-)
 
