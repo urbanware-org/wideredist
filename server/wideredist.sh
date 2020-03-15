@@ -26,7 +26,7 @@ download_file() {
 
     # Perform a verification by file size to ensure that the downloaded file
     # has actually been downloaded. In case the link is broken, its size will
-    # be significantly less than the actual definition update. 
+    # be significantly less than the actual definition update.
     status_size=1
     status_verify=0
     if [ -z "$verify_size" ]; then
@@ -232,6 +232,7 @@ fi
 unset http_proxy
 unset https_proxy
 
+rm -f $version_temp
 wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
 version_latest=$(grep "wideredist-" $version_temp \
                                     | head -n 1 \
