@@ -26,7 +26,7 @@ download_file() {
 
     # Perform a verification by file size to ensure that the downloaded file
     # has actually been downloaded. In case the link is broken, its size will
-    # definitely be less than the amount kilobytes set in the config file.
+    # be significantly less than the actual definition update. 
     status_size=1
     status_verify=0
     if [ -z "$verify_size" ]; then
