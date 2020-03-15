@@ -239,6 +239,7 @@ if [ ! -z "$version_latest" ]; then
         echo "$version_latest" > $definition_path/version.dat
         echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
                 "\e[93m$version_latest\e[0m is available now.\n"
+        log "notice" "New WiDeRedist version ($version_latest) available"
     fi
 fi
 
