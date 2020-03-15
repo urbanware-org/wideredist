@@ -29,6 +29,9 @@ download_file() {
     # definitely be less than the amount kilobytes set in the config file.
     status_size=1
     status_verify=0
+    if [ -z "$verify_size" ]; then
+        verify_size=100
+    fi
     file_size=$(ls -s "$outfile" | awk '{ print $1 }')
     if [ $file_size -lt $verify_size ]; then
         log "warning" "File verification failed: '$outfile'"
