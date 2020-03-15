@@ -213,6 +213,21 @@ rsync -a $update_path/* $definition_path/
 rm -fR $update_path
 log "notice" "Definition files have been updated"
 
+rm -f $version_temp
+wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
+version_latest=$(grep "wideredist-" $version_temp \
+                                    | head -n 1 \
+                                    | sed -e "s/.*wideredist-//g" \
+                                    | sed -e "s/\ .*//g")
+if [ ! -z "$version_latest" ]; then
+    if [ ! "$version" = "$version_latest" ]; then
+        echo "$version_latest" > $definition_path/version.dat
+        echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
+                "\e[93m$version_latest\e[0m is available now.\n"
+        log "notice" "New WiDeRedist version ($version_latest) available"
+    fi
+fi
+
 if [ $route -eq 1 ]; then
     if [ ! -z "$route_remove" ]; then
         if [ $route_remove -eq 1 ]; then
@@ -231,21 +246,6 @@ fi
 # variables will be ignored by 'unset' anyway
 unset http_proxy
 unset https_proxy
-
-rm -f $version_temp
-wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
-version_latest=$(grep "wideredist-" $version_temp \
-                                    | head -n 1 \
-                                    | sed -e "s/.*wideredist-//g" \
-                                    | sed -e "s/\ .*//g")
-if [ ! -z "$version_latest" ]; then
-    if [ ! "$version" = "$version_latest" ]; then
-        echo "$version_latest" > $definition_path/version.dat
-        echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
-                "\e[93m$version_latest\e[0m is available now.\n"
-        log "notice" "New WiDeRedist version ($version_latest) available"
-    fi
-fi
 
 echo -e "Process finished.\n"
 log "notice" "Process finished. Check log messages above for errors"
