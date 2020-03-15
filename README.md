@@ -1,6 +1,6 @@
 ### :warning: Please update to version <a href="https://github.com/urbanware-org/wideredist/releases/latest">1.2.x</a>, as earlier versions do not work anymore. [Details](#required-update)</a>
 
-Furthermore, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version available.
+Furthermore, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version is available.
 
 --------
 
@@ -118,7 +118,7 @@ Finally, you may add a cronjob to `/etc/crontab` to automatically download the l
 0 * * * * root /opt/wideredist/wideredist.sh &>/dev/null
 ```
 
-Nevertheless, it is recommended to run the script manually once in a while as it returns if a newer version available.
+Nevertheless, it is recommended to run the script manually once in a while as it returns if a newer version is available.
 
 ### Client side
 
@@ -173,7 +173,7 @@ Newer versions of *WiDeRedist* provide a corresponding user agent string which f
 
 Now there also is a file size verification of the downloaded files.
 
-However, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version available.
+However, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version is available.
 
 [Top](#wideredist-)
 
