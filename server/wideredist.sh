@@ -26,11 +26,11 @@ download_file() {
 
     # Perform a verification by file size to ensure that the downloaded file
     # has actually been downloaded. In case the link is broken, its size will
-    # definitely be less than 100 kilobytes.
+    # definitely be less than the amount kilobytes set in the config file.
     status_size=1
     status_verify=0
     file_size=$(ls -s "$outfile" | awk '{ print $1 }')
-    if [ $file_size -lt 100 ]; then
+    if [ $file_size -lt $verify_size ]; then
         log "warning" "File verification failed: '$outfile'"
         status_verify=1
     else
