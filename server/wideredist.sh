@@ -151,6 +151,10 @@ fi
 mkdir -p $update_path_x86
 mkdir -p $update_path_x64
 
+# WiDeRedist update check related
+version_url="https://github.com/urbanware-org/wideredist/releases/latest"
+version_temp="/tmp/wideredist_version.tmp"
+
 echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
@@ -191,11 +195,11 @@ log "notice" "Definition downloads have been finished"
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 echo -e "\nDuplicated platform independent file for both platforms."
 
-if [ $status_verify -eq 1 ]; then
-    echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
-            "the problem persists, the\ndownload link may be broken. See" \
-            "the config file for details."
-fi
+#if [ $status_verify -eq 1 ]; then
+#    echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
+#            "the problem persists, the\ndownload link may be broken. See" \
+#            "the config file for details."
+#fi
 
 echo -e \
   "\nProceeding with update of the definition files for redistribution.\n"
@@ -224,6 +228,18 @@ fi
 # variables will be ignored by 'unset' anyway
 unset http_proxy
 unset https_proxy
+
+wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
+version_latest=$(grep "wideredist-" $version_temp \
+                                    | head -n 1 \
+                                    | sed -e "s/.*wideredist-//g" \
+                                    | sed -e "s/\ .*//g")
+if [ ! -z "$version_latest" ]; then
+    if [ ! "$version" = "$version_latest" ]; then
+        echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
+                "\e[93m$version_latest\e[0m is available now.\n"
+    fi
+fi
 
 echo -e "Process finished.\n"
 log "notice" "Process finished. Check log messages above for errors"
