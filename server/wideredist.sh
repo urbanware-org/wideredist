@@ -83,7 +83,7 @@ if [ $? -ne 0 ]; then
     error "No configuration file found"
 fi
 
-if [ ! -z "$route_target" ] && [ ! -z "$route_gateway" ]; then
+if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
     route_target=$(sed -e "s/:.*$//g" <<< $proxy_address)
     if [[ $kernel_name =~ linux ]]; then
         ip route delete $route_target via $route_gateway &>/dev/null
