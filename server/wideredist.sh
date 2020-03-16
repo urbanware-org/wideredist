@@ -28,14 +28,13 @@ download_file() {
     # has actually been downloaded. In case the link is broken, its size will
     # be significantly less than the actual definition update.
     status_size=1
-    status_verify=0
     if [ -z "$verify_size" ]; then
         verify_size=100
     fi
     file_size=$(ls -s "$outfile" | awk '{ print $1 }')
     if [ $file_size -lt $verify_size ]; then
         log "warning" "File verification failed: '$outfile'"
-        status_verify=1
+        status_verify_fail=1
     else
         status_size=0
     fi
@@ -154,6 +153,9 @@ fi
 mkdir -p $update_path_x86
 mkdir -p $update_path_x64
 
+# Default value for file verification
+status_verify_fail=0
+
 # WiDeRedist update check related
 version_url="https://github.com/urbanware-org/wideredist/releases/latest"
 version_temp="/tmp/wideredist_version.tmp"
@@ -198,7 +200,7 @@ log "notice" "Definition downloads have been finished"
 cp -f $update_path_x86/mpam-d.exe $update_path_x64/
 echo -e "\nDuplicated platform independent file for both platforms."
 
-if [ $status_verify -eq 1 ]; then
+if [ $status_verify_fail -eq 1 ]; then
     echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
             "the problem persists, the\ndownload link may be broken. See" \
             "the config file for details."
