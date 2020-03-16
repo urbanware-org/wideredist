@@ -10,8 +10,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ============================================================================
 
-version="1.2.8"
-timestamp="2020-03-15"
+version="1.2.9"
+timestamp="2020-03-16"
 
 download_file() {
     weburl="$1"
