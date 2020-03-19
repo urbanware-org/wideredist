@@ -27,6 +27,11 @@ if [ -f "$script_dir/wideredist.upd" ]; then
     if [ "$keep_previous" = "1" ]; then
         cat $script_dir/wideredist.sh > $script_dir/wideredist.bkp
     fi
+
+    # Replace (overwrite to be precise) this script file on the fly and run
+    # the new (overwritten) version afterwards. As long as the new version has
+    # not finished its duty, the previous script will be idle and exit as soon
+    # as the new version is done (both scripts exit at the same time then).
     cat /tmp/wideredist.upd > $script_dir/wideredist.sh
     $script_dir/wideredist.sh
     exit
@@ -185,6 +190,10 @@ echo -e "Copyright (C) 2020 by Ralf Kilian"
 echo -e "\e[0m"
 
 if [[ $version == *-* ]]; then
+    # Before a new stable version is being released, an unstable version can
+    # be obtained from GitHub by cloning or downloading the repository itself.
+    # These unstable versions (whose version number contains hyphens) should
+    # be working, but have not been tested intensively.
     line="\e[90m---------------------------------------\e[0m"
     echo -e "${line}${line}"
     echo -e "\e[91mThis is an unstable version.\e[0m" \
@@ -256,6 +265,18 @@ if [ ! -z "$version_latest" ]; then
             rm -fR /tmp/wideredist*
             tarfile="wideredist-${version_latest}.tar.gz"
 
+            # The update process does not need an additional update script or
+            # whatsoever. However, the server side script cannot be updated at
+            # this point.
+            #
+            # Due to this, it is required to download the archive file of the
+            # latest version, extract the server side script from it, change
+            # the extension of the file and move (the renamed) file the local
+            # directory of WiDeRedist.
+            #
+            # So, the following code simply prepares the update for the server
+            # side script, but the actual update process will be performed
+            # when the script is being run again.
             wget -U "$user_agent" \
                  "$wideredist_url/archive/${version_latest}.tar.gz" -q \
                  -O /tmp/$tarfile &>/dev/null
@@ -265,7 +286,6 @@ if [ ! -z "$version_latest" ]; then
                $definition_path/client
             mv /tmp/wideredist-$version_latest/server/wideredist.sh \
                $script_dir/wideredist.upd
-            rm -fR /tmp/wideredist*
 
             echo -e "\e[93mWiDeRedist\e[0m will be updated to version" \
                     "\e[93m$version_latest\e[0m before the next run.\n"
@@ -296,6 +316,7 @@ fi
 unset http_proxy
 unset https_proxy
 
+rm -fR /tmp/wideredist*
 echo -e "Process finished.\n"
 log "notice" "Process finished. Check log messages above for errors"
 log "notice" "Exiting"
