@@ -1,4 +1,4 @@
-### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions do not work anymore. [Details](#required-update)</a>
+### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions may not work anymore. [Details](#required-update)</a>
 
 Furthermore, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version is available.
 
