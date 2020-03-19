@@ -13,6 +13,25 @@
 version="1.2.9"
 timestamp="2020-03-16"
 
+script_dir=$(dirname $(readlink -f $0))
+kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
+
+rm -fR /tmp/wideredist*
+if [ -f "$script_dir/wideredist.upd" ]; then
+    logger "wideredist[$$]: [notice] Installing WiDeRedist update."
+    source $script_dir/wideredist.conf
+    if [ $? -ne 0 ]; then
+        keep_previous=1
+    fi
+    mv $script_dir/wideredist.upd /tmp/
+    if [ $keep_previous -eq 1 ]; then
+        cat $script_dir/wideredist.sh > $script_dir/wideredist.bkp
+    fi
+    cat /tmp/wideredist.upd > $script_dir/wideredist.sh
+    $script_dir/wideredist.sh
+    exit
+fi
+
 download_file() {
     weburl="$1"
     outfile="$2"
@@ -77,9 +96,6 @@ if [ $? -eq 0 ]; then
 fi
 
 log "notice" "Running WiDeRedist $version ($timestamp)"
-script_dir=$(dirname $(readlink -f $0))
-kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
-
 source $script_dir/wideredist.conf
 if [ $? -ne 0 ]; then
     error "No configuration file found"
@@ -224,9 +240,30 @@ version_latest=$(grep "wideredist-" $version_temp \
 if [ ! -z "$version_latest" ]; then
     echo "$version_latest" > $definition_path/version.dat
     if [ ! "$version" = "$version_latest" ]; then
-        echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
-                "\e[93m$version_latest\e[0m is available now.\n"
         log "notice" "New WiDeRedist version ($version_latest) available"
+        if [ $wideredist_update -eq 1 ]; then
+            log "notice" "Automatically updating WiDeRedist"
+            rm -fR /tmp/wideredist*
+            tarfile="wideredist-${version_latest}.tar.gz"
+
+            wget -U "$user_agent" \
+                 "$wideredist_url/archive/${version_latest}.tar.gz" -q \
+                 -O /tmp/$tarfile &>/dev/null
+            tar xfv /tmp/$tarfile -C /tmp/ &>/dev/null
+            mkdir -p $definition_path/client
+            mv /tmp/wideredist-$version_latest/client/*.ps1 \
+               $definition_path/client
+            mv /tmp/wideredist-$version_latest/server/wideredist.sh \
+               $script_dir/wideredist.upd
+            rm -fR /tmp/wideredist*
+
+            echo -e "\e[93mWiDeRedist\e[0m will be updated to version" \
+                    "\e[93m$version_latest\e[0m before the next run.\n"
+            log "notice" "Start this script once again to finish the update"
+        else
+            echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
+                    "\e[93m$version_latest\e[0m is available now.\n"
+        fi
     fi
 fi
 
