@@ -20,11 +20,11 @@ rm -fR /tmp/wideredist*
 if [ -f "$script_dir/wideredist.upd" ]; then
     logger "wideredist[$$]: [notice] Installing WiDeRedist update."
     source $script_dir/wideredist.conf
-    if [ $? -ne 0 ]; then
+    if [ -z "$keep_previous" ]; then
         keep_previous=1
     fi
     mv $script_dir/wideredist.upd /tmp/
-    if [ $keep_previous -eq 1 ]; then
+    if [ "$keep_previous" = "1" ]; then
         cat $script_dir/wideredist.sh > $script_dir/wideredist.bkp
     fi
     cat /tmp/wideredist.upd > $script_dir/wideredist.sh
@@ -73,7 +73,7 @@ error() {
 
     # In case of an error the return code must not be zero, even if explicitly
     # set or not given
-    if [ "$exit_code" = "" ] || [ $exit_code -eq 0 ]; then
+    if [ -z "$exit_code" ] || [ $exit_code -eq 0 ]; then
         exit_code=1
     fi
     echo -e "\e[91merror:\e[0m ${message}."
