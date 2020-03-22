@@ -159,7 +159,7 @@ C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypas
 
 ## Required update
 
-In order to be able to continue using *WiDeRedist*, at least version **1.2.0** must be installed.
+In order to be able to continue using *WiDeRedist*, at least version **1.2.0** must be installed. Nevertheless, installing the latest version is recommended.
 
 All versions below do not work anymore. The reason for that lies inside the server side script file. When running the server side script, it usually returns that the downloads have been completed successfully.
 
