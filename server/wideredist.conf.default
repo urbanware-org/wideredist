@@ -1,0 +1,96 @@
+##############################################################################
+#                                                                            #
+#  wideredist.conf                                                           #
+#                                                                            #
+#  Configuration file for the 'wideredist.sh' script.                        #
+#                                                                            #
+#  The options inside this file cannot be set via command-line arguments.    #
+#                                                                            #
+#  Important notice:    Ensure that there are no spaces around the equal     #
+#                       signs of all options. Otherwise settings will not    #
+#                       be applied correctly or WiDeRedist may even crash    #
+#                       under certain circumstances.                         #
+#                                                                            #
+##############################################################################
+
+# --[ Local paths ]-----------------------------------------------------------
+
+# Directory where the downloaded files will be provided
+definition_path="/var/www/html/defender"
+
+# --[ Download settings ] ----------------------------------------------------
+
+# User agent used for the download (required since version 1.2.0, otherwise
+# the downloads will not work), by default from Chrome on Windows 10
+user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+
+# Most of the links below are provided by this official Microsoft website:
+# https://www.microsoft.com/en-us/wdsi/defenderupdates
+
+# Download links for 32-bit files
+mpam_fe_x86="https://go.microsoft.com/fwlink/?linkid=121721&arch=x86"
+mpas_fe_x86="https://go.microsoft.com/fwlink/?linkid=70631"
+nis_full_x86="https://go.microsoft.com/fwlink/?linkid=207869"
+
+# Download links for 64-bit files
+mpam_fe_x64="https://go.microsoft.com/fwlink/?linkid=121721&arch=x64"
+mpas_fe_x64="https://go.microsoft.com/fwlink/?linkid=121721&clcid=0x409&arch=x64&eng=0.0.0.0&avdelta=0.0.0.0&asdelta=0.0.0.0&prod=925A3ACA-C353-458A-AC8D-A7E5EB378092"
+nis_full_x64="https://go.microsoft.com/fwlink/?linkid=197094"
+
+# Download links for platform independent files
+mpam_d_ind="https://go.microsoft.com/fwlink/?linkid=211054"
+
+# Size verification value (in kilobytes, default is 100)
+verify_size=100
+
+# --[ Proxy settings ]--------------------------------------------------------
+
+# Below are some general settings for internet access via proxy server if
+# required. If not, simply leave the variables empty so the proxy settings
+# will be ignored.
+
+# IP address and port (both are required, separated by colon and without any
+# spaces), for example "192.168.2.100:8080"
+proxy_address=""
+
+# Gateway address for route to proxy
+route_gateway=""
+
+# Remove route again when after downloading the definition files:
+#
+#   Options:
+#     0 = do not remove route
+#     1 = remove route (default)
+#
+route_remove=1
+
+# --[ Update settings ]-------------------------------------------------------
+
+# WiDeRedist can be updated automatically. However, this is experimental so
+# far and thus done at your own risk. Notice that this will only affect the
+# script file (the config file will be kept untainted).
+
+# Automatic WiDeRedist update:
+#
+#   Options:
+#     0 = disabled (default)
+#     1 = enabled
+#
+wideredist_update=0
+
+# URL to WiDeRedist repository from which to download the latest version
+# (this works only with GitHub)
+wideredist_url="https://github.com/urbanware-org/wideredist"
+
+# Keep previous version from before the update:
+#
+#   This will backup the previous 'wideredist.sh' script as 'wideredist.bkp'
+#   inside the same directory.
+#
+#   Options:
+#     0 = disabled
+#     1 = enabled (default)
+#
+keep_previous=1
+
+# EOF
