@@ -114,7 +114,8 @@ if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
         if [ $? -eq 0 ]; then
             route=1
         else
-            error "Failed to add the given route, maybe a permission issue"
+            error \
+              "Failed to add the given route, most likely a permission issue"
         fi
     else  # BSD
         route delete $route_target $route_gateway &>/dev/null
@@ -122,7 +123,8 @@ if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
         if [ $? -eq 0 ]; then
             route=1
         else
-            error "Failed to add the given route, maybe a permission issue"
+            error \
+              "Failed to add the given route, most likely a permission issue"
         fi
     fi
     log "notice" "Added route to '$route_target' via '$route_gateway'"
@@ -169,7 +171,8 @@ rm -fR $update_path &>/dev/null
 # Before downloading anything, ensure the target directories exist
 mkdir -p $definition_path &>/dev/null
 if [ $? -ne 0 ]; then
-    error "Failed to create the definition path, maybe a permission issue"
+    error \
+      "Failed to create the definition path, most likely a permission issue"
 fi
 mkdir -p $update_path_x86
 mkdir -p $update_path_x64
