@@ -91,7 +91,7 @@ rm -f /var/www/html/defender/test
 
 #### *WiDeRedist* script and config
 
-As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` script as well as the `wideredist.conf` file there.
+As **root**, create the directory `/opt/wideredist` and copy the `wideredist.sh` script as well as the config files `wideredist.conf` and `wideredist.conf.default` there.
 
 The script should already be executable. If not (for whatever reason), run the following command to set the executable flag:
 
