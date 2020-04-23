@@ -101,8 +101,14 @@ if [ $? -eq 0 ]; then
 fi
 
 log "notice" "Running WiDeRedist $version ($timestamp)"
-source $script_dir/wideredist.conf
-if [ $? -ne 0 ]; then
+if [ -f "${script_dir}/wideredist.conf" ]; then
+    source ${script_dir}/wideredist.conf
+elif [ -f "${script_dir}/wideredist.conf.default" ]; then
+    # Fallback with the default config
+    source ${script_dir}/wideredist.conf.default
+    cp ${script_dir}/wideredist.conf.default \
+       ${script_dir}/wideredist.conf &>/dev/null
+else
     error "No configuration file found"
 fi
 
