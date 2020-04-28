@@ -46,7 +46,7 @@ The project does not have many requirements.
 
 ## Installation
 
-You can find how-tos and further information inside the [wiki](../../wiki).
+You can find the [installation instructions](../../wiki/Installing-wideredist) and further information inside the [wiki](../../wiki).
 
 [Top](#wideredist-)
 
