@@ -1,4 +1,4 @@
-### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions may not work anymore. [Details](#required-update)</a>
+### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions may not work anymore. [Details]((../../wiki#required-update)</a>
 
 Furthermore, it is recommended to run either the server or client side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
@@ -154,26 +154,6 @@ For the task scheduler, the command to execute requires the full path to `powers
 ```cmd
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -Command C:\Tools\WiDeRedist\DefenderUpdate.ps1
 ```
-
-[Top](#wideredist-)
-
-## Required update
-
-In order to be able to continue using *WiDeRedist*, at least version **1.2.0** must be installed. Nevertheless, installing the latest version is recommended.
-
-All versions below do not work anymore. The reason for that lies inside the server side script file. When running the server side script, it usually returns that the downloads have been completed successfully.
-
-However, some of those files are only a few kilobytes in size and therefore useless. The reason why the download is incorrectly considered successful is that `wget` downloads the wrong file, which succeeds.
-
-Before version 1.2.0, the definition files were downloaded from *Microsoft* using `wget` without giving any special arguments which has worked fine. Meanwhile the *Microsoft* servers do not seem to accept the default `wget` user agent string (e.g. `Wget/1.20.3 (linux-gnu)`) anymore.
-
-Instead of returning an HTTP error, the server redirects to a web page which tells that the user agent is missing. Therefore, `wget` downloads that HTML file instead of any definition file. So, it fetches the wrong file which succeeds and this leads to the incorrect output.
-
-Newer versions of *WiDeRedist* provide a corresponding user agent string which fixes the problem. If necessary, the string can be modified inside the server side config file.
-
-Now there also is a file size verification of the downloaded files.
-
-However, it is recommended to run either the server or client side script manually once in a while as it returns if a newer version is available.
 
 [Top](#wideredist-)
 
