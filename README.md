@@ -1,4 +1,6 @@
-### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions may not work anymore. [Details](../../wiki#required-update-for-old-versions)</a>
+### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions may not work anymore. [Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
+
+<!-- ../../wiki#required-update-for-old-versions -->
 
 Furthermore, it is recommended to run either the server or client side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
@@ -46,7 +48,12 @@ The project does not have many requirements.
 
 ## Installation
 
-You can find the [installation instructions](../../wiki/Installing-wideredist) and further information inside the [wiki](../../wiki).
+You can find the [installation instructions](https://github.com/urbanware-org/wideredist/wiki/Installing-wideredist) and further information inside the [wiki](https://github.com/urbanware-org/wideredist/wiki).
+
+<!--
+../../wiki/Installing-wideredist
+../../wiki
+-->
 
 [Top](#wideredist-)
 
