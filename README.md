@@ -48,6 +48,8 @@ The project does not have many requirements.
 
 You can find how-tos and further information inside the [wiki](../../wiki).
 
+[Top](#wideredist-)
+
 ## Contact
 
 Any suggestions, questions, bugs to report or feedback to give?
