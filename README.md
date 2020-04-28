@@ -11,7 +11,6 @@ Furthermore, it is recommended to run either the server or client side script ma
 *   [Details](#details)
 *   [Requirements](#requirements)
 *   [Installation](#installation)
-*   [Required update](#required-update)
 *   [Contact](#contact)
 *   [Useless facts](#useless-facts)
 
