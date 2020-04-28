@@ -46,7 +46,7 @@ The project does not have many requirements.
 
 ## Installation
 
-How-tos and further information can be found inside the [wiki](../../wiki)
+You can find how-tos and further information inside the [wiki](../../wiki).
 
 ## Contact
 
