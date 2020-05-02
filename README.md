@@ -48,7 +48,7 @@ The project does not have many requirements.
 
 ## Installation
 
-You can find the [installation instructions](https://github.com/urbanware-org/wideredist/wiki/Installing-wideredist) and further information inside the [wiki](https://github.com/urbanware-org/wideredist/wiki).
+You can find the installation instructions and further information inside the [wiki](https://github.com/urbanware-org/wideredist/wiki).
 
 <!--
 ../../wiki/Installing-wideredist
