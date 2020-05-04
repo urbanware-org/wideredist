@@ -42,7 +42,7 @@ The project does not have many requirements.
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `rsync` package (maybe already pre-installed, depending on the distribution).
     *   The `wget` package (same here).
-    *   The *Bash* shell (default in most distributions).
+    *   The *Bash* shell (default in most *Linux* distributions).
 *   ***Windows***:
     *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
 
