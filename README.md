@@ -20,7 +20,7 @@ Furthermore, it is recommended to run either the server or client side script ma
 
 ## Definition
 
-Special tool to update the *Windows Defender* definitions in the local network without client internet access via internal web server.
+Dedicated tool to update the *Windows Defender* definitions in the local network without client internet access via internal web server.
 
 [Top](#wideredist-)
 
