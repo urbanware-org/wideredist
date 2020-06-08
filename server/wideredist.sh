@@ -10,11 +10,15 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ============================================================================
 
-version="1.2.10"
-timestamp="2020-04-23"
+version="1.2.10-1"
+timestamp="2020-06-08"
 
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
+
+version_unstable=0
+version_update=0
+version_url="https://github.com/urbanware-org/wideredist/releases/latest"
 
 rm -fR /tmp/wideredist*
 if [ -f "$script_dir/wideredist.upd" ]; then
@@ -36,6 +40,53 @@ if [ -f "$script_dir/wideredist.upd" ]; then
     $script_dir/wideredist.sh
     exit
 fi
+
+check_version() {
+    version_temp="/tmp/wideredist_version.tmp"
+    rm -f $version_temp
+    wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
+
+    version_latest=$(grep "wideredist-" $version_temp \
+                                        | head -n 1 \
+                                        | sed -e "s/.*wideredist-//g" \
+                                        | sed -e "s/\ .*//g")
+
+    if [ $version_unstable -eq 1 ] || [ $version = $version_latest ]; then
+        return
+    fi
+
+    version_major=$((sed -e "s/\./\ /g" | awk '{ print $1 }') \
+                                        <<< $version)
+    version_minor=$((sed -e "s/\./\ /g" | awk '{ print $2 }') \
+                                        <<< $version)
+    version_revis=$((sed -e "s/\./\ /g" | awk '{ print $3 }') \
+                                        <<< $version)
+
+    version_major_latest=$((sed -e "s/\./\ /g" | awk '{ print $1 }') \
+                                               <<< $version_latest)
+    version_minor_latest=$((sed -e "s/\./\ /g" | awk '{ print $2 }') \
+                                               <<< $version_latest)
+    version_revis_latest=$((sed -e "s/\./\ /g" | awk '{ print $3 }') \
+                                               <<< $version_latest)
+
+    if [ $version_major_latest -ge $version_major ]; then
+        if [ $version_major_latest -gt $version_major ]; then
+            version_update=1
+        else
+            if [ $version_minor_latest -ge $version_minor ]; then
+                if [ $version_minor_latest -gt $version_minor ]; then
+                    version_update=1
+                else
+                    if [ $version_revis_latest -ge $version_revis ]; then
+                        if [ $version_revis_latest -gt $version_revis ]; then
+                            version_update=1
+                        fi
+                    fi
+                fi
+            fi
+        fi
+    fi
+}
 
 download_file() {
     weburl="$1"
@@ -186,10 +237,6 @@ mkdir -p $update_path_x64
 # Default value for file verification
 status_verify_fail=0
 
-# WiDeRedist update check related
-version_url="https://github.com/urbanware-org/wideredist/releases/latest"
-version_temp="/tmp/wideredist_version.tmp"
-
 echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
@@ -203,6 +250,8 @@ if [[ $version == *-* ]]; then
     # be obtained from GitHub by cloning or downloading the repository itself.
     # These unstable versions (whose version number contains hyphens) should
     # be working, but have not been tested intensively.
+    version_unstable=1
+
     line="\e[90m---------------------------------------\e[0m"
     echo -e "${line}${line}"
     echo -e "\e[91mThis is an unstable version.\e[0m" \
@@ -259,15 +308,10 @@ rsync -a $update_path/* $definition_path/
 rm -fR $update_path
 log "notice" "Definition files have been updated"
 
-rm -f $version_temp
-wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
-version_latest=$(grep "wideredist-" $version_temp \
-                                    | head -n 1 \
-                                    | sed -e "s/.*wideredist-//g" \
-                                    | sed -e "s/\ .*//g")
+check_version
 if [ ! -z "$version_latest" ]; then
     echo "$version_latest" > $definition_path/version.dat
-    if [ ! "$version" = "$version_latest" ]; then
+    if [ $version_update -eq 1 ]; then
         log "notice" "New WiDeRedist version ($version_latest) available"
         if [ $wideredist_update -eq 1 ]; then
             log "notice" "Automatically updating WiDeRedist"
