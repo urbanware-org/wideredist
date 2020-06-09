@@ -29,7 +29,7 @@ if [ -f "$script_dir/wideredist.upd" ]; then
     fi
     mv $script_dir/wideredist.upd /tmp/
     if [ "$keep_previous" = "1" ]; then
-        cat $script_dir/wideredist.sh > $script_dir/wideredist.bkp
+        cat $script_dir/wideredist.sh > $script_dir/wideredist.sh.bkp
     fi
 
     # Replace (overwrite to be precise) this script file on the fly and run
