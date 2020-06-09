@@ -270,8 +270,8 @@ If ($? -eq $True) {
 }
 
 # In order to reduce disk usage, you can automatically remove the local
-# definition directory created by this script. See local path options on
-# top of this file.
+# definition directory created by this script. See local path options inside
+# the config file.
 If ($RemoveDefinitionPathOnExit -eq 1) {
     Remove-Item -Path $Definitions -Recurse -Force
 }
