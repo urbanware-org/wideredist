@@ -227,7 +227,10 @@ If ($RemoveDefinitionPathOnExit -eq 1) {
 
 # Get timestamp and elapsed time
 $EndTime = Get-Date
-$ElapsedTime = New-TimeSpan $StartTime $EndTime
+$ElapsedTimeSpan = New-TimeSpan $StartTime $EndTime
+$ElapsedTimeString = $ElapsedTimeSpan.ToString("hh\:mm\:ss")
+Write-Host
+Write-Host "Elapsed time: $ElapsedTimeString"
 
 Try {
     Invoke-WebRequest -Uri "http://$DefinitionHostSource/version.dat" -OutFile "$VersionFile"
