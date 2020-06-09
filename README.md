@@ -2,7 +2,7 @@
 
 <!-- ../../wiki#required-update-for-old-versions -->
 
-Furthermore, it is recommended to run either the server or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
+Furthermore, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
 --------
 
