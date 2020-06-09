@@ -8,8 +8,59 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 # ==========================================================================================================
 
-$Version = "1.2.10"
-$TimeStamp = "2020-04-23"
+$Version = "1.2.10-1"
+$TimeStamp = "2020-06-09"
+
+Function Check-Update() {
+    Try {
+        Invoke-WebRequest -Uri "http://$DefinitionHostSource/version.dat" -OutFile "$VersionFile"
+    } Catch [System.Exception] { }
+
+    If ([System.IO.File]::Exists($VersionFile)) {
+        $VersionLatest = Get-Content "$VersionFile"
+        $VersionUpdate = 0
+
+        If ($Version -eq $VersionLatest -Or $Version.Contains("-")) {
+            Return
+        }
+
+        $VersionMajor = $Version.Split(".")[0]
+        $VersionMinor = $Version.Split(".")[1]
+        $VersionRevis = $Version.Split(".")[2]
+
+        $VersionLatestMajor = $VersionLatest.Split(".")[0]
+        $VersionLatestMinor = $VersionLatest.Split(".")[1]
+        $VersionLatestRevis = $VersionLatest.Split(".")[2]
+
+        If ($VersionLatestMajor -ge $VersionMajor) {
+            If ($VersionLatestMajor -gt $VersionMajor) {
+                $VersionUpdate = 1
+            } Else {
+                If ($VersionLatestMinor -ge $VersionMinor) {
+                    If ($VersionLatestMinor -gt $VersionMinor) {
+                        $VersionUpdate = 1
+                    } Else {
+                        If ($VersionLatestRevis -ge $VersionRevis) {
+                            If ($VersionLatestRevis -gt $VersionRevis) {
+                                $VersionUpdate = 1
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    If ($VersionUpdate -eq 1) {
+        Write-Host
+        Write-Host "Please update" -NoNewLine
+        Write-Host -ForegroundColor Yellow " WiDeRedist " -NoNewLine
+        Write-Host "as version" -NoNewLine
+        Write-Host -ForegroundColor Yellow " $VersionLatest " -NoNewLine
+        Write-Host "is available now."
+        $ExitDelay = $WaitOnError
+    }
+}
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     $Space = "    "
@@ -232,22 +283,8 @@ $ElapsedTimeString = $ElapsedTimeSpan.ToString("hh\:mm\:ss")
 Write-Host
 Write-Host "Elapsed time: $ElapsedTimeString"
 
-Try {
-    Invoke-WebRequest -Uri "http://$DefinitionHostSource/version.dat" -OutFile "$VersionFile"
-} Catch [System.Exception] { }
-
-If ([System.IO.File]::Exists($VersionFile)) {
-    $LatestVersion = Get-Content "$VersionFile"
-    If ($Version -ne $LatestVersion) {
-        Write-Host
-        Write-Host "Please update" -NoNewLine
-        Write-Host -ForegroundColor Yellow " WiDeRedist " -NoNewLine
-        Write-Host "as version" -NoNewLine
-        Write-Host -ForegroundColor Yellow " $Version " -NoNewLine
-        Write-Host "is available now."
-        $ExitDelay = $WaitOnError
-    }
-}
+# Get update information from the server (if existing)
+Check-Update
 
 Write-Log
 Exit-Script $ExitCode $ExitDelay
