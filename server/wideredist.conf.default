@@ -78,14 +78,14 @@ route_remove=1
 #
 wideredist_update=0
 
-# URL to WiDeRedist repository from which to download the latest version
-# (this works only with GitHub)
+# Web URL to the WiDeRedist repository from which to download the latest
+# version (this currently works with GitHub, only)
 wideredist_url="https://github.com/urbanware-org/wideredist"
 
 # Keep previous version from before the update:
 #
-#   This will backup the previous 'wideredist.sh' script as 'wideredist.bkp'
-#   inside the same directory.
+#   This will backup the previous server-side script file 'wideredist.sh' as
+#   'wideredist.sh.bkp' inside the same directory.
 #
 #   Options:
 #     0 = disabled
