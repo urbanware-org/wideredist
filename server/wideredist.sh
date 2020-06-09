@@ -328,8 +328,8 @@ if [ ! -z "$version_latest" ]; then
             # directory of WiDeRedist.
             #
             # Furthermore, the new config file from the archived will be
-            # stored als 'wideredist.conf.new', so the existing config file
-            # will be kept untainted.
+            # stored as new 'wideredist.conf.default', so the existing config
+            # file will be kept untainted.
             #
             # So, the following code simply prepares the update for the server
             # side script, but the actual update process will be performed
@@ -344,7 +344,7 @@ if [ ! -z "$version_latest" ]; then
             mv /tmp/wideredist-$version_latest/server/wideredist.sh \
                $script_dir/wideredist.upd
             cat /tmp/wideredist-$version_latest/server/wideredist.conf \
-               > $script_dir/wideredist.conf.new
+               > $script_dir/wideredist.conf.default
 
             echo -e "\e[93mWiDeRedist\e[0m will be updated to version" \
                     "\e[93m$version_latest\e[0m before the next run.\n"
