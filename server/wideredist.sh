@@ -340,7 +340,7 @@ if [ ! -z "$version_latest" ]; then
             tar xfv /tmp/$tarfile -C /tmp/ &>/dev/null
             mkdir -p $definition_path/client
             mv /tmp/wideredist-$version_latest/client/DefenderUpdate.ps1 \
-               $definition_path/client
+               $definition_path/client/
             mv /tmp/wideredist-$version_latest/client/Update.ini \
                $definition_path/client/UpdateDefault.ini
             mv /tmp/wideredist-$version_latest/server/wideredist.sh \
