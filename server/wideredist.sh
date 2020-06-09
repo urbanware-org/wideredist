@@ -339,7 +339,7 @@ if [ ! -z "$version_latest" ]; then
                  -O /tmp/$tarfile &>/dev/null
             tar xfv /tmp/$tarfile -C /tmp/ &>/dev/null
             mkdir -p $definition_path/client
-            mv /tmp/wideredist-$version_latest/client/*.ps1 \
+            mv /tmp/wideredist-$version_latest/client/DefenderUpdate.ps1 \
                $definition_path/client
             mv /tmp/wideredist-$version_latest/server/wideredist.sh \
                $script_dir/wideredist.upd
