@@ -18,7 +18,7 @@ Function Check-Update() {
 
     If ([System.IO.File]::Exists($VersionFile)) {
         $VersionLatest = Get-Content "$VersionFile"
-        $VersionUpdate = 0
+        $VersionUpdate = $False
 
         If ($Version -eq $VersionLatest -Or $Version.Contains("-")) {
             Return
@@ -34,15 +34,15 @@ Function Check-Update() {
 
         If ($VersionLatestMajor -ge $VersionMajor) {
             If ($VersionLatestMajor -gt $VersionMajor) {
-                $VersionUpdate = 1
+                $VersionUpdate = $True
             } Else {
                 If ($VersionLatestMinor -ge $VersionMinor) {
                     If ($VersionLatestMinor -gt $VersionMinor) {
-                        $VersionUpdate = 1
+                        $VersionUpdate = $True
                     } Else {
                         If ($VersionLatestRevis -ge $VersionRevis) {
                             If ($VersionLatestRevis -gt $VersionRevis) {
-                                $VersionUpdate = 1
+                                $VersionUpdate = $True
                             }
                         }
                     }
@@ -51,7 +51,7 @@ Function Check-Update() {
         }
     }
 
-    If ($VersionUpdate -eq 1) {
+    If ($VersionUpdate -eq $True) {
         Write-Host
         Write-Host "Please update" -NoNewLine
         Write-Host -ForegroundColor Yellow " WiDeRedist " -NoNewLine
