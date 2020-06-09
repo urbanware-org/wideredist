@@ -41,7 +41,7 @@ The project does not have many requirements.
 *   ***Linux*** or ***BSD***:
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `rsync` package (maybe already pre-installed, depending on the distribution).
-    *   The `wget` package (also maybe already pre-installed, depending on the distribution).
+    *   The `wget` package (maybe already pre-installed, also depending on the distribution).
     *   The *Bash* shell (default in most *Linux* distributions, but usually not on *BSD*).
 *   ***Windows***:
     *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
