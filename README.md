@@ -41,19 +41,14 @@ The project does not have many requirements.
 *   ***Linux*** or ***BSD***:
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `rsync` package (maybe already pre-installed, depending on the distribution).
-    *   The `wget` package (same here).
-    *   The *Bash* shell (default in most *Linux* distributions).
+    *   The `wget` package (also maybe already pre-installed, depending on the distribution).
+    *   The *Bash* shell (default in most *Linux* distributions, but usually not on *BSD*).
 *   ***Windows***:
     *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
 
 ## Installation
 
 You can find the documentation containing the installation instructions and further information inside the [wiki](https://github.com/urbanware-org/wideredist/wiki).
-
-<!--
-../../wiki/Installing-wideredist
-../../wiki
--->
 
 [Top](#wideredist-)
 
