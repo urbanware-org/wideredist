@@ -319,11 +319,11 @@ if [ ! -z "$version_latest" ]; then
             tarfile="wideredist-${version_latest}.tar.gz"
 
             # The update process does not need an additional update script or
-            # whatsoever. However, the server side script cannot be updated at
+            # whatsoever. However, the server-side script cannot be updated at
             # this point.
             #
             # Due to this, it is required to download the archive file of the
-            # latest version, extract the server side script from it, change
+            # latest version, extract the server-side script from it, change
             # the extension of the file and move (the renamed) file the local
             # directory of WiDeRedist.
             #
@@ -331,9 +331,9 @@ if [ ! -z "$version_latest" ]; then
             # stored as new 'wideredist.conf.default', so the existing config
             # file will be kept untainted.
             #
-            # So, the following code simply prepares the update for the server
-            # side script, but the actual update process will be performed
-            # when the script is being run again.
+            # So, the following code simply prepares the update for the
+            # server-side script, but the actual update process will be
+            # performed when the script is being run again.
             wget -U "$user_agent" \
                  "$wideredist_url/archive/${version_latest}.tar.gz" -q \
                  -O /tmp/$tarfile &>/dev/null
