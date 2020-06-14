@@ -237,6 +237,9 @@ mkdir -p $update_path_x64
 # Default value for file verification
 status_verify_fail=0
 
+# Start time measurement here
+timestamp_start="$(date -u +%s)"
+
 echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
@@ -377,9 +380,15 @@ fi
 unset http_proxy
 unset https_proxy
 
+# Get current timestamp and consequential elapsed time
+timestamp_end="$(date -u +%s)"
+time_elapsed=$(( $timestamp_end - $timestamp_start ))
+
 rm -fR /tmp/wideredist*
-echo -e "Process finished.\n"
+echo -e "Process finished."
+echo -e "Elapsed time: $time_elapsed seconds\n"
 log "notice" "Process finished. Check log messages above for errors"
+log "notice" "Elapsed time was $time_elapsed seconds"
 log "notice" "Exiting"
 
 # EOF
