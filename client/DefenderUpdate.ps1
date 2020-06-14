@@ -120,7 +120,7 @@ Function Write-Log() {
     ""                                                  | Out-File $ScriptLogFile -Append
     "  Start time:          " + $StartTime.DateTime     | Out-File $ScriptLogFile -Append
     "  End time:            " + $EndTime.DateTime       | Out-File $ScriptLogFile -Append
-    "  Elapsed time:        " + $TimeStamp              | Out-File $ScriptLogFile -Append
+    "  Elapsed time:        " + $ElapsedTimeString      | Out-File $ScriptLogFile -Append
     "  Executed as (user):  " + $Env:UserName           | Out-File $ScriptLogFile -Append
     "  User domain:         " + $Env:UserDomain         | Out-File $ScriptLogFile -Append
     ""                                                  | Out-File $ScriptLogFile -Append
@@ -276,7 +276,7 @@ If ($RemoveDefinitionPathOnExit -eq 1) {
     Remove-Item -Path $Definitions -Recurse -Force
 }
 
-# Get timestamp and elapsed time
+# Get current timestamp and consequential elapsed time
 $EndTime = Get-Date
 $ElapsedTimeSpan = New-TimeSpan $StartTime $EndTime
 $ElapsedTimeString = $ElapsedTimeSpan.ToString("hh\:mm\:ss")
