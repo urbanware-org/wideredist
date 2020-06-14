@@ -387,8 +387,8 @@ time_elapsed=$(( $timestamp_end - $timestamp_start ))
 rm -fR /tmp/wideredist*
 echo -e "Process finished."
 echo -e "Elapsed time: $time_elapsed seconds\n"
-log "notice" "Process finished. Check log messages above for errors"
-log "notice" "Elapsed time was $time_elapsed seconds"
+log "notice" "Process finished (within $time_elapsed seconds)"
+log "notice" "Please check the log messages above for errors"
 log "notice" "Exiting"
 
 # EOF
