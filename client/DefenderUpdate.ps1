@@ -121,6 +121,7 @@ Function Write-Log() {
     "  Start time:          " + $StartTime.DateTime     | Out-File $ScriptLogFile -Append
     "  End time:            " + $EndTime.DateTime       | Out-File $ScriptLogFile -Append
     "  Elapsed time:        " + $ElapsedTimeString      | Out-File $ScriptLogFile -Append
+    "  Computer name:       " + $Env:ComputerName       | Out-File $ScriptLogFile -Append
     "  Executed as (user):  " + $Env:UserName           | Out-File $ScriptLogFile -Append
     "  User domain:         " + $Env:UserDomain         | Out-File $ScriptLogFile -Append
     ""                                                  | Out-File $ScriptLogFile -Append
