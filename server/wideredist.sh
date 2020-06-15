@@ -20,27 +20,6 @@ version_unstable=0
 version_update=0
 version_url="https://github.com/urbanware-org/wideredist/releases/latest"
 
-rm -fR /tmp/wideredist*
-if [ -f "$script_dir/wideredist.upd" ]; then
-    logger "wideredist[$$]: [notice] Installing WiDeRedist update."
-    source $script_dir/wideredist.conf
-    if [ -z "$keep_previous" ]; then
-        keep_previous=1
-    fi
-    mv $script_dir/wideredist.upd /tmp/
-    if [ "$keep_previous" = "1" ]; then
-        cat $script_dir/wideredist.sh > $script_dir/wideredist.sh.bkp
-    fi
-
-    # Replace (overwrite to be precise) this script file on the fly and run
-    # the new (overwritten) version afterwards. As long as the new version has
-    # not finished its duty, the previous script will be idle and exit as soon
-    # as the new version is done (both scripts exit at the same time then).
-    cat /tmp/wideredist.upd > $script_dir/wideredist.sh
-    $script_dir/wideredist.sh
-    exit
-fi
-
 check_version() {
     version_temp="/tmp/wideredist_version.tmp"
     rm -f $version_temp
@@ -149,6 +128,27 @@ grep "\-\-version" <<< $@ &>/dev/null
 if [ $? -eq 0 ]; then
     echo "$version"
     exit 0
+fi
+
+rm -fR /tmp/wideredist*
+if [ -f "$script_dir/wideredist.upd" ]; then
+    log "Installing WiDeRedist update"
+    source $script_dir/wideredist.conf
+    if [ -z "$keep_previous" ]; then
+        keep_previous=1
+    fi
+    mv $script_dir/wideredist.upd /tmp/
+    if [ "$keep_previous" = "1" ]; then
+        cat $script_dir/wideredist.sh > $script_dir/wideredist.sh.bkp
+    fi
+
+    # Replace (overwrite to be precise) this script file on the fly and run
+    # the new (overwritten) version afterwards. As long as the new version has
+    # not finished its duty, the previous script will be idle and exit as soon
+    # as the new version is done (both scripts exit at the same time then).
+    cat /tmp/wideredist.upd > $script_dir/wideredist.sh
+    $script_dir/wideredist.sh
+    exit
 fi
 
 log "notice" "Running WiDeRedist $version ($timestamp)"
