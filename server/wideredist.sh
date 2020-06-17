@@ -25,6 +25,12 @@ check_version() {
     rm -f $version_temp
     wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
 
+    if [ $wideredist_update_check -eq 0 ]; then
+        rm -f $definition_path/version.dat
+        version_latest=""
+        return
+    fi
+
     version_latest=$(grep "wideredist-" $version_temp \
                                         | head -n 1 \
                                         | sed -e "s/.*wideredist-//g" \
