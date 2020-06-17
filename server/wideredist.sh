@@ -148,6 +148,12 @@ if [ -f "$script_dir/wideredist.upd" ]; then
         cat $script_dir/wideredist.sh > $script_dir/wideredist.sh.bkp
     fi
 
+    if [ -f "$script_dir/wideredist.conf.default" ] && \
+       [ -f "$script_dir/wideredist.conf.new" ]; then
+            rm -f $script_dir/wideredist.conf.new
+        fi
+    fi
+
     # Replace (overwrite to be precise) this script file on the fly and run
     # the new (overwritten) version afterwards. As long as the new version has
     # not finished its duty, the previous script will be idle and exit as soon
