@@ -18,7 +18,6 @@ kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
 
 version_unstable=0
 version_update=0
-version_url="https://github.com/urbanware-org/wideredist/releases/latest"
 
 check_version() {
     version_temp="/tmp/wideredist_version.tmp"
@@ -260,6 +259,7 @@ echo -e "Version $version (Released $timestamp)"
 echo -e "Copyright (C) 2020 by Ralf Kilian"
 echo -e "\e[0m"
 
+version_url="${wideredist_url}/releases/latest"
 if [[ $version == *-* ]]; then
     # Before a new stable version is being released, an unstable version can
     # be obtained from GitHub by cloning or downloading the repository itself.
