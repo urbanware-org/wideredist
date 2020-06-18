@@ -24,7 +24,7 @@ check_version() {
     rm -f $version_temp
     wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
 
-    if [ "$wideredist_update_check" = "" ] ||
+    if [ -z "$wideredist_update_check" ] ||
        [ $wideredist_update_check -eq 0 ]; then
         rm -f $definition_path/version.dat
         version_latest=""
