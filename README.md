@@ -1,4 +1,4 @@
-### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier versions may not work anymore. [Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
+### :warning: Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier may not work anymore. [Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
 
 <!-- ../../wiki#required-update-for-old-versions -->
 
