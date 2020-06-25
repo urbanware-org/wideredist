@@ -1,7 +1,5 @@
 ### <img src="https://raw.githubusercontent.com/urbanware-org/hello_world/master/stuff/sign_warning/sign_warning_64x64.png" alt="Important" height="48px" width="48px" align="left"/> Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier may not work anymore. [Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
-
-<!-- ../../wiki#required-update-for-old-versions -->
-
+<br/>
 Furthermore, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
 --------
