@@ -1,4 +1,4 @@
-### <img src="https://raw.githubusercontent.com/urbanware-org/hello_world/master/stuff/sign_warning/sign_warning_48x48.png" alt="Important" height="48px" width="48px" align="left"/>Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier may not work anymore. [Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
+### <img src="https://raw.githubusercontent.com/urbanware-org/hello_world/master/stuff/sign_warning/sign_warning_48x48.png" alt="Important" height="48px" width="48px" align="left"/>Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier may not work anymore.<br/>[Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
 
 <br/>Furthermore, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
