@@ -1,0 +1,35 @@
+##############################################################################
+#                                                                            #
+#  wideredist.urls                                                           #
+#                                                                            #
+#  Configuration file for the Microsoft URLs used by the 'wideredist.sh'     #
+#  script to download Windows Defender definitions.                          #
+#                                                                            #
+#  The options inside this file cannot be set via command-line arguments.    #
+#                                                                            #
+#  Important notice:    Ensure that there are no spaces around the equal     #
+#                       signs of all options. Otherwise settings will not    #
+#                       be applied correctly or WiDeRedist may even crash    #
+#                       under certain circumstances.                         #
+#                                                                            #
+##############################################################################
+
+# --[ Download links ]--------------------------------------------------------
+
+# Most of the links below are provided by this official Microsoft website:
+# https://www.microsoft.com/en-us/wdsi/defenderupdates
+
+# Download links for 32-bit files
+mpam_fe_x86="https://go.microsoft.com/fwlink/?linkid=121721&arch=x86"
+mpas_fe_x86="https://go.microsoft.com/fwlink/?linkid=70631"
+nis_full_x86="https://go.microsoft.com/fwlink/?linkid=207869"
+
+# Download links for 64-bit files
+mpam_fe_x64="https://go.microsoft.com/fwlink/?linkid=121721&arch=x64"
+mpas_fe_x64="https://go.microsoft.com/fwlink/?linkid=121721&clcid=0x409&arch=x64&eng=0.0.0.0&avdelta=0.0.0.0&asdelta=0.0.0.0&prod=925A3ACA-C353-458A-AC8D-A7E5EB378092"
+nis_full_x64="https://go.microsoft.com/fwlink/?linkid=197094"
+
+# Download links for platform independent files
+mpam_d_ind="https://go.microsoft.com/fwlink/?linkid=211054"
+
+# EOF
