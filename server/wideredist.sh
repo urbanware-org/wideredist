@@ -171,7 +171,7 @@ elif [ -f "${script_dir}/wideredist.conf.default" ]; then
     cp ${script_dir}/wideredist.conf.default \
        ${script_dir}/wideredist.conf &>/dev/null
 else
-    error "No configuration file found"
+    error "No configuration file found" 1
 fi
 
 # The separate (and optional) file 'wideredist.urls' is intended to simply
@@ -188,8 +188,12 @@ if [ -z "$mpam_fe_x86" ] || [ -z "$mpas_fe_x86" ] || \
    [ -z "$nis_full_x86" ] || [ -z "$mpam_fe_x64" ] || \
    [ -z "$mpas_fe_x64" ] || [ -z "$nis_full_x64" ] || \
    [ -z "$mpam_d_ind" ]; then
-     error "At least one Windows Defender definition download link is missing"
+    error \
+      "At least one Windows Defender definition download link is missing" 2
 fi
+
+# Just a supplement for repeating error messages
+permission_issue="most likely a permission issue"
 
 if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
     route_target=$(sed -e "s/:.*$//g" <<< $proxy_address)
@@ -200,7 +204,7 @@ if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
             route=1
         else
             error \
-              "Failed to add the given route, most likely a permission issue"
+              "Failed to add the given route, $permission_issue" 3
         fi
     else  # BSD
         route delete $route_target $route_gateway &>/dev/null
@@ -209,7 +213,7 @@ if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
             route=1
         else
             error \
-              "Failed to add the given route, most likely a permission issue"
+              "Failed to add the given route, $permission_issue" 3
         fi
     fi
     log "notice" "Added route to '$route_target' via '$route_gateway'"
@@ -238,13 +242,14 @@ update_path_x64="$update_path/x64"
 # to the definition path as well as its sub-directories.
 if [ -e "$definition_path" ]; then
     if [ ! -d "$definition_path" ]; then
-        error "Definition path already exists, but is not a directory"
+        error "Definition path already exists, but is not a directory" 4
     fi
 
     for object in $(find "$definition_path"); do
         touch -ca "$object"
         if [ $? -ne 0 ]; then
-            error "Access denied on '$object', please set correct permissions"
+            error \
+              "Access denied on '$object', please set correct permissions" 5
         fi
     done
 fi
@@ -257,7 +262,7 @@ rm -fR $update_path &>/dev/null
 mkdir -p $definition_path &>/dev/null
 if [ $? -ne 0 ]; then
     error \
-      "Failed to create the definition path, most likely a permission issue"
+      "Failed to create the definition path, $permission_issue" 6
 fi
 mkdir -p $update_path_x86
 mkdir -p $update_path_x64
