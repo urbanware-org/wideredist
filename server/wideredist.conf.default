@@ -20,25 +20,12 @@ definition_path="/var/www/html/defender"
 
 # --[ Download settings ] ----------------------------------------------------
 
+# All download links for the Windows Defender definitions can be found inside
+# the separate 'wideredist.urls' config file.
+
 # User agent used for the download (required since version 1.2.0, otherwise
 # the downloads will not work), by default from Chrome on Windows 10
 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
-
-# Most of the links below are provided by this official Microsoft website:
-# https://www.microsoft.com/en-us/wdsi/defenderupdates
-
-# Download links for 32-bit files
-mpam_fe_x86="https://go.microsoft.com/fwlink/?linkid=121721&arch=x86"
-mpas_fe_x86="https://go.microsoft.com/fwlink/?linkid=70631"
-nis_full_x86="https://go.microsoft.com/fwlink/?linkid=207869"
-
-# Download links for 64-bit files
-mpam_fe_x64="https://go.microsoft.com/fwlink/?linkid=121721&arch=x64"
-mpas_fe_x64="https://go.microsoft.com/fwlink/?linkid=121721&clcid=0x409&arch=x64&eng=0.0.0.0&avdelta=0.0.0.0&asdelta=0.0.0.0&prod=925A3ACA-C353-458A-AC8D-A7E5EB378092"
-nis_full_x64="https://go.microsoft.com/fwlink/?linkid=197094"
-
-# Download links for platform independent files
-mpam_d_ind="https://go.microsoft.com/fwlink/?linkid=211054"
 
 # Size verification value (in kilobytes, default is 100)
 verify_size=100
