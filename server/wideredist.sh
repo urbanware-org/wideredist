@@ -184,6 +184,13 @@ if [ -f "${script_dir}/wideredist.urls" ]; then
     source ${script_dir}/wideredist.urls
 fi
 
+if [ -z "$mpam_fe_x86" ] || [ -z "$mpas_fe_x86" ] || \
+   [ -z "$nis_full_x86" ] || [ -z "$mpam_fe_x64" ] || \
+   [ -z "$mpas_fe_x64" ] || [ -z "$nis_full_x64" ] || \
+   [ -z "$mpam_d_ind" ]; then
+     error "At least one Windows Defender definition download link is missing"
+fi
+
 if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
     route_target=$(sed -e "s/:.*$//g" <<< $proxy_address)
     if [[ $kernel_name =~ linux ]]; then
