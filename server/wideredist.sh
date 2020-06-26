@@ -249,7 +249,7 @@ if [ -e "$definition_path" ]; then
         touch -ca "$object"
         if [ $? -ne 0 ]; then
             error \
-              "Access denied on '$object', please set correct permissions" 5
+              "Access denied on '$object', $permission_issue" 5
         fi
     done
 fi
