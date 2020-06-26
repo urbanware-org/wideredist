@@ -174,6 +174,16 @@ else
     error "No configuration file found"
 fi
 
+# The separate (and optional) file 'wideredist.urls' is intended to simply
+# contain the Microsoft URLs to the files downloaded by WiDeRedist. The main
+# purpose of this is that if these URLs have changed (quite unlikely, but has
+# happened once before), only this file must be replaced and the configuration
+# file 'wideredist.conf' can remain untainted.
+if [ -f "${script_dir}/wideredist.urls" ]; then
+    # This will overwrite the values given by 'wideredist.conf'
+    source ${script_dir}/wideredist.urls
+fi
+
 if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
     route_target=$(sed -e "s/:.*$//g" <<< $proxy_address)
     if [[ $kernel_name =~ linux ]]; then
