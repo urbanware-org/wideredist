@@ -5,6 +5,10 @@
 #  Configuration file for the Microsoft URLs used by the 'wideredist.sh'     #
 #  script to download Windows Defender definitions.                          #
 #                                                                            #
+#  All download links for the Windows Defender definitions can be found      #
+#  below. In case the URLs should change again, only the URL file needs to   #
+#  be replaced and the 'wideredist.conf' file can be kept untainted.         #
+#                                                                            #
 #  The options inside this file cannot be set via command-line arguments.    #
 #                                                                            #
 #  Important notice:    Ensure that there are no spaces around the equal     #
