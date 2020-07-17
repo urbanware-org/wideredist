@@ -148,6 +148,14 @@ Function Write-Log() {
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 }
 
+# Check platform first
+$Platform = [System.Environment]::OSVersion.Platform.ToString()
+If (-Not $Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
+    Write-Host -ForegroundColor Red `
+      "This platform is not supported by the WiDeRedist client as it requires Microsoft Windows."
+    Exit 1
+}
+
 # Script related
 $StartTime = Get-Date
 $DownloadErrors = 0
