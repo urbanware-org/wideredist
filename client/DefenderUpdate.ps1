@@ -110,6 +110,11 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     Return $KeyLine.Split("=")[1].Trim()
 }
 
+Function Write-Event([String]$Message, [Int]$EventID, $EventLogEntryType) {
+    Write-EventLog -LogName Application -Source "WiDeRedist" -Message $Message `
+                   -EventID $EventID -EntryType $EventLogEntryType
+}
+
 Function Write-Log() {
     # Write the log file (which still requires some revision). This will simply
     # overwrite the previous one (if already existing).
