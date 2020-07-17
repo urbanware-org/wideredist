@@ -271,7 +271,11 @@ If ($? -eq $True) {
       "Windows Defender definition update has been successfully completed."
     Write-Host "See '$ScriptLogFile' for the current status."
 
-    $ExitCode = 0
+    If ($DownloadErrors -gt 0) {
+        $ExitCode = 2
+    } Else {
+        $ExitCode = 0
+    }
     $ExitDelay = $WaitOnSuccess
 } Else {
     Write-Host
