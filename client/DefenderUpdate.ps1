@@ -195,6 +195,11 @@ $WaitOnError = Read-Config "WaitOnError" "10"
 # significantly and also takes way less CPU load
 $ProgressPreference = "SilentlyContinue"
 
+# Create an event log for WiDeRedist (if not already existing)
+If (-Not [System.Diagnostics.EventLog]::SourceExists("WiDeRedist")) {
+    New-EventLog -LogName Application -Source "WiDeRedist" | Out-Null
+}
+
 Write-Host
 Write-Host -ForegroundColor Yellow `
   "WiDeRedist - Windows Defender definition download and redistribution tool"
