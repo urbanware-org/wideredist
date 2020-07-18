@@ -151,7 +151,9 @@ Function Write-Log() {
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 }
 
-# Check platform first
+# First, check the operating system by reading out the platform property.
+# Alternatively you could also check the directory separator char to do this.
+# However, using the platform property makes more sense.
 $Platform = [System.Environment]::OSVersion.Platform.ToString()
 If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
     Write-Host -ForegroundColor Red `
