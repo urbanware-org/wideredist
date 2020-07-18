@@ -251,8 +251,8 @@ If ($SetDefinitionSource -eq 1) {
         Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
         Set-MpPreference -SignatureFallbackOrder FileShares
     } Catch [System.Exception] {
-        # This does not affect the exit code of this script, as it is related
-        # to the status of the actual Windows Defender update status.
+        # This does not affect the exit code of this script at all, as it is
+        # related to the status of the actual Windows Defender update status
         Write-Host
         Write-Host -ForegroundColor Red `
           "Error while trying to set Windows Defender preferences."
