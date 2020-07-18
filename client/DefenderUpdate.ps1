@@ -153,7 +153,7 @@ Function Write-Log() {
 
 # Check platform first
 $Platform = [System.Environment]::OSVersion.Platform.ToString()
-If (-Not $Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
+If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
     Write-Host -ForegroundColor Red `
       "This platform is not supported by the WiDeRedist client as it requires Microsoft Windows."
     Exit 1
@@ -200,7 +200,7 @@ $WaitOnError = Read-Config "WaitOnError" "10"
 $ProgressPreference = "SilentlyContinue"
 
 # Create an event log for WiDeRedist (if not already existing)
-If (-Not [System.Diagnostics.EventLog]::SourceExists("WiDeRedist")) {
+If (![System.Diagnostics.EventLog]::SourceExists("WiDeRedist")) {
     New-EventLog -LogName Application -Source "WiDeRedist" | Out-Null
 }
 
