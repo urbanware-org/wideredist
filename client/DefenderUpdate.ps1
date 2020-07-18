@@ -278,6 +278,9 @@ If ($? -eq $True) {
     Write-Host "See '$ScriptLogFile' for the current status."
 
     If ($DownloadErrors -gt 0) {
+        # In this case, the update process iteself was successful, but the
+        # download of at least one definition file has failed, which most
+        # likely results in outdated definitions
         $ExitCode = 2
     } Else {
         $ExitCode = 0
