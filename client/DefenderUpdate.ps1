@@ -122,7 +122,7 @@ Function Write-Log() {
     # Write the log file (which still requires some revision). This will simply
     # overwrite the previous one (if already existing).
 
-    "WiDeRedist log file"                               | Out-File $ScriptLogFile
+    "WiDeRedist log file from last run"                 | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
     "  WiDeRedist version:  $Version ($TimeStamp)"      | Out-File $ScriptLogFile -Append
     ""                                                  | Out-File $ScriptLogFile -Append
@@ -138,6 +138,8 @@ Function Write-Log() {
     } Else {
         "  Exit code:           $ExitCode (Failure)"    | Out-File $ScriptLogFile -Append
     }
+    ""                                                  | Out-File $ScriptLogFile -Append
+    "  See the Event Viewer for process details."       | Out-File $ScriptLogFile -Append
     ""                                                  | Out-File $ScriptLogFile -Append
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 
