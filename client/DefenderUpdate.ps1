@@ -295,10 +295,8 @@ If ($? -eq $True) {
     Write-Host -ForeGroundColor Yellow `
       "In case the downloads above failed, check the configuration file."
     Write-Host -ForeGroundColor Yellow `
-      "Otherwise, see the Windows Defender logs inside the Event Viewer"
-    Write-Host -ForegroundColor Yellow `
-      "for details."
-
+      "You may also see the Windows Defender and WiDeRedist logs in the" `
+      "Event Viewer."
     $ExitCode = 1
     $ExitDelay = $WaitOnError
 }
