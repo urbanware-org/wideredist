@@ -120,7 +120,8 @@ Function Write-Event([String]$Message, [Int]$EventID, $EventLogEntryType) {
 
 Function Write-Log() {
     # This is only the log file from the last run and will be overwritten
-    # again after the next one.
+    # again after the next one. The details of the each process step are being
+    # written into the Windows event log.
 
     "WiDeRedist log file from last run"                 | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
