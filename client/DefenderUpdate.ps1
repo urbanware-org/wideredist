@@ -119,8 +119,8 @@ Function Write-Event([String]$Message, [Int]$EventID, $EventLogEntryType) {
 }
 
 Function Write-Log() {
-    # Write the log file (which still requires some revision). This will simply
-    # overwrite the previous one (if already existing).
+    # This is only the log file from the last run and will be overwritten
+    # again after the next one.
 
     "WiDeRedist log file from last run"                 | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
