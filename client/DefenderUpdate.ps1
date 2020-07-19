@@ -113,7 +113,7 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     Return $KeyLine.Split("=")[1].Trim()
 }
 
-Function Write-Event([String]$Message, [Int]$EventID, $EventLogEntryType) {
+Function Write-Event($EventLogEntryType, [String]$Message, [Int]$EventID) {
     Write-EventLog -LogName Application -Source "WiDeRedist" -Message $Message `
                    -EventID $EventID -EntryType $EventLogEntryType
 }
