@@ -118,6 +118,18 @@ Function Write-Event($EventLogEntryType, [Int]$EventID, [String]$Message) {
                    -EventID $EventID -EntryType $EventLogEntryType
 }
 
+Function Write-Event-Error([Int]$EventID, [String]$Message) {
+    Write-Event Error $EventID "$Message"
+}
+
+Function Write-Event-Info([Int]$EventID, [String]$Message) {
+    Write-Event Information $EventID "$Message"
+}
+
+Function Write-Event-Warn([Int]$EventID, [String]$Message) {
+    Write-Event Warning $EventID "$Message"
+}
+
 Function Write-Log() {
     # This is only the log file from the last run and will be overwritten
     # again after the next one. The details of the each process step are being
