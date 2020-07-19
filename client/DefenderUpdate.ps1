@@ -76,11 +76,9 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
         } Else {
             $Seconds = "seconds"
         }
-
         Write-Host -ForegroundColor Cyan "Waiting $Count $Seconds to exit.$Space`r" -NoNewLine
         Start-Sleep -Seconds 1
     }
-
     Write-Host -ForegroundColor Cyan "Exiting.$WideSpace"
     Write-Host
 
