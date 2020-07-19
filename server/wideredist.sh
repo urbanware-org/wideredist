@@ -129,7 +129,8 @@ log() {
     logger "wideredist[$$]: [$prefix] ${message}."
 }
 
-# Just check for '--version' argument, everything else will be ignored
+# Check for the '--version' argument. If given, simply return the version and
+# exit (everything else will be ignored).
 grep "\-\-version" <<< $@ &>/dev/null
 if [ $? -eq 0 ]; then
     echo "$version"
