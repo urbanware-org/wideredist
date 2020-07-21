@@ -133,7 +133,7 @@ Function Write-Log() {
     # again after the next one. The details of the each process step are being
     # written into the Windows event log.
 
-    "WiDeRedist log file from last run"                 | Out-File $ScriptLogFile
+    "WiDeRedist log file from the last run:"            | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
     "  WiDeRedist version:  $Version ($TimeStamp)"      | Out-File $ScriptLogFile -Append
     ""                                                  | Out-File $ScriptLogFile -Append
