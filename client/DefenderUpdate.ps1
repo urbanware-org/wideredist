@@ -98,7 +98,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
 }
 
 Function Read-Config([String]$ConfigKey, [String]$Fallback) {
-    If (![System.IO.File]::Exists($ScriptConfigFile)) {
+    If (!$ScriptConfigFileExists) {
         Return $Fallback
     }
 
@@ -180,8 +180,14 @@ $DownloadErrors = 0
 
 # Local paths and options
 $ScriptPath = Split-Path -Parent $PSCommandPath
-$ScriptConfigFile = "$ScriptPath\Update.ini"
 $ScriptLogFile = "$ScriptPath\RecentUpdate.log"
+$ScriptConfigFile = "$ScriptPath\Update.ini"
+If ([System.IO.File]::Exists($ScriptConfigFile)) {
+    $ScriptConfigFileExists = $True
+} Else {
+    $ScriptConfigFileExists = $False
+}
+
 $Definitions = Read-Config "DefinitionPath" "C:\Defender"
 $RemoveSingleQuotesFromPath = Read-Config "RemoveSingleQuotesFromPath" "0"
 If ($RemoveSingleQuotesFromPath -eq 1) {
