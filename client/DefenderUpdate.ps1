@@ -260,7 +260,7 @@ If ($DownloadErrors -eq 8) {
 } ElseIf ($DownloadErrors -gt 0) {
     Write-Host
     Write-Host -ForegroundColor Yellow `
-      "At least one download has failed. Trying to install available files."
+      "At least one definition file download has failed. Trying to install available files."
     Write-Host -ForegroundColor Yellow `
       "However, this can result in outdated definitions."
 }
