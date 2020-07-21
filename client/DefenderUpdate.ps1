@@ -59,6 +59,7 @@ Function Check-Update() {
         Write-Host -ForegroundColor Yellow " $VersionLatest " -NoNewLine
         Write-Host "is available now."
         $ExitDelay = $WaitOnError
+        Write-Event-Info 1 "New WiDeRedist version ($VersionLatest) available."
     }
 }
 
@@ -93,6 +94,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
         Write-Host -ForegroundColor Green "Download completed."
     } Catch [System.Exception] {
         Write-Host -ForegroundColor Red "Download failed."
+        Write-Event-Warn 1 "Definition file download failed for `"$FileDestination`"."
         $Script:DownloadErrors += 1
     }
 }
@@ -106,6 +108,7 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     $KeyLine = Get-Content -Path $ScriptConfigFile `
                | Where-Object { $_ -match "$ConfigKey = " }
     If ($null -eq $KeyLine) {
+        Write-Event-Warn 1 "No value for config key `"$ConfigKey`". Falling back to default value."
         Return $Fallback
     }
     Return $KeyLine.Split("=")[1].Trim()
@@ -191,6 +194,7 @@ If ([System.IO.File]::Exists($ScriptConfigFile)) {
     $ScriptConfigFileExists = $True
 } Else {
     $ScriptConfigFileExists = $False
+    Write-Event-Warn 1 "Config file `"$ScriptConfigFile`" missing. Falling back to default values."
 }
 
 $Definitions = Read-Config "DefinitionPath" "C:\Defender"
@@ -256,8 +260,10 @@ If ($DownloadErrors -eq 8) {
       "All definition downloads have failed. Process canceled."
     Write-Host -ForegroundColor Yellow `
       "Please check your network configuration for accessing the source."
+    Write-Event-Error 1 "All definition downloads have failed. Please check your network configuration."
 
     Write-Log
+    Write-Event-Info 1 (Get-Content $ScriptLogFile -Raw)
     $ExitCode = -1
     $ExitDelay = 10
 } ElseIf ($DownloadErrors -gt 0) {
@@ -266,6 +272,7 @@ If ($DownloadErrors -eq 8) {
       "At least one definition file download has failed. Trying to install available files."
     Write-Host -ForegroundColor Yellow `
       "However, this can result in outdated definitions."
+    Write-Event-Warn 1 "At least one definition file download has failed. Definitions may be outdated."
 }
 
 If ($SetDefinitionSource -eq 1) {
@@ -283,6 +290,7 @@ If ($SetDefinitionSource -eq 1) {
         Write-Host -ForegroundColor Yellow `
           "Proceeding anyway."
         $SetPreferenceError = $True
+        Write-Event-Warn 1 "Failed to to set Windows Defender preferences."
     }
 }
 
@@ -324,6 +332,8 @@ If ($DownloadErrors -lt 8) {
           "Event Viewer."
         $ExitCode = 1
         $ExitDelay = $WaitOnError
+        Write-Event-Error 1 `
+          "Windows Defender definition update has failed. Please check the configuration file."
     }
 }
 
@@ -345,4 +355,9 @@ Write-Host "Elapsed time: $ElapsedTimeString"
 Check-Update
 
 Write-Log
+If ($ExitCode -eq -1) {
+    Write-Event-Error 1 (Get-Content $ScriptLogFile -Raw)
+} Else {
+    Write-Event-Info 1 (Get-Content $ScriptLogFile -Raw)
+}
 Exit-Script $ExitCode $ExitDelay
