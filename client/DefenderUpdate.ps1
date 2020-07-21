@@ -174,6 +174,11 @@ If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
     Exit 1
 }
 
+# Create an event log for WiDeRedist (if not already existing)
+If (![System.Diagnostics.EventLog]::SourceExists("WiDeRedist")) {
+    New-EventLog -LogName Application -Source "WiDeRedist" | Out-Null
+}
+
 # Script related
 $StartTime = Get-Date
 $DownloadErrors = 0
@@ -219,11 +224,6 @@ $WaitOnError = Read-Config "WaitOnError" "10"
 # Suppressing the shell progress output speeds up the whole process
 # significantly and also takes way less CPU load
 $ProgressPreference = "SilentlyContinue"
-
-# Create an event log for WiDeRedist (if not already existing)
-If (![System.Diagnostics.EventLog]::SourceExists("WiDeRedist")) {
-    New-EventLog -LogName Application -Source "WiDeRedist" | Out-Null
-}
 
 Write-Host
 Write-Host -ForegroundColor Yellow `
