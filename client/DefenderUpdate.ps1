@@ -113,7 +113,7 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
 
 Function Write-Event($EventLogEntryType, [Int]$EventID, [String]$Message) {
     Write-EventLog -LogName Application -Source "WiDeRedist" -Message $Message `
-                   -EventID $EventID -EntryType $EventLogEntryType
+                   -EventID $EventID -EntryType $EventLogEntryType -Category 0
 }
 
 Function Write-Event-Error([Int]$EventID, [String]$Message) {
