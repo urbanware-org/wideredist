@@ -256,7 +256,10 @@ If ($DownloadErrors -eq 8) {
       "All definition downloads have failed. Process canceled."
     Write-Host -ForegroundColor Yellow `
       "Please check your network configuration for accessing the source."
-    Exit-Script 1 10
+
+    Write-Log
+    $ExitCode = -1
+    $ExitDelay = 10
 } ElseIf ($DownloadErrors -gt 0) {
     Write-Host
     Write-Host -ForegroundColor Yellow `
@@ -283,39 +286,45 @@ If ($SetDefinitionSource -eq 1) {
     }
 }
 
-Write-Host
-Write-Host "Installing definitions. Please wait, this may take a while."
-
-# Use this external command to update the definitions as the cmdlet called
-# 'Update-MpSignature' did not work properly (not at all to be precise)
-& 'C:\Program Files\Windows Defender\mpcmdrun.exe' -SignatureUpdate `
-                                                   -Path "$Definitions" | Out-Null
-If ($? -eq $True) {
+# Exit code -1 is being manually set if all downloads have failed (see the
+# download error handling further up in the code). In that case triggering
+# a signature update does not make any sense at all.
+If ($DownloadErrors -lt 8) {
     Write-Host
-    Write-Host -ForegroundColor Green `
-      "Windows Defender definition update has been successfully completed."
-    Write-Host "See '$ScriptLogFile' for the current status."
+    Write-Host "Installing definitions. Please wait, this may take a while."
 
-    If ($DownloadErrors -gt 0) {
-        # In this case, the update process itself was successful, but the
-        # download of at least one definition file has failed, which most
-        # likely results in outdated definitions
-        $ExitCode = 2
+    # Use this external command to update the definitions as the cmdlet called
+    # 'Update-MpSignature' did not work properly (not at all to be precise)
+    & 'C:\Program Files\Windows Defender\mpcmdrun.exe' -SignatureUpdate `
+                                                       -Path "$Definitions" | Out-Null
+    If ($? -eq $True) {
+        Write-Host
+        Write-Host -ForegroundColor Green `
+          "Windows Defender definition update has been successfully completed."
+        Write-Host "See '$ScriptLogFile' for the current status."
+
+        If ($DownloadErrors -gt 0) {
+            # In this case, the update process itself was successful, but the
+            # download of at least one definition file has failed, which most
+            # likely results in outdated definitions (see the download error
+            # handling further up in the code)
+            $ExitCode = 2
+        } Else {
+            $ExitCode = 0
+        }
+        $ExitDelay = $WaitOnSuccess
     } Else {
-        $ExitCode = 0
+        Write-Host
+        Write-Host -ForegroundColor Red `
+          "Windows Defender definition update has failed."
+        Write-Host -ForeGroundColor Yellow `
+          "In case the downloads above failed, check the configuration file."
+        Write-Host -ForeGroundColor Yellow `
+          "You may also see the Windows Defender and WiDeRedist logs in the" `
+          "Event Viewer."
+        $ExitCode = 1
+        $ExitDelay = $WaitOnError
     }
-    $ExitDelay = $WaitOnSuccess
-} Else {
-    Write-Host
-    Write-Host -ForegroundColor Red `
-      "Windows Defender definition update has failed."
-    Write-Host -ForeGroundColor Yellow `
-      "In case the downloads above failed, check the configuration file."
-    Write-Host -ForeGroundColor Yellow `
-      "You may also see the Windows Defender and WiDeRedist logs in the" `
-      "Event Viewer."
-    $ExitCode = 1
-    $ExitDelay = $WaitOnError
 }
 
 # In order to reduce disk usage, you can automatically remove the local
