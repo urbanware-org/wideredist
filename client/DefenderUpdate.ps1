@@ -223,6 +223,7 @@ $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
 
 # Windows Defender preferences
 $SetDefinitionSource = Read-Config "SetDefinitionSource" "1"
+$ShowUpdateOutput = Read-Config "ShowUpdateOutput" "0"
 $SetPreferenceError = $False
 
 # Delays
@@ -307,8 +308,13 @@ If ($DownloadErrors -lt 8) {
 
     # Use this external command to update the definitions as the cmdlet called
     # 'Update-MpSignature' did not work properly (not at all to be precise)
-    & 'C:\Program Files\Windows Defender\mpcmdrun.exe' -SignatureUpdate `
-                                                       -Path "$Definitions" | Out-Null
+    If ($ShowUpdateOutput -eq 1) {
+        & $MpCmdRunBin -SignatureUpdate -Path "$Definitions"
+    } Else {
+        # Suppress the output
+        & $MpCmdRunBin -SignatureUpdate -Path "$Definitions" | Out-Null
+    }
+
     If ($? -eq $True) {
         Write-Host
         Write-Host -ForegroundColor Green `
