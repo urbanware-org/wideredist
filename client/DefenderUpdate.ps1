@@ -197,6 +197,9 @@ If ([System.IO.File]::Exists($ScriptConfigFile)) {
     Write-Event-Warn 1 "Config file `"$ScriptConfigFile`" missing. Falling back to default values."
 }
 
+# Binary for the Microsoft Malware Protection Command-Run Utility
+$MpCmdRunBin = "C:\Program Files\Windows Defender\mpcmdrun.exe"
+
 $Definitions = Read-Config "DefinitionPath" "C:\Defender"
 $RemoveSingleQuotesFromPath = Read-Config "RemoveSingleQuotesFromPath" "0"
 If ($RemoveSingleQuotesFromPath -eq 1) {
@@ -206,9 +209,6 @@ If ($RemoveSingleQuotesFromPath -eq 1) {
     # quotes for enclosing the string.
     $Definitions = $Definitions.Replace("'", "")
 }
-
-# Binary for the Microsoft Malware Protection Command-Run Utility
-$MpCmdRunBin = "C:\Program Files\Windows Defender\mpcmdrun.exe"
 
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
