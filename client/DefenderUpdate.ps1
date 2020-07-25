@@ -206,6 +206,10 @@ If ($RemoveSingleQuotesFromPath -eq 1) {
     # quotes for enclosing the string.
     $Definitions = $Definitions.Replace("'", "")
 }
+
+# Binary for the Microsoft Malware Protection Command-Run Utility
+$MpCmdRunBin = "C:\Program Files\Windows Defender\mpcmdrun.exe"
+
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
