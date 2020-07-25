@@ -59,7 +59,7 @@ Function Check-Update() {
         Write-Host -ForegroundColor Yellow " $VersionLatest " -NoNewLine
         Write-Host "is available now."
         $ExitDelay = $WaitOnError
-        Write-Event-Info 1 "New WiDeRedist version ($VersionLatest) available."
+        Write-Event-Info 101 "New WiDeRedist version ($VersionLatest) available."
     }
 }
 
@@ -68,9 +68,8 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     $WideSpace = $Space * 10
 
     Write-Host
-    # In case the script is being executed outside an already open PowerShell
-    # window (e.g. via shortcut), use a delay to prevent the window from
-    # disappearing immediately
+    # In case the script is being executed outside an already open PowerShell window (e.g. via
+    # shortcut), use a delay to prevent the window from disappearing immediately
     For ($Count = $ExitDelay; $Count -gt 0; $Count--) {
         If ($Count -eq 1) {
             $Seconds = "second"
@@ -94,7 +93,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
         Write-Host -ForegroundColor Green "Download completed."
     } Catch [System.Exception] {
         Write-Host -ForegroundColor Red "Download failed."
-        Write-Event-Warn 1 "Definition file download failed for `"$FileDestination`"."
+        Write-Event-Warn 131 "Definition file download failed for `"$FileDestination`"."
         $Script:DownloadErrors += 1
     }
 }
@@ -108,15 +107,15 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     $KeyLine = Get-Content -Path $ScriptConfigFile `
                | Where-Object { $_ -match "$ConfigKey = " }
     If ($null -eq $KeyLine) {
-        Write-Event-Warn 1 "No value for config key `"$ConfigKey`". Falling back to default value."
+        Write-Event-Warn 121 "No value for config key `"$ConfigKey`". Falling back to default value."
         Return $Fallback
     }
     Return $KeyLine.Split("=")[1].Trim()
 }
 
 Function Write-Event($EventLogEntryType, [Int]$EventID, [String]$Message) {
-    Write-EventLog -LogName Application -Source "WiDeRedist" -Message $Message `
-                   -EventID $EventID -EntryType $EventLogEntryType -Category 0
+    Write-EventLog -LogName Application -Source "WiDeRedist" -Message $Message -EventID $EventID `
+                   -EntryType $EventLogEntryType -Category 0
 }
 
 Function Write-Event-Error([Int]$EventID, [String]$Message) {
@@ -132,9 +131,8 @@ Function Write-Event-Warn([Int]$EventID, [String]$Message) {
 }
 
 Function Write-Log() {
-    # This is only the log file from the last run and will be overwritten
-    # again after the next one. The details of the each process step are being
-    # written into the Windows event log.
+    # This is only the log file from the last run and will be overwritten again after the next one.
+    # The details of the each process step are being written into the Windows event log.
 
     "WiDeRedist log file from the last run:"            | Out-File $ScriptLogFile
     ""                                                  | Out-File $ScriptLogFile -Append
@@ -167,9 +165,9 @@ Function Write-Log() {
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 }
 
-# First, check the operating system by reading out the platform property.
-# Alternatively you could also check the directory separator char to do this.
-# However, using the platform property makes more sense.
+# First, check the operating system by reading out the platform property. Alternatively you could
+# also check the directory separator char to do this. However, using the platform property makes
+# more sense.
 $Platform = [System.Environment]::OSVersion.Platform.ToString()
 If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
     Write-Host -ForegroundColor Red `
@@ -194,7 +192,7 @@ If ([System.IO.File]::Exists($ScriptConfigFile)) {
     $ScriptConfigFileExists = $True
 } Else {
     $ScriptConfigFileExists = $False
-    Write-Event-Warn 1 "Config file `"$ScriptConfigFile`" missing. Falling back to default values."
+    Write-Event-Warn 129 "Config file `"$ScriptConfigFile`" missing. Falling back to default values."
 }
 
 # Binary for the Microsoft Malware Protection Command-Run Utility
@@ -203,13 +201,11 @@ $MpCmdRunBin = "C:\Program Files\Windows Defender\mpcmdrun.exe"
 $Definitions = Read-Config "DefinitionPath" "C:\Defender"
 $RemoveSingleQuotesFromPath = Read-Config "RemoveSingleQuotesFromPath" "0"
 If ($RemoveSingleQuotesFromPath -eq 1) {
-    # Required in case the path inside the config file is enclosed with single
-    # quotes. However, this will also remove all of the single quotes in the
-    # path itself (if existing). Due to this, it is recommended to use double
-    # quotes for enclosing the string.
+    # Required in case the path inside the config file is enclosed with single quotes. However, this
+    # will also remove all of the single quotes in the path itself (if existing). Due to this, it is
+    # recommended to use double quotes for enclosing the string.
     $Definitions = $Definitions.Replace("'", "")
 }
-
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
@@ -230,8 +226,8 @@ $SetPreferenceError = $False
 $WaitOnSuccess = Read-Config "WaitOnSuccess" "3"
 $WaitOnError = Read-Config "WaitOnError" "10"
 
-# Suppressing the shell progress output speeds up the whole process
-# significantly and also takes way less CPU load
+# Suppressing the shell progress output speeds up the whole process significantly and also takes way
+# less CPU load
 $ProgressPreference = "SilentlyContinue"
 
 Write-Host
@@ -261,23 +257,18 @@ Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definition
 
 If ($DownloadErrors -eq 8) {
     Write-Host
-    Write-Host -ForegroundColor Red `
-      "All definition downloads have failed. Process canceled."
-    Write-Host -ForegroundColor Yellow `
-      "Please check your network configuration for accessing the source."
-    Write-Event-Error 1 "All definition downloads have failed. Please check your network configuration."
+    Write-Host -ForegroundColor Red "All definition downloads have failed. Process canceled."
+    Write-Host -ForegroundColor Yellow "Please check your network configuration for accessing the source."
+    Write-Event-Error 139 "All definition downloads have failed. Please check your network configuration."
 
-    Write-Log
-    Write-Event-Info 1 (Get-Content $ScriptLogFile -Raw)
     $ExitCode = -1
     $ExitDelay = 10
 } ElseIf ($DownloadErrors -gt 0) {
     Write-Host
-    Write-Host -ForegroundColor Yellow `
-      "At least one definition file download has failed. Trying to install available files."
-    Write-Host -ForegroundColor Yellow `
-      "However, this can result in outdated definitions."
-    Write-Event-Warn 1 "At least one definition file download has failed. Definitions may be outdated."
+    Write-Host -ForegroundColor Yellow "At least one definition file download has failed. Trying to" `
+                                       "install the"
+    Write-Host -ForegroundColor Yellow "available files. However, this can result in outdated definitions."
+    Write-Event-Warn 138 "At least one definition file download has failed. Definitions may be outdated."
 }
 
 If ($SetDefinitionSource -eq 1) {
@@ -285,29 +276,26 @@ If ($SetDefinitionSource -eq 1) {
         Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
         Set-MpPreference -SignatureFallbackOrder FileShares
     } Catch [System.Exception] {
-        # This does not affect the exit code of this script at all, as it is
-        # related to the status of the actual Windows Defender update status
+        # This does not affect the exit code of this script at all, as it is related to the status
+        # of the actual Windows Defender update status
         Write-Host
-        Write-Host -ForegroundColor Red `
-          "Error while trying to set Windows Defender preferences."
-        Write-Host -ForegroundColor Yellow `
-          "Ensure that Windows is activated and Windows Defender is running."
-        Write-Host -ForegroundColor Yellow `
-          "Proceeding anyway."
+        Write-Host -ForegroundColor Red "Error while trying to set Windows Defender preferences."
+        Write-Host -ForegroundColor Yellow "Ensure that Windows is activated and Windows Defender is" `
+                                           "running."
+        Write-Host -ForegroundColor Yellow "Proceeding anyway."
         $SetPreferenceError = $True
-        Write-Event-Warn 1 "Failed to to set Windows Defender preferences."
+        Write-Event-Warn 141 "Failed to to set Windows Defender preferences."
     }
 }
 
-# Exit code -1 is being manually set if all downloads have failed (see the
-# download error handling further up in the code). In that case triggering
-# a signature update does not make any sense at all.
+# If all definition file downloads have failed (see the download error handling code further up)
+# triggering a signature update does not make any sense at all
 If ($DownloadErrors -lt 8) {
     Write-Host
     Write-Host "Installing definitions. Please wait, this may take a while."
 
-    # Use this external command to update the definitions as the cmdlet called
-    # 'Update-MpSignature' did not work properly (not at all to be precise)
+    # Use an external command to update the definitions as the cmdlet called 'Update-MpSignature'
+    # did not work properly (not at all to be precise)
     If ($ShowUpdateOutput -eq 1) {
         & $MpCmdRunBin -SignatureUpdate -Path "$Definitions"
     } Else {
@@ -319,13 +307,14 @@ If ($DownloadErrors -lt 8) {
         Write-Host
         Write-Host -ForegroundColor Green `
           "Windows Defender definition update has been successfully completed."
-        Write-Host "See '$ScriptLogFile' for the current status."
+        Write-Host -ForeGroundColor White "See " -NoNewLine
+        Write-Host -ForegroundColor Yellow "$ScriptLogFile" -NoNewline
+        Write-Host -ForeGroundColor White " for the current status."
 
         If ($DownloadErrors -gt 0) {
-            # In this case, the update process itself was successful, but the
-            # download of at least one definition file has failed, which most
-            # likely results in outdated definitions (see the download error
-            # handling further up in the code)
+            # In this case, the update process itself was successful, but the download of at least
+            # one definition file has failed, which most likely results in outdated definitions
+            # (see the download error handling code further up)
             $ExitCode = 2
         } Else {
             $ExitCode = 0
@@ -333,23 +322,32 @@ If ($DownloadErrors -lt 8) {
         $ExitDelay = $WaitOnSuccess
     } Else {
         Write-Host
-        Write-Host -ForegroundColor Red `
-          "Windows Defender definition update has failed."
-        Write-Host -ForeGroundColor Yellow `
-          "In case the downloads above failed, check the configuration file."
-        Write-Host -ForeGroundColor Yellow `
-          "You may also see the Windows Defender and WiDeRedist logs in the" `
-          "Event Viewer."
+        Write-Host -ForegroundColor Red "Windows Defender definition update has failed."
+        Write-Host -ForeGroundColor Yellow "In case the downloads above failed, check the configuration" `
+                                           "file. Otherwise"
+        Write-Host -ForeGroundColor Yellow "check the Windows Defender and the WiDeRedist log file as" `
+                                           "well as its log"
+        Write-Host -ForeGroundColor Yellow "entries inside the Event Viewer."
+        If ($ShowUpdateOutput -ne 1) {
+            Write-Host
+            Write-Host -ForeGroundColor Yellow "You may also set the value of " -NoNewLine
+            Write-Host -ForegroundColor White "ShowUpdateOutput" -NoNewline
+            Write-Host -ForeGroundColor Yellow " to "  -NoNewLine
+            Write-Host -ForegroundColor White "1" -NoNewline
+            Write-Host -ForeGroundColor Yellow " inside the WiDeRedist "
+            Write-Host -ForegroundColor Yellow "config file to see "  -NoNewLine
+            Write-Host -ForeGroundColor Yellow "the output of the Windows Defender update command itself."
+        }
+
         $ExitCode = 1
         $ExitDelay = $WaitOnError
-        Write-Event-Error 1 `
+        Write-Event-Error 149 `
           "Windows Defender definition update has failed. Please check the configuration file."
     }
 }
 
-# In order to reduce disk usage, you can automatically remove the local
-# definition directory created by this script. See local path options inside
-# the config file.
+# In order to reduce disk usage, you can automatically remove the local definition directory
+# created by this script. See local path options inside the config file.
 If ($RemoveDefinitionPathOnExit -eq 1) {
     Remove-Item -Path $Definitions -Recurse -Force
 }
@@ -366,8 +364,8 @@ Check-Update
 
 Write-Log
 If ($ExitCode -eq -1) {
-    Write-Event-Error 1 (Get-Content $ScriptLogFile -Raw)
+    Write-Event-Error 199 (Get-Content $ScriptLogFile -Raw)
 } Else {
-    Write-Event-Info 1 (Get-Content $ScriptLogFile -Raw)
+    Write-Event-Info 100 (Get-Content $ScriptLogFile -Raw)
 }
 Exit-Script $ExitCode $ExitDelay
