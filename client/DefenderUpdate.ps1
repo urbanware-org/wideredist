@@ -297,7 +297,10 @@ If ($DownloadErrors -lt 8) {
     # Use an external command to update the definitions as the cmdlet called 'Update-MpSignature'
     # did not work properly (not at all to be precise)
     If ($ShowUpdateOutput -eq 1) {
+        Write-Host
+        Write-Host -ForegroundColor Yellow "> Windows Defender update process output"
         & $MpCmdRunBin -SignatureUpdate -Path "$Definitions"
+        Write-Host -ForegroundColor Yellow "< Windows Defender update process exited"
     } Else {
         # Suppress the output
         & $MpCmdRunBin -SignatureUpdate -Path "$Definitions" | Out-Null
