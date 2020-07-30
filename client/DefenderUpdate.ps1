@@ -175,6 +175,18 @@ If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
     Exit 1
 }
 
+# Prevent the script from running multiple times simultaneously
+$RunningInstances = Get-WMIObject -Class Win32_Process | Select CommandLine `
+                                                       | Select-String -Pattern "DefenderUpdate.ps1" `
+                                                       | Measure-Object
+If ($RunningInstances.Count -gt 1) {
+    Write-Host "Another instance of " -NoNewline
+    Write-Host -ForegroundColor Yellow "WiDeRedist" -NoNewline
+    Write-Host " is already running."
+    Start-Sleep 3
+    Exit 102
+}
+
 # Create an event log for WiDeRedist (if not already existing)
 If (![System.Diagnostics.EventLog]::SourceExists("WiDeRedist")) {
     New-EventLog -LogName Application -Source "WiDeRedist" | Out-Null
