@@ -140,7 +140,7 @@ fi
 # Prevent the script from running multiple times simultaneously
 ps a | grep "wideredist\.sh" | grep -v "$$" | grep -v "grep" &>/dev/null
 if [ $? -eq 0 ]; then
-    error "Another instance of \e[93mWiDeRedist\e[0m is already running"
+    error "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
 fi
 
 rm -fR /tmp/wideredist*
