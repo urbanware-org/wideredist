@@ -183,8 +183,9 @@ If ($RunningInstances.Count -gt 1) {
     Write-Host "Another instance of " -NoNewline
     Write-Host -ForegroundColor Yellow "WiDeRedist" -NoNewline
     Write-Host " is already running."
+    Write-Event-Info 102 "Another instance of WiDeRedist is already running."
     Start-Sleep 3
-    Exit 102
+    Exit 255
 }
 
 # Create an event log for WiDeRedist (if not already existing)
