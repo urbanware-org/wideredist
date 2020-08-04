@@ -137,10 +137,15 @@ if [ $? -eq 0 ]; then
     exit 0
 fi
 
-# Prevent the script from running multiple times simultaneously
-ps a | grep "wideredist\.sh" | grep -v "$$" | grep -v "grep" &>/dev/null
-if [ $? -eq 0 ]; then
-    error "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
+# Prevent the script from running multiple times simultaneously. However, when
+# performing an automatic update, two instances of the script need to be run
+# simultaneously to perform the update process.
+if [ ! -f "/tmp/wideredist.upd" ]; then
+    ps a | grep "wideredist\.sh" | grep -v "$$" | grep -v "grep" &>/dev/null
+    if [ $? -eq 0 ]; then
+      error \
+        "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
+    fi
 fi
 
 rm -fR /tmp/wideredist*
