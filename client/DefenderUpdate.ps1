@@ -81,7 +81,6 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     }
     Write-Host -ForegroundColor Cyan "Exiting.$WideSpace"
     Write-Host
-
     Exit $ExitCode
 }
 
