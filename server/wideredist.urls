@@ -9,6 +9,11 @@
 #  below. In case the URLs should change again, only the URL file needs to   #
 #  be replaced and the 'wideredist.conf' file can be kept untainted.         #
 #                                                                            #
+#  This file makes the Microsoft URLs inside the 'wideredist.conf' files     #
+#  obsolete. However, if this file is missing, WiDeRedist will try to read   #
+#  the URLs out of the 'wideredist.conf' as a fallback (the way it did       #
+#  before this separate URL file existed).                                   #
+#                                                                            #
 #  The options inside this file cannot be set via command-line arguments.    #
 #                                                                            #
 #  Important notice:    Ensure that there are no spaces around the equal     #
