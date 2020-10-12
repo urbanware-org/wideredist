@@ -312,13 +312,15 @@ If ($DownloadErrors -lt 8) {
         Write-Host
         Write-Host -ForegroundColor Yellow "> Windows Defender update process output"
         & $MpCmdRunBin -SignatureUpdate -Path "$Definitions"
+        $MpCmdRunBinStatus = $?
         Write-Host -ForegroundColor Yellow "< Windows Defender update process exited"
     } Else {
         # Suppress the output
         & $MpCmdRunBin -SignatureUpdate -Path "$Definitions" | Out-Null
+        $MpCmdRunBinStatus = $?
     }
 
-    If ($? -eq $True) {
+    If ($MpCmdRunBinStatus -eq $True) {
         Write-Host
         Write-Host -ForegroundColor Green `
           "Windows Defender definition update has been successfully completed."
