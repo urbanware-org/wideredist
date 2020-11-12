@@ -198,13 +198,22 @@ $DownloadErrors = 0
 
 # Local paths and options
 $ScriptPath = Split-Path -Parent $PSCommandPath
-$ScriptLogFile = "$ScriptPath\RecentUpdate.log"
 $ScriptConfigFile = "$ScriptPath\Update.ini"
 If ([System.IO.File]::Exists($ScriptConfigFile)) {
     $ScriptConfigFileExists = $True
 } Else {
     $ScriptConfigFileExists = $False
     Write-Event-Warn 129 "Config file `"$ScriptConfigFile`" missing. Falling back to default values."
+}
+
+# Log file related
+$ScriptLogFilePath = Read-Config "LogFilePath" "$ScriptPath"
+$ScriptLogFileName = Read-Config "LogFileName" "RecentUpdate.log"
+$ScriptLogFile = ($ScriptLogFilePath + "\" + $ScriptLogFileName).Replace("\\", "\")
+$ScriptLogFileHostName = Read-Config "IncludeHostname" "0"
+If ($ScriptLogFileHostName -eq 1) {
+    $ComputerName = $Env:ComputerName
+    $ScriptLogFile = $ScriptLogFile.Replace(".log", "_" + $ComputerName + ".log")
 }
 
 # Binary for the Microsoft Malware Protection Command-Run Utility
