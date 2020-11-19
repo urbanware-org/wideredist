@@ -104,7 +104,7 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
 
     # This is not really an INI-file parser, rather a quick-and-dirty solution
     $KeyLine = Get-Content -Path $ScriptConfigFile `
-               | Where-Object { $_ -match "$ConfigKey = " }
+               | Where-Object { $_ -match "^$ConfigKey = " }
     If ($null -eq $KeyLine) {
         Write-Event-Warn 121 "No value for config key `"$ConfigKey`". Falling back to default value."
         Return $Fallback
