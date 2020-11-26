@@ -98,11 +98,13 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
 }
 
 Function Read-Config([String]$ConfigKey, [String]$Fallback) {
+    # The client-side config file is structured like an INI-file and being parsed with this
+    # function, which is not really a parser, rather than a quick-and-dirty solution
+
     If (!$ScriptConfigFileExists) {
         Return $Fallback
     }
 
-    # This is not really an INI-file parser, rather a quick-and-dirty solution
     $KeyLine = Get-Content -Path $ScriptConfigFile `
                | Where-Object { $_ -match "^$ConfigKey = " }
     If ($null -eq $KeyLine) {
