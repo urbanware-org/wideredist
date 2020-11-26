@@ -1,4 +1,4 @@
-# ==========================================================================================================
+#
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
 # Copyright (C) 2020 by Ralf Kilian and Simon Gauer
@@ -6,7 +6,7 @@
 #
 # GitHub: https://github.com/urbanware-org/wideredist
 # GitLab: https://gitlab.com/urbanware-org/wideredist
-# ==========================================================================================================
+#
 
 $Version = "1.4.3"
 $TimeStamp = "2020-11-26"

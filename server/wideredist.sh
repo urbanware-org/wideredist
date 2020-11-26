@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ============================================================================
+#
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Definition download and local redistribution script for Linux/BSD
 # Copyright (C) 2020 by Ralf Kilian
@@ -8,7 +8,7 @@
 #
 # GitHub: https://github.com/urbanware-org/wideredist
 # GitLab: https://gitlab.com/urbanware-org/wideredist
-# ============================================================================
+#
 
 version="1.4.3"
 timestamp="2020-11-26"
