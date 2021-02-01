@@ -19,6 +19,13 @@ kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
 version_unstable=0
 version_update=0
 
+check_command() {
+    command -v "$1" &>/dev/null
+    if [ $? -ne 0 ]; then
+        error "The '$1' tool does not seem to be installed" 7
+    fi
+}
+
 check_version() {
     version_temp="/tmp/wideredist_version.tmp"
     rm -f $version_temp
@@ -175,6 +182,10 @@ if [ -f "$script_dir/wideredist.upd" ]; then
 fi
 
 log "notice" "Running WiDeRedist $version ($timestamp)"
+
+check_command rsync
+check_command wget
+
 if [ -f "${script_dir}/wideredist.conf" ]; then
     source ${script_dir}/wideredist.conf
 elif [ -f "${script_dir}/wideredist.conf.default" ]; then
