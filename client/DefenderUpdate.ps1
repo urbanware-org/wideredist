@@ -8,8 +8,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 #
 
-$Version = "1.4.3-1"
-$TimeStamp = "2021-02-01"
+$Version = "1.4.3-2"
+$TimeStamp = "2021-02-02"
 
 Function Check-Update() {
     Try {
