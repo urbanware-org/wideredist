@@ -29,6 +29,14 @@ definition_path="/var/www/html/defender"
 # the downloads will not work), by default from Chrome on Windows 10
 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
 
+# Skip definition download for the 32-bit platform
+#
+#   Options:
+#     0 = download 32-bit and 64-bit definitions (default)
+#     1 = download 64-bit definitions, only
+#
+skip_x86_download=0
+
 # Size verification value (in kilobytes, default is 100)
 verify_size=100
 

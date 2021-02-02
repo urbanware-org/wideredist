@@ -87,6 +87,12 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
 Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                              [Int]$FileCount) {
     Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
+    $SkipX86Definitions = Read-Config "SkipX86Definitions" "0"
+    If ($FileSource.Contains("x86") -And ($SkipX86Definitions -eq 1)) {
+         Write-Host -ForegroundColor Yellow "Download skipped."
+         Write-Event-Info 132 "Definition file download `"$FileDestination`" skipped."
+         Return
+    }
     Try {
         Invoke-WebRequest -Uri $FileSource -OutFile "$FileDestination"
         Write-Host -ForegroundColor Green "Download completed."

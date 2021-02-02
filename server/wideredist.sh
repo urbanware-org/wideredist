@@ -332,10 +332,15 @@ fi
 echo -e "Starting definition download. Please wait, this may take a while."
 log "notice" "Starting definition download"
 
-echo -e "\nDownloading \e[96m32-bit\e[0m definition files."
-download_file $mpam_fe_x86      $update_path_x86/mpam-fe.exe  1 3
-download_file $mpas_fe_x86      $update_path_x86/mpas-fe.exe  2 3
-download_file $nis_full_x86     $update_path_x86/nis_full.exe 3 3
+if [ ! "$skip_x86_download" = "1" ]; then
+    echo -e "\nDownloading \e[96m32-bit\e[0m definition files."
+    download_file $mpam_fe_x86      $update_path_x86/mpam-fe.exe  1 3
+    download_file $mpas_fe_x86      $update_path_x86/mpas-fe.exe  2 3
+    download_file $nis_full_x86     $update_path_x86/nis_full.exe 3 3
+else
+    echo -e "\nSkipping \e[96m32-bit\e[0m definition files."
+    rm -f $update_path_x86/*
+fi
 
 echo -e "\nDownloading \e[96m64-bit\e[0m definition files."
 download_file $mpam_fe_x64      $update_path_x64/mpam-fe.exe  1 3
@@ -343,15 +348,17 @@ download_file $mpas_fe_x64      $update_path_x64/mpas-fe.exe  2 3
 download_file $nis_full_x64     $update_path_x64/nis_full.exe 3 3
 
 echo -e "\nDownloading \e[96mplatform independent\e[0m definition files."
-download_file $mpam_d_ind       $update_path_x86/mpam-d.exe   1 1
+download_file $mpam_d_ind       $update_path_x64/mpam-d.exe   1 1
 
 log "notice" "Definition downloads have been finished"
 
-# The file 'mpam-d.exe' is also required in the definition directory for
-# 64-bit environments. The file is platform independent, so it simply can
-# be copied to 'x64'.
-cp -f $update_path_x86/mpam-d.exe $update_path_x64/
-echo -e "\nDuplicated platform independent file for both platforms."
+if [ ! "$skip_x86_download" = "1" ]; then
+    # The file 'mpam-d.exe' is also required in the definition directory for
+    # 64-bit environments. The file is platform independent, so it simply can
+    # be copied to 'x64'.
+    cp -f $update_path_x64/mpam-d.exe $update_path_x86/
+    echo -e "\nDuplicated platform independent file for both platforms."
+fi
 
 if [ $status_verify_fail -eq 1 ]; then
     echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
