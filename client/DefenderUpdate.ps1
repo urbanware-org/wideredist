@@ -112,12 +112,12 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
     }
 
     $KeyLine = Get-Content -Path $ScriptConfigFile `
-               | Where-Object { $_ -match "^$ConfigKey = " }
+               | Where-Object { $_ -match "^$ConfigKey*=*" }
     If ($null -eq $KeyLine) {
         Write-Event-Warn 121 "No value for config key `"$ConfigKey`". Falling back to default value."
         Return $Fallback
     }
-    Return $KeyLine.Split("=")[1].Trim()
+    Return $KeyLine.Split("=")[1].Replace("`"", "").Trim()
 }
 
 Function Write-Event($EventLogEntryType, [Int]$EventID, [String]$Message) {
@@ -217,7 +217,7 @@ If ([System.IO.File]::Exists($ScriptConfigFile)) {
 # Log file related
 $ScriptLogFilePath = Read-Config "LogFilePath" "$ScriptPath"
 $ScriptLogFileName = Read-Config "LogFileName" "RecentUpdate.log"
-$ScriptLogFile = ($ScriptLogFilePath + "\" + $ScriptLogFileName).Replace("\\", "\")
+$ScriptLogFile = Join-Path -Path $ScriptLogFilePath -ChildPath $ScriptLogFileName
 $ScriptLogFileHostName = Read-Config "IncludeHostname" "0"
 If ($ScriptLogFileHostName -eq 1) {
     $ComputerName = $Env:ComputerName
@@ -227,7 +227,7 @@ If ($ScriptLogFileHostName -eq 1) {
 # Binary for the Microsoft Malware Protection Command-Run Utility
 $MpCmdRunBin = "C:\Program Files\Windows Defender\mpcmdrun.exe"
 
-$Definitions = Read-Config "DefinitionPath" "C:\Defender"
+$Definitions = (Read-Config "DefinitionPath" "C:\Defender").Trim()
 $RemoveSingleQuotesFromPath = Read-Config "RemoveSingleQuotesFromPath" "0"
 If ($RemoveSingleQuotesFromPath -eq 1) {
     # Required in case the path inside the config file is enclosed with single quotes. However, this
