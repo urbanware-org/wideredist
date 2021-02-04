@@ -119,7 +119,7 @@ error() {
     exit_code="$2"
 
     # In case of an error the return code must not be zero, even if explicitly
-    # set or not given
+    # set to zero or not given at all
     if [ -z "$exit_code" ] || [ $exit_code -eq 0 ]; then
         exit_code=1
     fi
