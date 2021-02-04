@@ -15,8 +15,6 @@ timestamp="2021-02-03"
 
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
-
-version_unstable=0
 version_update=0
 
 check_command() {
@@ -43,7 +41,7 @@ check_version() {
                                         | sed -e "s/.*wideredist-//g" \
                                         | sed -e "s/\ .*//g")
 
-    if [ $version_unstable -eq 1 ] || [ $version = $version_latest ]; then
+    if [ $version = $version_latest ]; then
         return
     fi
 
@@ -58,7 +56,8 @@ check_version() {
                                                <<< $version_latest)
     version_minor_latest=$((sed -e "s/\./\ /g" | awk '{ print $2 }') \
                                                <<< $version_latest)
-    version_revis_latest=$((sed -e "s/\./\ /g" | awk '{ print $3 }') \
+    version_revis_latest=$((sed -e "s/\./\ /g" | awk '{ print $3 }' \
+                                               | cut -c1) \
                                                <<< $version_latest)
 
     if [ $version_major_latest -ge $version_major ]; then
@@ -310,7 +309,6 @@ if [[ $version == *-* ]]; then
     # be obtained from GitHub by cloning or downloading the repository itself.
     # These unstable versions (whose version number contains hyphens) should
     # be working, but have not been tested intensively.
-    version_unstable=1
 
     line="\e[90m---------------------------------------\e[0m"
     echo -e "${line}${line}"
