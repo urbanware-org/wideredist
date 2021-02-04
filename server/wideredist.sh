@@ -316,7 +316,7 @@ if [[ $version == *-* ]]; then
     echo -e "${line}${line}"
     echo -e "\e[91mThis is an unstable version.\e[0m" \
             "You can find the latest stable version on" \
-            "\e[96mGitHub\e[0m.\n\nDirect link: \e[93m$version_url\e[0m"
+            "\e[96mGitHub\e[0m.\nDirect link: \e[93m$version_url\e[0m"
     echo -e "${line}${line}\n"
     sleep 3
 fi
