@@ -27,7 +27,7 @@ check_command() {
 check_version() {
     version_temp="/tmp/wideredist_version.tmp"
     rm -f $version_temp
-    wget -U "$user_agent" "$version_url" -q -O $version_temp &>/dev/null
+    wget -U "$user_agent" "$version_json" -q -O $version_temp &>/dev/null
 
     if [ -z "$wideredist_update_check" ] ||
        [ $wideredist_update_check -eq 0 ]; then
@@ -36,11 +36,9 @@ check_version() {
         return
     fi
 
-    version_latest=$(grep "wideredist-" $version_temp \
-                                        | head -n 1 \
-                                        | sed -e "s/.*wideredist-//g" \
-                                        | sed -e "s/\ .*//g")
-
+    version_latest=$(grep "tag_name" $version_temp | awk '{ print $2 }' \
+                                                   | sed -e "s/^\"//" \
+                                                   | sed -e "s/\".*//g")
     if [ $version = $version_latest ]; then
         return
     fi
@@ -50,7 +48,7 @@ check_version() {
     version_minor=$((sed -e "s/\./\ /g" | awk '{ print $2 }') \
                                         <<< $version)
     version_revis=$((sed -e "s/\./\ /g" | awk '{ print $3 }') \
-                                        <<< $version)
+                                        <<< $version | sed -e "s/-.*//g")
 
     version_major_latest=$((sed -e "s/\./\ /g" | awk '{ print $1 }') \
                                                <<< $version_latest)
@@ -196,6 +194,10 @@ else
     error "No configuration file found" 1
 fi
 
+version_url="${wideredist_url}/releases/latest"
+version_json=$(sed -e "s/github\.com/api\.github\.com\/repos/g" \
+                   <<< $version_url)
+
 # The separate (and optional) file 'wideredist.urls' is intended to simply
 # contain the Microsoft URLs to the files downloaded by WiDeRedist. The main
 # purpose of this is that if these URLs have changed (quite unlikely, but has
@@ -303,7 +305,6 @@ echo -e "Version $version (Released $timestamp)"
 echo -e "Copyright (C) 2021 by Ralf Kilian"
 echo -e "\e[0m"
 
-version_url="${wideredist_url}/releases/latest"
 if [[ $version == *-* ]]; then
     # Before a new stable version is being released, an unstable version can
     # be obtained from GitHub by cloning or downloading the repository itself.
