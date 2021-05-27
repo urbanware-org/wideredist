@@ -2,6 +2,10 @@
 
 Furthermore, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
+:floppy_disk: Latest program version: **1.4.4** (**2021-02-03**)
+
+:scroll: Download link file (`wideredist.conf`) date: **2020-06-26**
+
 --------
 
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
