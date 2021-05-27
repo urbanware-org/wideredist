@@ -4,7 +4,7 @@ Furthermore, it is recommended to run either the server-side or client-side scri
 
 :floppy_disk: Latest program version: **1.4.4** (**2021-02-03**)
 
-:scroll: Download link file (`wideredist.conf`) date: **2020-06-26**
+:scroll: Download URL file date: **2020-06-26**
 
 --------
 
