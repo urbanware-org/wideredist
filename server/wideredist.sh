@@ -361,8 +361,8 @@ fi
 
 if [ $status_verify_fail -eq 1 ]; then
     echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
-            "the problem persists, the\ndownload link may be broken. See" \
-            "the config file for details."
+            "the problem persists, the\ndownload link may be broken. Check" \
+            "the config and URL file for details."
 fi
 
 echo -e \
