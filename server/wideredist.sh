@@ -27,7 +27,7 @@ check_command() {
 check_version() {
     version_temp="/tmp/wideredist_version.tmp"
     rm -f $version_temp
-    wget -U "$user_agent" "$version_json" -q -O $version_temp &>/dev/null
+    wget -U "$user_agent" "$version_json" -q -O $version_temp
 
     if [ -z "$wideredist_update_check" ] ||
        [ $wideredist_update_check -eq 0 ]; then
@@ -85,7 +85,7 @@ download_file() {
 
     echo -e "  File '$(sed -e "s#$update_path##g" <<< $outfile)'" \
                "\t(${file_current} of ${file_count}): \c"
-    wget -U "$user_agent" "$weburl" -q -O $outfile &>/dev/null
+    wget -U "$user_agent" "$weburl" -q -O $outfile
     status_wget=$?
 
     # Perform a verification by file size to ensure that the downloaded file
@@ -402,7 +402,7 @@ if [ ! -z "$version_latest" ]; then
             # performed when the script is being run again.
             wget -U "$user_agent" \
                  "$wideredist_url/archive/${version_latest}.tar.gz" -q \
-                 -O /tmp/$tarfile &>/dev/null
+                 -O /tmp/$tarfile
             tar xfv /tmp/$tarfile -C /tmp/ &>/dev/null
             mkdir -p $definition_path/client
             mv /tmp/wideredist-$version_latest/client/DefenderUpdate.ps1 \
