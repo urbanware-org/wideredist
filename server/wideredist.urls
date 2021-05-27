@@ -14,6 +14,8 @@
 #  missing, WiDeRedist will try to read the URLs out of 'wideredist.conf'    #
 #  as a fallback (the way it did before this separate URL file existed).     #
 #                                                                            #
+#  URL file date:       2020-06-26                                           #
+#                                                                            #
 #  Important notice:    Ensure that there are no spaces around the equal     #
 #                       signs of all options. Otherwise settings will not    #
 #                       be applied correctly or WiDeRedist may even crash    #
