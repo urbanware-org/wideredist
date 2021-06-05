@@ -208,9 +208,9 @@ if [ -f "${script_dir}/wideredist.urls" ]; then
     source ${script_dir}/wideredist.urls
 fi
 
-if [ -z "$mpam_fe_x86" ] || [ -z "$mpas_fe_x86" ] || \
-   [ -z "$nis_full_x86" ] || [ -z "$mpam_fe_x64" ] || \
-   [ -z "$mpas_fe_x64" ] || [ -z "$nis_full_x64" ] || \
+if [ -z "$mpam_fe_x86" ] || [ -z "$mpam_fe_x64" ] || \
+   [ -z "$mpas_fe_x86" ] || [ -z "$mpas_fe_x64" ] || \
+   [ -z "$nis_full_x86" ] || [ -z "$nis_full_x64" ] || \
    [ -z "$mpam_d_ind" ]; then
     error \
       "At least one Windows Defender definition download link is missing" 2
