@@ -40,13 +40,19 @@ This tool currently takes advantage of a *Linux* server (or alternatively *BSD*)
 
 The project does not have many requirements.
 
+### Server
+
 *   ***Linux*** or ***BSD***:
     *   Some web server such as *Apache* or *nginx* (latter has been used in development).
     *   The `rsync` package (should already be pre-installed, depending on the distribution).
     *   The `wget` package (should already be pre-installed, also depending on the distribution).
     *   The *Bash* shell (default in most *Linux* distributions, but usually not on *BSD*).
+
+### Client
+
 *   ***Windows***:
-    *   The *Windows Defender* as well as the *PowerShell* which should both be already pre-installed.
+    *   *Windows* 7 or higher with 32-bit or 64-bit architecture.
+    *   *PowerShell* 2.0 or higher.
 
 ## Installation
 
