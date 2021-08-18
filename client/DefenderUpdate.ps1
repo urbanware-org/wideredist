@@ -307,23 +307,21 @@ If ($DownloadErrors -eq 8) {
     Write-Event-Warn 138 "At least one definition file download has failed. Definitions may be outdated."
 }
 
-Try {
-    Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
-    If ($SetDefinitionSource -eq 1) {
-        Set-MpPreference -SignatureFallbackOrder "FileShares"
-    } Else {
-        Set-MpPreference -SignatureFallbackOrder "FileShares|MicrosoftUpdateServer|MMPC"
+If ($SetDefinitionSource -eq 1) {
+    Try {
+        Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
+        Set-MpPreference -SignatureFallbackOrder FileShares
+    } Catch [System.Exception] {
+        # This does not affect the exit code of this script at all, as it is related to the status
+        # of the actual Windows Defender update status
+        Write-Host
+        Write-Host -ForegroundColor Red "Error while trying to set Windows Defender preferences."
+        Write-Host -ForegroundColor Yellow "Ensure that Windows is activated and Windows Defender is" `
+                                           "running."
+        Write-Host -ForegroundColor Yellow "Proceeding anyway."
+        $SetPreferenceError = $True
+        Write-Event-Warn 141 "Failed to to set Windows Defender preferences."
     }
-} Catch [System.Exception] {
-    # This does not affect the exit code of this script at all, as it is related to the status
-    # of the actual Windows Defender update status
-    Write-Host
-    Write-Host -ForegroundColor Red "Error while trying to set Windows Defender preferences."
-    Write-Host -ForegroundColor Yellow "Ensure that Windows is activated and Windows Defender is" `
-                                        "running."
-    Write-Host -ForegroundColor Yellow "Proceeding anyway."
-    $SetPreferenceError = $True
-    Write-Event-Warn 141 "Failed to to set Windows Defender preferences."
 }
 
 # If all definition file downloads have failed (see the download error handling code further up)
