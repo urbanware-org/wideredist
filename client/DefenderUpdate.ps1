@@ -263,6 +263,16 @@ Write-Host -ForegroundColor Yellow "Copyright (C) 2021 by Ralf Kilian and Simon 
 Write-Host
 Write-Host "Downloading definitions from update source."
 
+If (![System.Environment]::Is64BitOperatingSystem) {
+    $Architecture = "32-bit"
+} Else {
+    $Architecture = "64-bit"
+}
+Write-Host -ForeGroundColor White "Detected " -NoNewLine
+Write-Host -ForegroundColor Cyan "$Architecture" -NoNewline
+Write-Host -ForeGroundColor White " operating system architecture."
+Write-Host
+
 # Before downloading anything, ensure the target directories exist
 New-Item -ItemType Directory -Path $Definitions     -Force | Out-Null
 New-Item -ItemType Directory -Path $Definitions_x86 -Force | Out-Null
