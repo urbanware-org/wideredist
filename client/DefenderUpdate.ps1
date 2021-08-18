@@ -87,12 +87,6 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
 Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                              [Int]$FileCount) {
     Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
-    $SkipX86Definitions = Read-Config "SkipX86Definitions" "0"
-    If ($FileSource.Contains("x86") -And ($SkipX86Definitions -eq 1)) {
-         Write-Host -ForegroundColor Yellow "Download skipped."
-         Write-Event-Info 132 "Definition file download `"$FileDestination`" skipped."
-         Return
-    }
     Try {
         Invoke-WebRequest -Uri $FileSource -OutFile "$FileDestination"
         Write-Host -ForegroundColor Green "Download completed."
@@ -269,20 +263,33 @@ Write-Host -ForegroundColor Yellow "Copyright (C) 2021 by Ralf Kilian and Simon 
 Write-Host
 Write-Host "Downloading definitions from update source."
 
+If (![System.Environment]::Is64BitOperatingSystem) {
+    $Architecture = "32-bit"
+} Else {
+    $Architecture = "64-bit"
+}
+Write-Host -ForeGroundColor White "Detected " -NoNewLine
+Write-Host -ForegroundColor Cyan "$Architecture" -NoNewline
+Write-Host -ForeGroundColor White " operating system architecture."
+Write-Host
+
 # Before downloading anything, ensure the target directories exist
 New-Item -ItemType Directory -Path $Definitions     -Force | Out-Null
 New-Item -ItemType Directory -Path $Definitions_x86 -Force | Out-Null
 New-Item -ItemType Directory -Path $Definitions_x64 -Force | Out-Null
 
-Get-Definition-File "http://$DefinitionHostSource/x86/mpam-d.exe"   "$Definitions_x86\mpam-d.exe"   1 8
-Get-Definition-File "http://$DefinitionHostSource/x86/mpam-fe.exe"  "$Definitions_x86\mpam-fe.exe"  2 8
-Get-Definition-File "http://$DefinitionHostSource/x86/mpas-fe.exe"  "$Definitions_x86\mpas-fe.exe"  3 8
-Get-Definition-File "http://$DefinitionHostSource/x86/nis_full.exe" "$Definitions_x86\nis_full.exe" 4 8
-
-Get-Definition-File "http://$DefinitionHostSource/x64/mpam-d.exe"   "$Definitions_x64\mpam-d.exe"   5 8
-Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definitions_x64\mpam-fe.exe"  6 8
-Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  7 8
-Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 8 8
+Write-Host "Downloading definitions from update source."
+If (![System.Environment]::Is64BitOperatingSystem) {
+    Get-Definition-File "http://$DefinitionHostSource/x86/mpam-d.exe"   "$Definitions_x86\mpam-d.exe"   1 4
+    Get-Definition-File "http://$DefinitionHostSource/x86/mpam-fe.exe"  "$Definitions_x86\mpam-fe.exe"  2 4
+    Get-Definition-File "http://$DefinitionHostSource/x86/mpas-fe.exe"  "$Definitions_x86\mpas-fe.exe"  3 4
+    Get-Definition-File "http://$DefinitionHostSource/x86/nis_full.exe" "$Definitions_x86\nis_full.exe" 4 4
+} Else {
+    Get-Definition-File "http://$DefinitionHostSource/x64/mpam-d.exe"   "$Definitions_x64\mpam-d.exe"   1 4
+    Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definitions_x64\mpam-fe.exe"  2 4
+    Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  3 4
+    Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 4 4
+}
 
 If ($DownloadErrors -eq 8) {
     Write-Host
@@ -300,23 +307,21 @@ If ($DownloadErrors -eq 8) {
     Write-Event-Warn 138 "At least one definition file download has failed. Definitions may be outdated."
 }
 
-Try {
-    Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
-    If ($SetDefinitionSource -eq 1) {
-        Set-MpPreference -SignatureFallbackOrder "FileShares"
-    } Else {
-        Set-MpPreference -SignatureFallbackOrder "FileShares|MicrosoftUpdateServer|MMPC"
+If ($SetDefinitionSource -eq 1) {
+    Try {
+        Set-MpPreference -SignatureDefinitionUpdateFileSharesSource "$Definitions"
+        Set-MpPreference -SignatureFallbackOrder FileShares
+    } Catch [System.Exception] {
+        # This does not affect the exit code of this script at all, as it is related to the status
+        # of the actual Windows Defender update status
+        Write-Host
+        Write-Host -ForegroundColor Red "Error while trying to set Windows Defender preferences."
+        Write-Host -ForegroundColor Yellow "Ensure that Windows is activated and Windows Defender is" `
+                                           "running."
+        Write-Host -ForegroundColor Yellow "Proceeding anyway."
+        $SetPreferenceError = $True
+        Write-Event-Warn 141 "Failed to to set Windows Defender preferences."
     }
-} Catch [System.Exception] {
-    # This does not affect the exit code of this script at all, as it is related to the status
-    # of the actual Windows Defender update status
-    Write-Host
-    Write-Host -ForegroundColor Red "Error while trying to set Windows Defender preferences."
-    Write-Host -ForegroundColor Yellow "Ensure that Windows is activated and Windows Defender is" `
-                                        "running."
-    Write-Host -ForegroundColor Yellow "Proceeding anyway."
-    $SetPreferenceError = $True
-    Write-Event-Warn 141 "Failed to to set Windows Defender preferences."
 }
 
 # If all definition file downloads have failed (see the download error handling code further up)
