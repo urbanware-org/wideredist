@@ -133,12 +133,22 @@ log() {
     logger "wideredist[$$]: [$prefix] ${message}."
 }
 
-# Check for the '--version' argument. If given, simply return the version and
-# exit (everything else will be ignored).
-grep "\-\-version" <<< $@ &>/dev/null
-if [ $? -eq 0 ]; then
-    echo "$version"
-    exit 0
+if [ $# -gt 0 ]; then
+    if [ "$1" = "--version" ]; then
+        echo "$version"
+        exit 0
+    else
+        cat <<- end
+
+There are no command-line arguments available (except for '--version'). All
+options for the server-side script can be found inside its config file.
+
+Set the options required for your environment inside 'wideredist.conf' (if not
+already done) and simply run this script again without any arguments.
+
+end
+        error "Unexpected argument '$1'" 254
+    fi
 fi
 
 # Prevent the script from running multiple times simultaneously. However, when
