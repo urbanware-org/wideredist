@@ -155,10 +155,13 @@ fi
 # performing an automatic update, two instances of the script need to be run
 # simultaneously to perform the update process.
 if [ ! -f "/tmp/wideredist.upd" ]; then
-    ps a | grep "wideredist\.sh" | grep -v "$$" | grep -v "grep" &>/dev/null
+    ps a | grep "bash" | \
+           grep "wideredist.sh" | \
+           grep -v "$$" | \
+           grep -v "grep" &>/dev/null
     if [ $? -eq 0 ]; then
-      error \
-        "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
+        error \
+          "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
     fi
 fi
 
