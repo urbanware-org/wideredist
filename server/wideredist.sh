@@ -315,21 +315,6 @@ echo -e "Version $version (Released $timestamp)"
 echo -e "Copyright (C) 2021 by Ralf Kilian"
 echo -e "\e[0m"
 
-if [[ $version == *-* ]]; then
-    # Before a new stable version is being released, an unstable version can
-    # be obtained from GitHub by cloning or downloading the repository itself.
-    # These unstable versions (whose version number contains hyphens) should
-    # be working, but have not been tested intensively.
-
-    line="\e[90m---------------------------------------\e[0m"
-    echo -e "${line}${line}"
-    echo -e "\e[91mThis is an unstable version.\e[0m" \
-            "You can find the latest stable version on" \
-            "\e[96mGitHub\e[0m.\nDirect link: \e[93m$version_url\e[0m"
-    echo -e "${line}${line}\n"
-    sleep 3
-fi
-
 if [ $route -eq 1 ]; then
     echo -e "Added route to \e[96m$route_target\e[0m" \
             "via \e[96m$route_gateway\e[0m.\n"
