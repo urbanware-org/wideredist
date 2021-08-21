@@ -261,7 +261,6 @@ Write-Host -ForegroundColor Yellow `
 Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
 Write-Host -ForegroundColor Yellow "Copyright (C) 2021 by Ralf Kilian and Simon Gauer"
 Write-Host
-Write-Host "Downloading definitions from update source."
 
 If (![System.Environment]::Is64BitOperatingSystem) {
     $Architecture = "32-bit"
