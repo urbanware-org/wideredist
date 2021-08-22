@@ -9,7 +9,7 @@
 #
 
 $Version = "1.5.0"
-$TimeStamp = "2021-08-21"
+$TimeStamp = "2021-08-22"
 
 Function Check-Update() {
     Try {

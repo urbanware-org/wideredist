@@ -2,7 +2,7 @@
 
 Furthermore, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
-:floppy_disk: Latest program version: **1.5.0** (**2021-08-21**)
+:floppy_disk: Latest program version: **1.5.0** (**2021-08-22**)
 
 :scroll: Download URL file date: **2020-06-26**
 

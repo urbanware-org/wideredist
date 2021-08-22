@@ -11,7 +11,7 @@
 #
 
 version="1.5.0"
-timestamp="2021-08-21"
+timestamp="2021-08-22"
 
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
