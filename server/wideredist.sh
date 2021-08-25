@@ -154,12 +154,20 @@ fi
 # Prevent the script from running multiple times simultaneously. However, when
 # performing an automatic update, two instances of the script need to be run
 # simultaneously to perform the update process.
+already_running=1
 if [ ! -f "/tmp/wideredist.upd" ]; then
-    ps a | grep "bash" | \
-           grep "wideredist.sh" | \
-           grep -v "$$" | \
-           grep -v "grep" &>/dev/null
-    if [ $? -eq 0 ]; then
+    for tries in {0..3}; do
+        sleep 1
+        ps a | grep "bash" | \
+               grep "wideredist.sh" | \
+               grep -v "$$" | \
+               grep -v "grep" &>/dev/null
+        if [ $? -eq 1 ]; then
+            already_running=0
+            break
+        fi
+    done
+    if [ $already_running -eq 1 ]; then
         error \
           "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
     fi
