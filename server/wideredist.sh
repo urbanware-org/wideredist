@@ -58,6 +58,15 @@ check_version() {
                                                | cut -c1) \
                                                <<< $version_latest)
 
+    if [ -z "$version_major" ] || \
+       [ -z "$version_minor" ] || \
+       [ -z "$version_revis" ] || \
+       [ -z "$version_major_latest" ] || \
+       [ -z "$version_minor_latest" ] || \
+       [ -z "$version_revis_latest" ]; then
+        return
+    fi
+
     if [ $version_major_latest -ge $version_major ]; then
         if [ $version_major_latest -gt $version_major ]; then
             version_update=1
