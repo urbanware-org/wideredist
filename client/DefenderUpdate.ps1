@@ -239,6 +239,10 @@ $RemoveDefinitionPathOnExit = Read-Config "RemoveDefinitionPathOnExit" "0"
 $DefinitionHostIP = Read-Config "DefinitionHostIP" "192.168.2.1"
 $DefinitionHostPort = Read-Config "DefinitionHostPort" "8080"
 $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
+$IgnoreSystemWideProxy = Read-Config "IgnoreSystemWideProxy" "0"
+if ($IgnoreSystemWideProxy -eq 1) {
+    [System.Net.WebRequest]::DefaultWebProxy = $null
+}
 
 # Windows Defender preferences
 $SetDefinitionSource = Read-Config "SetDefinitionSource" "1"
