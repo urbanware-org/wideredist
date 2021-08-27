@@ -267,9 +267,9 @@ If (![System.Environment]::Is64BitOperatingSystem) {
 } Else {
     $Architecture = "64-bit"
 }
-Write-Host -ForeGroundColor White "Detected " -NoNewLine
+Write-Host -ForeGroundColor White "Detected the " -NoNewLine
 Write-Host -ForegroundColor Cyan "$Architecture" -NoNewline
-Write-Host -ForeGroundColor White " operating system architecture."
+Write-Host -ForeGroundColor White " architecture for this operating system."
 Write-Host
 
 # Before downloading anything, ensure the target directories exist
