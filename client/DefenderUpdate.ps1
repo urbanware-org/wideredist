@@ -107,7 +107,7 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
 
     $KeyLine = Get-Content -Path $ScriptConfigFile `
                | Where-Object { $_ -match "^$ConfigKey*=*" }
-    If ($null -eq $KeyLine) {
+    If ($Null -eq $KeyLine) {
         Write-Event-Warn 121 "No value for config key `"$ConfigKey`". Falling back to default value."
         Return $Fallback
     }
@@ -241,7 +241,7 @@ $DefinitionHostPort = Read-Config "DefinitionHostPort" "8080"
 $DefinitionHostSource = "${DefinitionHostIP}:$DefinitionHostPort"
 $IgnoreSystemWideProxy = Read-Config "IgnoreSystemWideProxy" "0"
 if ($IgnoreSystemWideProxy -eq 1) {
-    [System.Net.WebRequest]::DefaultWebProxy = $null
+    [System.Net.WebRequest]::DefaultWebProxy = $Null
 }
 
 # Windows Defender preferences
