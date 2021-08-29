@@ -172,7 +172,7 @@ Function Write-Log() {
 $Platform = [System.Environment]::OSVersion.Platform.ToString()
 If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
     Write-Host -ForegroundColor Red `
-      "This platform is not supported by the WiDeRedist client as it requires Microsoft Windows."
+      "This platform is not supported as the WiDeRedist client runs on Microsoft Windows, only."
     Exit 1
 }
 
