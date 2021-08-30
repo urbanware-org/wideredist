@@ -39,7 +39,7 @@ check_version() {
     version_latest=$(grep "tag_name" $version_temp | awk '{ print $2 }' \
                                                    | sed -e "s/^\"//" \
                                                    | sed -e "s/\".*//g")
-    if [ $version = $version_latest ]; then
+    if [ "$version" = "$version_latest" ]; then
         return
     fi
 
