@@ -214,15 +214,19 @@ check_command rsync
 check_command wget
 
 if [ -f "${script_dir}/wideredist.conf" ]; then
-    source ${script_dir}/wideredist.conf
+    config_file="${script_dir}/wideredist.conf"
 elif [ -f "${script_dir}/wideredist.conf.default" ]; then
     # Fallback with the default config
-    source ${script_dir}/wideredist.conf.default
     cp ${script_dir}/wideredist.conf.default \
        ${script_dir}/wideredist.conf &>/dev/null
+    config_file="${script_dir}/wideredist.conf"
 else
     error "No configuration file found" 1
 fi
+
+# Remove the spaces around equals signs before parsing the config file
+(sed -e "s/ *= */=/g") < $config_file > /tmp/wideredist_config
+source /tmp/wideredist_config.tmp
 
 version_url="${wideredist_url}/releases/latest"
 version_json=$(sed -e "s/github\.com/api\.github\.com\/repos/g" \
