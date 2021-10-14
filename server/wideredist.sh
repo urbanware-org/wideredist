@@ -224,9 +224,13 @@ else
     error "No configuration file found" 1
 fi
 
-# Remove the spaces around equals signs before parsing the config file
-(sed -e "s/ *= */=/g") < $config_file > /tmp/wideredist_config
-source /tmp/wideredist_config.tmp
+# Read the config file and remove spaces around the equals signs of the config
+# values (if existing). Afterwards, write the changes into the config file and
+# parse it.
+mv $config_file /tmp/wideredist_config.tmp
+(sed -e "/^#/! s/ *= */=/g") < /tmp/wideredist_config.tmp > $config_file
+source $config_file
+rm -f /tmp/wideredist_config.tmp
 
 version_url="${wideredist_url}/releases/latest"
 version_json=$(sed -e "s/github\.com/api\.github\.com\/repos/g" \
