@@ -1,0 +1,48 @@
+
+README (WiDeReDist)
+
+    Project
+
+        WiDeReDist (client-side component)
+        Version 1.5.1
+        Copyright (C) 2021 by Ralf Kilian and Simon Gauer
+
+        GitHub: https://github.com/urbanware-org/wideredist
+        GitLab: https://gitlab.com/urbanware-org/wideredist
+
+    Definition
+
+        The WiDeReDist project updates Windows Defender definitons (or
+        signatures) in internal environments that are completely separated
+        from the internet.
+
+    License
+
+        This project is distributed under the MIT License. You should have
+        received a copy of the license along with this program (see the file
+        'License.txt'). If not, you can find the license terms here:
+
+            https://opensource.org/licenses/MIT
+
+    Requirements
+
+        The project does not have many requirements:
+
+            - Windows 7 or higher with 32-bit or 64-bit architecture
+            - PowerShell 2.0 or higher
+
+    Usage
+
+        You can find the documentation for installation and usage inside the
+        official project wiki:
+
+            https://github.com/urbanware-org/wideredist/wiki
+
+    Contact
+
+        Any suggestions, questions, bugs to report or feedback to give?
+
+        You can contact me by sending an email to dev@urbanware.org or by
+        opening a GitHub issue (which I would prefer if you have a GitHub
+        account).
+
