@@ -3,7 +3,7 @@ README (WiDeReDist)
 
     Project
 
-        WiDeReDist (client-side component)
+        WiDeReDist
         Version 1.5.1
         Copyright (C) 2021 by Ralf Kilian and Simon Gauer
 
@@ -15,6 +15,12 @@ README (WiDeReDist)
         The WiDeReDist project updates Windows Defender definitons (or
         signatures) in internal environments that are completely separated
         from the internet.
+
+        Notice that the project consists of two components.
+
+        This is only the client-side component (for Windows). The server-
+        side component (for Linux and BSD) can also be downloaded from the
+        GitHub repository.
 
     License
 
