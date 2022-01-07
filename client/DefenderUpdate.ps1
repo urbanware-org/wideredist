@@ -88,7 +88,7 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
                              [Int]$FileCount) {
     Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
     Try {
-        Invoke-WebRequest -Uri $FileSource -OutFile "$FileDestination"
+        Invoke-WebRequest -Uri "$FileSource" -OutFile "$FileDestination"
         Write-Host -ForegroundColor Green "Download completed."
     } Catch [System.Exception] {
         Write-Host -ForegroundColor Red "Download failed."
