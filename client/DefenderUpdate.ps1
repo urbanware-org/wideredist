@@ -87,7 +87,23 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
 Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                              [Int]$FileCount) {
     Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
+    $FileChecksumSource = "$FileSource.sha256"
+    $FileChecksumDestination = "$FileDestination.sha256"
     Try {
+        Try {
+            If ([System.IO.File]::Exists($FileDestination)) {
+                # Ignore checksum download failures. If the checksum is either unavailable or it
+                # cannot be downloaded for some reason, just download the definition file as usual.
+                Invoke-WebRequest -Uri "$FileChecksumSource" -OutFile "$FileChecksumDestination"
+                $HashLocal = (Get-Content "$FileChecksumDestination")
+                $HashFromFile = (Get-FileHash "$FileDestination" -Algorithm SHA256).Hash
+                If ($HashLocal -eq $HashFromFile) {
+                    Write-Host -ForegroundColor Green "Already downloaded."
+                    Return
+                }
+            }
+        } Catch [System.Exception] { }
+
         Invoke-WebRequest -Uri "$FileSource" -OutFile "$FileDestination"
         Write-Host -ForegroundColor Green "Download completed."
     } Catch [System.Exception] {

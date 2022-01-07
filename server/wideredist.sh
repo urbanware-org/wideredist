@@ -115,6 +115,7 @@ download_file() {
     if [ $status_size -eq 0 ] && [ $status_wget -eq 0 ]; then
         echo -e "\e[92mDownload completed.\e[0m"
         log "notice" "Download completed: '$outfile'"
+        sha256sum "$outfile" | awk '{ print $1 }' > "${outfile}.sha256"
     else
         echo -e "\e[91mDownload failed.\e[0m"
         log "warning" "Download failed: '$outfile'"
@@ -378,7 +379,7 @@ if [ ! "$skip_x86_download" = "1" ]; then
     # The file 'mpam-d.exe' is also required in the definition directory for
     # 64-bit environments. The file is platform independent, so it simply can
     # be copied to 'x64'.
-    cp -f $update_path_x64/mpam-d.exe $update_path_x86/
+    cp -f $update_path_x64/mpam-d.* $update_path_x86/
     echo -e "\nDuplicated platform independent file for both platforms."
 fi
 
