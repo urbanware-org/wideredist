@@ -1,25 +1,35 @@
 
 CHANGELOG (WiDeRedist)
 
+    Version 1.5.2 (2022-01-07)
+
+        + Added a checksum check to avoid downloading already up-to-date files
+          for the client-side script.
+
+        * Revised the code of the client-side script (negligible changes).
+        * Revised the config file parser inside the server-side script (parse
+          the config file, remove unnecessary spaces next to equals signs and
+          write the changes back into the file).
+
     Version 1.5.1 (2021-08-30)
-    
+
         + Added an option to the client-side script that allows to ignore the
           system-wide proxy settings.
-          
+
         * Revised some code in the client-side script (negligible changes).
         * Revised the output of the client-side script (negligible changes).
-        
+
         # Fixed the missing unary operator bug inside the server-side script
           (occurred when checking for updates).
         # Fixed the multiple instances already running bug inside the server-
           side script.
-    
+
     Version 1.5.0 (2021-08-22)
-    
+
         + Added the detection of the operating system architecture to the
           client-side script (to automatically detect the architecture and
           download the relevant files, only).
-          
+
         * Revised the automatic update function inside the server-side script.
         * Revised the command-line argument parsing inside the server-side
           script.
@@ -28,56 +38,56 @@ CHANGELOG (WiDeRedist)
         * Revised the output of the client-side script (negligible changes).
         * Revised the server and client scripts in general (negligible
           changes).
-          
+
         - Removed the obsolete option for skipping 32-bit downloads inside the
-          client-side config file.    
+          client-side config file.
 
     Version 1.4.4 (2021-02-03)
-    
+
         + Added an option to skip the download of the 32-bit definition files
           for both scripts.
-          
+
         * Revised the code for reading config file values inside the client-
           side script (ignore leading and trailing whitespaces and improved
           the quote handling).
-          
+
         # Fixed the path concatenation bug inside the client-side script (led
           to invalid filepaths).
 
     Version 1.4.3 (2020-11-26)
-    
+
         + Added an optional log related feature to the client-side script
           (custom log file location and log file name).
-          
+
         * Revised the config file of the client-side script (added details to
           each option).
-          
+
         # Fixed the config file read bug inside the client-side script (by
           ignoring commented out lines starting with a semicolon).
-        
+
     Version 1.4.2 (2020-10-12)
-    
+
         # Fixed the erroneous status output inside the client-side script
           (returned success though the Windows Defender update failed).
         # Fixed the multiple instance bug on automatic update inside the
           server-side script.
 
     Version 1.4.1 (2020-08-04)
-    
+
         + Added code to check for already running instances to both scripts
           (prevents running them multiple times simultaneously).
-          
+
         * Revised the output of the client-side script (negligible changes).
 
     Version 1.4.0 (2020-07-26)
-    
+
         + Added an option to show the output of the Windows Defender update
           process to the client-side script.
         + Added a platform check to the client-side script (to ensure it only
           runs on Windows).
         + Added code to write status messages into the Windows event log to
           the client-side script.
-          
+
         * Revised the download error handling code inside the client-side
           script.
         * Revised the log file content (negligible changes).
@@ -85,19 +95,19 @@ CHANGELOG (WiDeRedist)
           changes).
         * Revised the return codes of the client-side script (added code for
           successful update despite failed downloads).
-          
+
         # Fixed the config file read error inside the client-side script (use
           the default values as fallback if the config file is missing without
           showing an error).
 
     Version 1.3.0 (2020-06-26)
-    
+
         + Added a separate file (optional) specifically for the download links
           for the server-side script.
         + Added the elapsed time information to the server-side script.
         + Added the option to disable update checks from the server-side
           script.
-          
+
         * Revised the code inside the server-side script (negligible changes).
         * Revised the error messages inside the server-side script (added
           return codes in first place).
@@ -107,22 +117,22 @@ CHANGELOG (WiDeRedist)
           side script.
         * Revised the output of the client-side script (added elapsed time
           information on exit).
-          
+
         # Fixed the elapsed time information bug in the log file of the
           client-side script (was a timestamp instead of a timespan).
 
     Version 1.2.11 (2020-06-09)
-     
+
         + Added a default config file for the client-side script when
           downloading a newer version using the automatic update feature.
-        
+
         * Revised the code to determine if there is an update available inside
           both scripts.
         * Revised the output of the client-side script (added elapsed time
           information on exit).
 
     Version 1.2.10 (2020-04-23)
-    
+
         + Added a default config file and a fallback functionality in case the
           config file is missing (related to the server-side script).
         + Added an optional automatic update feature (to keep WiDeRedist
@@ -132,27 +142,27 @@ CHANGELOG (WiDeRedist)
           changes).
 
     Version 1.2.9 (2020-03-16)
-    
+
         + Added an option for the verification file size to the config file of
           the server-side script.
         + Added a version check for WiDeRedist updates to the client and
           server-side script.
-          
+
         * Revised the code of the server-side script in general (negligible
           changes).
         * Revised the code of the download function inside the server-side
           script.
-          
+
         # Fixed the target route bug inside the server-side script (route to
           proxy server was not set).
 
     Version 1.2.1 (2020-03-09)
-    
+
         * Revised the code of the server-side script to extract the route
           target from the proxy address (removed route target config option).
-          
+
         # Fixed the file size check syntax error inside the server-side script
-          (only occurred on BSD) by replacing the command used with another.  
+          (only occurred on BSD) by replacing the command used with another.
 
     Version 1.2.0 (2020-02-24)
 
@@ -170,16 +180,16 @@ CHANGELOG (WiDeRedist)
           download links from the script into a new section in this file).
         * Revised (updated) the download links inside the config file of the
           server-side script.
-          
+
         # Fixed the definition file download bug inside the server-side script
           (links were broken due to a missing user agent string).
 
     Version 1.1.0 (2020-01-28)
-    
+
         + Added some syslog messages to the server script.
         + Added support for BSD derivates to the server script (now runs on
           Linux and BSD).
-          
+
         * Revised the code of the client script (exit delay output and further
           negligible changes).
         * Revised the code of the server script (redirect the output of some
@@ -193,23 +203,23 @@ CHANGELOG (WiDeRedist)
 
         + Added further error handlers to the server script (additional result
           checks).
-          
+
         * Revised some code in general (negligible changes).
 
     Version 1.0.8 (2019-08-25)
-    
+
         + Added error handlers to the server script (new function and result
           checks).
-          
+
         * Revised some code in the server script in general (negligible
           changes).
         * Revised the output of the server script (increased verbosity).
 
     Version 1.0.7 (2019-08-01)
-    
+
         + Added further options to the config file for the server and client
           script.
-               
+
         * Revised some code in general (negligible changes).
         * Revised the code to parse the definition path in the client script
           (allows path enclosed in quotes now).
@@ -221,14 +231,14 @@ CHANGELOG (WiDeRedist)
           automatically delete the route when done).
 
     Version 1.0.6 (2019-07-11)
-            
-        + Added a fallback parameter for the function to read config files in 
+
+        + Added a fallback parameter for the function to read config files in
           the client script (in case the requested value cannot be loaded).
         + Added an additional notice to the client script in case the
           definition download fails.
         + Added time measurement code to the client script (to log the elapsed
           runtime).
-          
+
         * Revised some function and comparison code (negligible changes).
         * Revised the code for writing log files in the client script
           (separate function now).
@@ -239,15 +249,15 @@ CHANGELOG (WiDeRedist)
           related to a different command).
 
     Version 1.0.4 (2019-04-26)
-    
+
         + Added an option to the 'Update.ini' file to remove the local
           definition directory when finished.
-          
+
         * Revised path separators in the client script (negligible changes).
         * Revised the 'Read-Config' function in the client script (now
           supports paths containing spaces).
 
     Version 1.0.3 (2019-04-25)
-    
+
         * First official version that has been originally released on GitHub.
 
