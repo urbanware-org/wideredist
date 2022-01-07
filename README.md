@@ -1,13 +1,3 @@
-### <img src="https://raw.githubusercontent.com/urbanware-org/hello_world/master/stuff/sign_warning/sign_warning_48x48.png" alt="Important" height="48px" width="48px" align="left"/>Please update to the <a href="https://github.com/urbanware-org/wideredist/releases/latest">latest version</a>, as earlier may not work anymore.<br/>[Details](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>
-
-Furthermore, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
-
-:floppy_disk: Latest program version: **1.5.2** (**2022-01-07**)
-
-:scroll: Latest download URL file date: **2020-06-26**
-
---------
-
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
 
 **Table of contents**
@@ -57,6 +47,10 @@ The project does not have many requirements.
 ## Installation
 
 You can find the documentation containing the installation instructions and further information inside the [wiki](https://github.com/urbanware-org/wideredist/wiki).
+
+Please keep *WiDeRedist* up to date, as earlier version may not work anymore. Usually, outdated versions should not be a problem, but in the past there was the case that *WiDeRedist* did not download the definition files correctly, obviously because of a change on the side of the *Microsoft* servers. Details can be found [here](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>.
+
+Anyway, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available.
 
 [Top](#wideredist-)
 
