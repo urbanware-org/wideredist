@@ -405,8 +405,6 @@ if [ ! -z "$version_latest" ]; then
         log "notice" "New WiDeRedist version ($version_latest) available"
         if [ $wideredist_update -eq 1 ]; then
             log "notice" "Automatically updating WiDeRedist"
-            rm -fR /tmp/wideredist*
-            tarfile="wideredist-${version_latest}.tar.gz"
 
             # The update process does not need an additional update script.
             # However, the server-side script cannot be updated at this point.
@@ -423,16 +421,23 @@ if [ ! -z "$version_latest" ]; then
             #
             # The update of the server-side script performed when it is being
             # run again.
-            
+
+            rm -fR /tmp/wideredist*
+            tarfile="wideredist-${version_latest}.tar.gz"
+
             wget -U "$user_agent" \
                  "$wideredist_url/archive/${version_latest}.tar.gz" -q \
                  -O /tmp/$tarfile
             tar xfv /tmp/$tarfile -C /tmp/ &>/dev/null
+
+            # Client-side files
             mkdir -p $definition_path/client
             mv /tmp/wideredist-$version_latest/client/DefenderUpdate.ps1 \
                $definition_path/client/
             mv /tmp/wideredist-$version_latest/client/Update.ini \
                $definition_path/client/UpdateDefault.ini
+
+            # Server-side files
             mv /tmp/wideredist-$version_latest/server/wideredist.sh \
                $script_dir/wideredist.upd
             cat /tmp/wideredist-$version_latest/server/wideredist.conf \
