@@ -362,7 +362,7 @@ if [ ! "$skip_x86_download" = "1" ]; then
     download_file $nis_full_x86     $update_path_x86/nis_full.exe 3 3
 else
     echo -e "\nSkipping \e[96m32-bit\e[0m definition files."
-    rm -f $update_path_x86/*
+    rm -f $definition_path/x86/*
 fi
 
 echo -e "\nDownloading \e[96m64-bit\e[0m definition files."
