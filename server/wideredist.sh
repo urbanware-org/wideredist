@@ -377,8 +377,8 @@ log "notice" "Definition downloads have been finished"
 
 if [ ! "$skip_x86_download" = "1" ]; then
     # The file 'mpam-d.exe' is also required in the definition directory for
-    # 64-bit environments. The file is platform independent, so it simply can
-    # be copied to 'x64'.
+    # 32-bit environments. The file is platform independent, so it simply can
+    # be copied to 'x86'.
     cp -f $update_path_x64/mpam-d.* $update_path_x86/
     echo -e "\nDuplicated platform independent file for both platforms."
 fi
@@ -408,22 +408,22 @@ if [ ! -z "$version_latest" ]; then
             rm -fR /tmp/wideredist*
             tarfile="wideredist-${version_latest}.tar.gz"
 
-            # The update process does not need an additional update script or
-            # whatsoever. However, the server-side script cannot be updated at
-            # this point.
+            # The update process does not need an additional update script.
+            # However, the server-side script cannot be updated at this point.
             #
-            # Due to this, it is required to download the archive file of the
-            # latest version, extract the server-side script from it, change
-            # the extension of the file and move (the renamed) file the local
-            # directory of WiDeRedist.
+            # In order to update, it is required to download the archive file
+            # of the latest version, extract the server-side script from it,
+            # change the extension of the file and move (the renamed) file the
+            # local directory of WiDeRedist. All these steps are automatically
+            # handled by this script.
             #
-            # Furthermore, the new config file from the archived will be
-            # stored as new 'wideredist.conf.default', so the existing config
-            # file will be kept untainted.
+            # Furthermore, the new config file from the archive will be stored
+            # as 'wideredist.conf.default', so the existing config file will
+            # be kept untainted.
             #
-            # So, the following code simply prepares the update for the
-            # server-side script, but the actual update process will be
-            # performed when the script is being run again.
+            # The update of the server-side script performed when it is being
+            # run again.
+            
             wget -U "$user_agent" \
                  "$wideredist_url/archive/${version_latest}.tar.gz" -q \
                  -O /tmp/$tarfile
