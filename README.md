@@ -64,6 +64,6 @@ You can contact me by sending an email to [dev@urbanware.org](mailto:dev@urbanwa
 
 ## Useless facts
 
-*   The project name is an abbreviation for ***Wi**ndows* ***De**fender* *Definition* ***Redist**ribution* (the second and thus repetitive "De" was omitted).
+*   The project name is an abbreviation for ***Wi**ndows* ***De**fender* *Definition* ***Redist**ribution* (the second and thus repetitive "De" from "Definition" was omitted).
 
 [Top](#wideredist-)
