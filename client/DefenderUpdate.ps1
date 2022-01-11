@@ -299,15 +299,19 @@ New-Item -ItemType Directory -Path $Definitions_x64 -Force | Out-Null
 
 Write-Host "Downloading definitions from update source."
 If (![System.Environment]::Is64BitOperatingSystem) {
+    # 32-bit
     Get-Definition-File "http://$DefinitionHostSource/x86/mpam-d.exe"   "$Definitions_x86\mpam-d.exe"   1 4
     Get-Definition-File "http://$DefinitionHostSource/x86/mpam-fe.exe"  "$Definitions_x86\mpam-fe.exe"  2 4
     Get-Definition-File "http://$DefinitionHostSource/x86/mpas-fe.exe"  "$Definitions_x86\mpas-fe.exe"  3 4
     Get-Definition-File "http://$DefinitionHostSource/x86/nis_full.exe" "$Definitions_x86\nis_full.exe" 4 4
+    Remove-Item "$Definitions_x64\*" -Force | Out-Null
 } Else {
+    # 64-bit
     Get-Definition-File "http://$DefinitionHostSource/x64/mpam-d.exe"   "$Definitions_x64\mpam-d.exe"   1 4
     Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definitions_x64\mpam-fe.exe"  2 4
     Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  3 4
     Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 4 4
+    Remove-Item "$Definitions_x86\*" -Force | Out-Null
 }
 
 If ($DownloadErrors -eq 8) {
