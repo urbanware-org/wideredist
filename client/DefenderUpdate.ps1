@@ -273,6 +273,13 @@ $WaitOnError = Read-Config "WaitOnError" "10"
 # less CPU load
 $ProgressPreference = "SilentlyContinue"
 
+Try {
+    Start-Transcript "$ScriptPath\RecentUpdate.tsc" | Out-Null
+    $Transcript = $True
+} Catch {
+    $Transcript = $False
+}
+
 Write-Host
 Write-Host -ForegroundColor Yellow `
   "WiDeRedist - Windows Defender definition download and redistribution tool"
@@ -434,4 +441,9 @@ If ($ExitCode -eq -1) {
 } Else {
     Write-Event-Info 100 (Get-Content $ScriptLogFile -Raw)
 }
+
+If ($Transcript -eq $True) {
+    Stop-Transcript | Out-Null
+}
+
 Exit-Script $ExitCode $ExitDelay
