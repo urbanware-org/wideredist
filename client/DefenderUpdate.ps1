@@ -263,7 +263,6 @@ if ($IgnoreSystemWideProxy -eq 1) {
 # Windows Defender preferences
 $SetDefinitionSource = Read-Config "SetDefinitionSource" "1"
 $ShowUpdateOutput = Read-Config "ShowUpdateOutput" "0"
-$SetPreferenceError = $False
 
 # Delays
 $WaitOnSuccess = Read-Config "WaitOnSuccess" "3"
@@ -352,7 +351,6 @@ Try {
     Write-Host -ForegroundColor Yellow "Ensure that Windows is activated and Windows Defender is" `
                                         "running."
     Write-Host -ForegroundColor Yellow "Proceeding anyway."
-    $SetPreferenceError = $True
     Write-Event-Warn 141 "Failed to to set Windows Defender preferences."
 }
 
