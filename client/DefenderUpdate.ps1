@@ -1,7 +1,7 @@
 #
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
-# Copyright (C) 2022 by Ralf Kilian and Simon Gauer
+# Copyright (c) 2022 by Ralf Kilian and Simon Gauer
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
@@ -285,7 +285,7 @@ Write-Host -ForegroundColor Yellow `
 Write-Host -ForegroundColor Yellow `
   "Local definition update script for Windows servers and clients"
 Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
-Write-Host -ForegroundColor Yellow "Copyright (C) 2022 by Ralf Kilian and Simon Gauer"
+Write-Host -ForegroundColor Yellow "Copyright (c) 2022 by Ralf Kilian and Simon Gauer"
 Write-Host
 
 If (![System.Environment]::Is64BitOperatingSystem) {

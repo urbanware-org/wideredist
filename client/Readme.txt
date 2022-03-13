@@ -5,7 +5,7 @@ README (WiDeReDist)
 
         WiDeReDist
         Version 1.5.2
-        Copyright (C) 2022 by Ralf Kilian and Simon Gauer
+        Copyright (c) 2022 by Ralf Kilian and Simon Gauer
 
         GitHub: https://github.com/urbanware-org/wideredist
         GitLab: https://gitlab.com/urbanware-org/wideredist

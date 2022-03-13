@@ -3,7 +3,7 @@
 #
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Definition download and local redistribution script for Linux and BSD
-# Copyright (C) 2022 by Ralf Kilian
+# Copyright (c) 2022 by Ralf Kilian
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
@@ -341,7 +341,7 @@ echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
 echo -e "Definition download and local redistribution script"
 echo -e "Version $version (Released $timestamp)"
-echo -e "Copyright (C) 2022 by Ralf Kilian"
+echo -e "Copyright (c) 2022 by Ralf Kilian"
 echo -e "\e[0m"
 
 if [ $route -eq 1 ]; then
