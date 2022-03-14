@@ -170,6 +170,8 @@ Function Write-Log() {
     ""                                                  | Out-File $ScriptLogFile -Append
     "  See the Event Viewer for process details."       | Out-File $ScriptLogFile -Append
     ""                                                  | Out-File $ScriptLogFile -Append
+    "  The Windows Defender status can be found below." | Out-File $ScriptLogFile -Append
+    ""                                                  | Out-File $ScriptLogFile -Append
     $("-" * 80)                                         | Out-File $ScriptLogFile -Append
 
     Try {
