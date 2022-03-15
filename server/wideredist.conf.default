@@ -115,5 +115,3 @@ wideredist_url="https://github.com/urbanware-org/wideredist"
 #     1 = enabled (default)
 #
 keep_previous=1
-
-# EOF
