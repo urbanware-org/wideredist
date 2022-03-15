@@ -275,7 +275,7 @@ $WaitOnError = Read-Config "WaitOnError" "10"
 $ProgressPreference = "SilentlyContinue"
 
 Try {
-    Start-Transcript "$ScriptPath\RecentUpdate.tsc" | Out-Null
+    Start-Transcript "$ScriptPath\RecentUpdate_Transcript.log" | Out-Null
     $Transcript = $True
 } Catch {
     $Transcript = $False
