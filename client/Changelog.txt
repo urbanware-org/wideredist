@@ -1,6 +1,21 @@
 
 CHANGELOG (WiDeRedist)
 
+    Version 1.5.3 (2022-03-15)
+
+        + Added the transcript session recording to the client-side script.
+
+        * Revised the code of the client-side script (remove unnecessary
+          definition files if existing and further negligible changes).
+        * Revised the update procedure inside the server-side script
+          (negligible changes).
+
+        # Fixed the directory path bug inside the server-side script
+          (directory )
+
+        - Removed the unnecessary end-of-file comments from all script and
+          config files.
+
     Version 1.5.2 (2022-01-07)
 
         + Added a checksum check to avoid downloading already up-to-date files
