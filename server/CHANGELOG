@@ -10,8 +10,9 @@ CHANGELOG (WiDeRedist)
         * Revised the update procedure inside the server-side script
           (negligible changes).
 
-        # Fixed the directory path bug inside the server-side script
-          (directory )
+        # Fixed the directory path bug inside the server-side script (when
+          skipping 32-bit definition downloads the corresponding directory
+          was not deleted).
 
         - Removed the unnecessary end-of-file comments from all script and
           config files.
