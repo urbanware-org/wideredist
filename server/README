@@ -32,7 +32,7 @@ README (WiDeReDist)
 
     Requirements
 
-        The project does not have many requirements:
+        The server-side component does not have many requirements:
 
             - Some web server such as Apache or nginx (latter has been used in
               development)

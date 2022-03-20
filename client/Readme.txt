@@ -32,7 +32,7 @@ README (WiDeReDist)
 
     Requirements
 
-        The project does not have many requirements:
+        The client-side component does not have many requirements:
 
             - Windows 7 or higher with 32-bit or 64-bit architecture
             - PowerShell 2.0 or higher
