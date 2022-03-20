@@ -12,7 +12,7 @@ README (WiDeReDist)
 
     Definition
 
-        The WiDeReDist project updates Windows Defender definitons (or
+        The WiDeReDist project updates Windows Defender definitions (or
         signatures) in internal environments that are completely separated
         from the internet.
 
