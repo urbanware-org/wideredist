@@ -65,7 +65,6 @@ Function Check-Update() {
     }
 }
 
-
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     $Space = "    "
     $WideSpace = $Space * 10
