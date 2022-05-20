@@ -249,6 +249,9 @@ If ($RemoveSingleQuotesFromPath -eq 1) {
     # recommended to use double quotes for enclosing the string.
     $Definitions = $Definitions.Replace("'", "")
 }
+
+# The directory path for the 64-bit definition files below is predefined and must not be changed
+# (e.g. to 'x86_64' or whatever) as this will lead to errors resulting in an update failure.
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
@@ -302,26 +305,30 @@ Write-Host -ForegroundColor Cyan "$Architecture" -NoNewline
 Write-Host -ForeGroundColor White " architecture for this operating system."
 Write-Host
 
-# Before downloading anything, ensure the target directories exist
-New-Item -ItemType Directory -Path $Definitions     -Force | Out-Null
-New-Item -ItemType Directory -Path $Definitions_x86 -Force | Out-Null
-New-Item -ItemType Directory -Path $Definitions_x64 -Force | Out-Null
+# Before downloading anything, ensure the main target directory exists
+New-Item -ItemType Directory -Path $Definitions -Force | Out-Null
 
 Write-Host "Downloading definitions from update source."
 If (![System.Environment]::Is64BitOperatingSystem) {
     # 32-bit
+    New-Item -ItemType Directory -Path $Definitions_x86 -Force | Out-Null
     Get-Definition-File "http://$DefinitionHostSource/x86/mpam-d.exe"   "$Definitions_x86\mpam-d.exe"   1 4
     Get-Definition-File "http://$DefinitionHostSource/x86/mpam-fe.exe"  "$Definitions_x86\mpam-fe.exe"  2 4
     Get-Definition-File "http://$DefinitionHostSource/x86/mpas-fe.exe"  "$Definitions_x86\mpas-fe.exe"  3 4
     Get-Definition-File "http://$DefinitionHostSource/x86/nis_full.exe" "$Definitions_x86\nis_full.exe" 4 4
-    Remove-Item "$Definitions_x64\*" -Force | Out-Null
+    If ([System.IO.Directory]::Exists("$Definitions_x64")) {
+        Remove-Item "$Definitions_x64" -Recurse -Force | Out-Null
+    }
 } Else {
     # 64-bit
+    New-Item -ItemType Directory -Path $Definitions_x64 -Force | Out-Null
     Get-Definition-File "http://$DefinitionHostSource/x64/mpam-d.exe"   "$Definitions_x64\mpam-d.exe"   1 4
     Get-Definition-File "http://$DefinitionHostSource/x64/mpam-fe.exe"  "$Definitions_x64\mpam-fe.exe"  2 4
     Get-Definition-File "http://$DefinitionHostSource/x64/mpas-fe.exe"  "$Definitions_x64\mpas-fe.exe"  3 4
     Get-Definition-File "http://$DefinitionHostSource/x64/nis_full.exe" "$Definitions_x64\nis_full.exe" 4 4
-    Remove-Item "$Definitions_x86\*" -Force | Out-Null
+    If ([System.IO.Directory]::Exists("$Definitions_x86")) {
+        Remove-Item "$Definitions_x86" -Recurse -Force | Out-Null
+    }
 }
 
 If ($DownloadErrors -eq 8) {
