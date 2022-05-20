@@ -12,13 +12,15 @@ $Version = "1.5.3"
 $TimeStamp = "2022-03-17"
 
 Function Check-Update() {
+    $VersionUpdate = $False
+
     Try {
         Invoke-WebRequest -Uri "http://$DefinitionHostSource/version.dat" -OutFile "$VersionFile"
     } Catch [System.Exception] { }
 
     If ([System.IO.File]::Exists($VersionFile)) {
         $VersionLatest = Get-Content "$VersionFile"
-        $VersionUpdate = $False
+        Remove-Item "$VersionFile" -Force | Out-Null
 
         If ($Version -eq $VersionLatest -Or $Version.Contains("-")) {
             Return
@@ -62,6 +64,7 @@ Function Check-Update() {
         Write-Event-Info 101 "New WiDeRedist version ($VersionLatest) available."
     }
 }
+
 
 Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
     $Space = "    "
