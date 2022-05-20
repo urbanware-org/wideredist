@@ -331,7 +331,7 @@ If (![System.Environment]::Is64BitOperatingSystem) {
     }
 }
 
-If ($DownloadErrors -eq 8) {
+If ($DownloadErrors -gt 3) {
     Write-Host
     Write-Host -ForegroundColor Red "All definition downloads have failed. Process canceled."
     Write-Host -ForegroundColor Yellow "Please check your network configuration for accessing the source."
