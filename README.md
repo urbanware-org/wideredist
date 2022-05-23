@@ -18,7 +18,7 @@ Dedicated tool to update the *Windows Defender* definitions in the local network
 
 ## Details
 
-This project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* definitons (or signatures) in internal environments that are completely separated from the internet.
+This project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* definitions (or signatures) in internal environments that are completely separated from the internet.
 
 Nevertheless, this requires at least one system to access the internet, of course.
 
