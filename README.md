@@ -58,7 +58,7 @@ Anyway, it is recommended to run either the server-side or client-side script ma
 
 Any suggestions, questions, bugs to report or feedback to give?
 
-You can contact me by sending an email to [dev@urbanware.org](mailto:dev@urbanware.org) or by opening a *GitHub* issue (which I would prefer if you have a *GitHub* account).
+You can contact us by sending an email to [dev@urbanware.org](mailto:dev@urbanware.org) or by opening a *GitHub* issue (which I would prefer if you have a *GitHub* account).
 
 [Top](#wideredist-)
 
