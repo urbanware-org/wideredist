@@ -250,8 +250,9 @@ If ($RemoveSingleQuotesFromPath -eq 1) {
     $Definitions = $Definitions.Replace("'", "")
 }
 
-# The directory path for the 64-bit definition files below is predefined and must not be changed
-# (e.g. to 'x86_64' or whatever) as this will lead to errors resulting in an update failure.
+# The directory path for the 64-bit definition files below is pre-defined. Due to this, it must not
+# be changed manually (e.g. to 'x86_64' or whatever) as this will lead to errors resulting in an
+# update failure of the 64-bit definitions.
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
