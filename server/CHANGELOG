@@ -1,6 +1,16 @@
 
 CHANGELOG (WiDeRedist)
 
+    Next release (outstanding)
+
+        * Revised the target directory content management code in the client-
+          side script (keep files that are required to update only and remove
+          empty directories).
+        * Revised the update check function inside the client-side script
+          (negligible changes).
+
+        # Fixed the download error count bug in the client-side script.
+
     Version 1.5.3 (2022-03-17)
 
         + Added the transcript session recording to the client-side script.
