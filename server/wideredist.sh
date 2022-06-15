@@ -76,7 +76,8 @@ check_version() {
                     version_update=1
                 else
                     if [ ${version_revis_latest} -ge ${version_revis} ]; then
-                        if [ ${version_revis_latest} -gt ${version_revis} ]; then
+                        if [ ${version_revis_latest} -gt ${version_revis} ];
+                        then
                             version_update=1
                         fi
                     fi
