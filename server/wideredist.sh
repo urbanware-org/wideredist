@@ -351,6 +351,15 @@ echo -e "Version ${version} (Released ${timestamp})"
 echo -e "Copyright (c) 2022 by Ralf Kilian"
 echo -e "\e[0m"
 
+if [ $(whoami) = "root" ]; then
+    echo -e "Notice that you are running this script as \e[96mroot\e[0m" \
+            "which is a potential \e[91mrisk\e[0m."
+    echo -e "Due to this, it is strongly recommended to run it with a" \
+            "dedicated user"
+    echo -e "having the required permissions instead."
+    echo
+fi
+
 if [ ${route} -eq 1 ]; then
     echo -e "Added route to \e[96m${route_target}\e[0m" \
             "via \e[96m${route_gateway}\e[0m.\n"
