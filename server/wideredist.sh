@@ -92,8 +92,14 @@ download_file() {
     file_current="$3"
     file_count="$4"
 
-    echo -e "  File '$(sed -e "s#${update_path}##g" <<< ${outfile})'" \
-               "\t(${file_current} of ${file_count}): \c"
+    download_failed="\e[91mDownload failed.\e[0m"
+    download_completed="\e[92mDownload completed.\e[0m"
+    download_running="\e[36mDownloading...\e[0m"
+    download_file="$(sed -e "s#${update_path}##g" <<< ${outfile})"
+    download_count="${file_current} of ${file_count}"
+
+    output="  File '${download_file}'\t(${download_count}):"
+    echo -ne "${output} ${download_running}\r"
     wget -U "${user_agent}" "${weburl}" -q -O ${outfile}
     status_wget=$?
 
@@ -113,11 +119,11 @@ download_file() {
     fi
 
     if [ ${status_size} -eq 0 ] && [ ${status_wget} -eq 0 ]; then
-        echo -e "\e[92mDownload completed.\e[0m"
+        echo -e "${output} ${download_completed}"
         log "notice" "Download completed: '${outfile}'"
         sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
     else
-        echo -e "\e[91mDownload failed.\e[0m"
+        echo -e "${output} ${download_failed}"
         log "warning" "Download failed: '${outfile}'"
     fi
 }
