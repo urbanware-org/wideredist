@@ -362,11 +362,12 @@ if [ $(whoami) = "root" ]; then
             "\e[96mdedicated user\e[0m"
     echo -e "having the required permissions instead."
     echo
+    cancel="Press \e[96mCtrl\e[37m+\e[0m\e[96mC\e[0m to \e[91mcancel\e[0m. "
     for seconds in {10..1}; do
         if [ ${seconds} -eq 1 ]; then
-            echo -ne "Proceeding in 1 second.  \r"
+            echo -ne "Proceeding in 1 second. ${cancel}  \r"
         else
-            echo -ne "Proceeding in ${seconds} seconds. \r"
+            echo -ne "Proceeding in ${seconds} seconds. ${cancel} \r"
         fi
         sleep 1
     done
