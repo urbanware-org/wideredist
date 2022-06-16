@@ -352,12 +352,20 @@ echo -e "Copyright (c) 2022 by Ralf Kilian"
 echo -e "\e[0m"
 
 if [ $(whoami) = "root" ]; then
-    echo -e "Notice that you are running this script as \e[96mroot\e[0m" \
+    echo -e "Notice that you are running this script as \e[93mroot\e[0m" \
             "which is a potential \e[91mrisk\e[0m."
     echo -e "Due to this, it is strongly recommended to run it with a" \
-            "dedicated user"
+            "\e[96mdedicated user\e[0m"
     echo -e "having the required permissions instead."
     echo
+    for seconds in {10..1}; do
+        if [ ${seconds} -eq 1 ]; then
+            echo -ne "Proceeding in 1 second.  \r"
+        else
+            echo -ne "Proceeding in ${seconds} seconds. \r"
+        fi
+        sleep 1
+    done
 fi
 
 if [ ${route} -eq 1 ]; then
