@@ -471,9 +471,8 @@ echo -e \
   "\nProceeding with update of the definition files for redistribution.\n"
 log "notice" "Updating the definition files for redistribution"
 
-# Update the actual definitions and remove temporary data
+# Update the actual definitions. Temporary data will be deleted on exit.
 rsync -a ${update_path}/* ${definition_path}/
-rm -fR ${update_path}
 log "notice" "Definition files have been updated"
 
 check_version
