@@ -450,7 +450,16 @@ download_file ${nis_full_x64}     ${update_path_x64}/nis_full.exe 3 3
 echo -e "\nDownloading \e[96mplatform independent\e[0m definition files."
 download_file ${mpam_d_ind}       ${update_path_x64}/mpam-d.exe   1 1
 
-log "notice" "Definition downloads have been finished"
+if [ ${status_download_fail_count} -eq ${status_download_fail_max} ]; then
+    echo
+    error "Aborting as all downloads have failed"
+elif [ ${status_download_fail_count} -gt 0 ]; then
+    echo -e \
+      "\n\e[93mProceeding even though at least one download has failed.\e[0m"
+    log "warning" "Proceeding even though at least one download has failed"
+else
+    log "notice" "Definition downloads have been finished."
+fi
 
 if [ ! "${skip_x86_download}" = "1" ]; then
     # The file 'mpam-d.exe' is also required in the definition directory for
@@ -550,7 +559,6 @@ clean_up
 timestamp_end="$(date -u +%s)"
 time_elapsed=$(( ${timestamp_end} - ${timestamp_start} ))
 
-rm -fR /tmp/wideredist*
 echo -e "Process finished."
 echo -e "Elapsed time: ${time_elapsed} seconds\n"
 log "notice" "Process finished (within ${time_elapsed} seconds)"
