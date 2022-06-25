@@ -3,6 +3,8 @@ CHANGELOG (WiDeRedist)
 
     Next release (outstanding)
 
+        * Revised the client-side script in general (some negligible changes).
+        * Revised the download error handling inside the client-side script.
         * Revised the target directory content management code in the client-
           side script (keep files that are required to update only and remove
           empty directories).
