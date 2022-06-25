@@ -168,9 +168,12 @@ error() {
     if [ -z "${exit_code}" ] || [ ${exit_code} -eq 0 ]; then
         exit_code=1
     fi
+
     echo -e "\e[91merror:\e[0m ${message}."
     log "error" "${message}"
     log "notice" "Exiting"
+
+    clean_up
     exit ${exit_code}
 }
 
@@ -541,10 +544,7 @@ if [ ${route} -eq 1 ]; then
     fi
 fi
 
-# No need to check if proxy address is set, as non-existing environment
-# variables will be ignored by 'unset' anyway
-unset http_proxy
-unset https_proxy
+clean_up
 
 # Get current timestamp and consequential elapsed time
 timestamp_end="$(date -u +%s)"
