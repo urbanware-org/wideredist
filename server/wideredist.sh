@@ -108,34 +108,54 @@ download_file() {
     download_running="\e[36mDownloading...\e[0m"
     download_file="$(sed -e "s#${update_path}##g" <<< ${outfile})"
     download_count="${file_current} of ${file_count}"
+    wget_timeout=120
 
     output="  File '${download_file}'\t(${download_count}):"
     echo -ne "${output} ${download_running}\r"
-    wget -U "${user_agent}" "${weburl}" -q -O ${outfile}
+    wget -T ${wget_timeout} -U "${user_agent}" "${weburl}" -q -O ${outfile}
     status_wget=$?
 
-    # Perform a verification by file size to ensure that the downloaded file
-    # has actually been downloaded. In case the link is broken, its size will
-    # be significantly less than the actual definition update.
+    # In case the download succeeded, perform a verification by file size to
+    # ensure that the downloaded file has actually been downloaded. In case
+    # the link is broken, its size will be significantly less than the actual
+    # definition update.
     status_size=1
-    if [ -z "${verify_size}" ]; then
-        verify_size=100
-    fi
-    file_size=$(ls -s "${outfile}" | awk '{ print $1 }')
-    if [ ${file_size} -lt ${verify_size} ]; then
-        log "warning" "File verification failed: '${outfile}'"
-        status_verify_fail=1
-    else
-        status_size=0
+    if [ ${status_wget} -eq 0 ]; then
+        if [ -z "${verify_size}" ]; then
+            verify_size=100
+        fi
+        file_size=$(ls -s "${outfile}" | awk '{ print $1 }')
+        if [ ${file_size} -lt ${verify_size} ]; then
+            log "warning" "File verification failed: '${outfile}'"
+            status_verify_fail=1
+        else
+            status_size=0
+        fi
     fi
 
     if [ ${status_size} -eq 0 ] && [ ${status_wget} -eq 0 ]; then
         echo -e "${output} ${download_completed}"
         log "notice" "Download completed: '${outfile}'"
         sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
+    elif [ ${status_wget} -eq 3 ]; then
+        echo -e "${output} ${download_failed}"
+        reason="I/O error"
+        log "error" "Download failed (${reason}): '${outfile}'"
+        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+    elif [ ${status_wget} -eq 4 ]; then
+        echo -e "${output} ${download_failed}"
+        reason="network failure"
+        log "error" "Download failed (${reason}): '${outfile}'"
+        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+    elif [ ${status_wget} -eq 5 ]; then
+        echo -e "${output} ${download_failed}"
+        reason="SSL verification failure"
+        log "error" "Download failed (${reason}): '${outfile}'"
+        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
     else
         echo -e "${output} ${download_failed}"
-        log "warning" "Download failed: '${outfile}'"
+        log "error" "Download failed: '${outfile}'"
+        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
     fi
 }
 
