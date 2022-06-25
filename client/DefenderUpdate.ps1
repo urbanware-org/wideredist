@@ -250,9 +250,8 @@ If ($RemoveSingleQuotesFromPath -eq 1) {
     $Definitions = $Definitions.Replace("'", "")
 }
 
-# The directory path for the 64-bit definition files below is pre-defined. Due to this, it must not
-# be changed manually (e.g. to 'x86_64' or whatever) as this will lead to errors resulting in an
-# update failure of the 64-bit definitions.
+# The directory path for the 64-bit definition files below is predefined and must not be changed
+# (e.g. to 'x86_64' or whatever) as this will lead to errors resulting in an update failure.
 $Definitions = $Definitions.Replace("`"", "")
 $Definitions_x86 = "$Definitions\x86"
 $Definitions_x64 = "$Definitions\x64"
@@ -346,6 +345,8 @@ If ($DownloadErrors -gt 3) {
                                        "install the"
     Write-Host -ForegroundColor Yellow "available files. However, this can result in outdated definitions."
     Write-Event-Warn 138 "At least one definition file download has failed. Definitions may be outdated."
+
+    $ExitDelay = $WaitOnError
 }
 
 Try {
@@ -368,7 +369,7 @@ Try {
 
 # If all definition file downloads have failed (see the download error handling code further up)
 # triggering a signature update does not make any sense at all
-If ($DownloadErrors -lt 8) {
+If ($DownloadErrors -lt 4) {
     Write-Host
     Write-Host "Installing definitions. Please wait, this may take a while."
 
