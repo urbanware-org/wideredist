@@ -87,6 +87,16 @@ check_version() {
     fi
 }
 
+clean_up() {
+    # No need to check if proxy address is set, as non-existing environment
+    # variables will be ignored by 'unset' anyway
+    unset http_proxy
+    unset https_proxy
+
+    rm -fR ${update_path}
+    rm -fR /tmp/wideredist*
+}
+
 download_file() {
     weburl="$1"
     outfile="$2"
