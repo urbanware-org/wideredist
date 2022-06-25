@@ -350,7 +350,7 @@ if [ -e "${definition_path}" ]; then
     fi
 
     for object in $(find "${definition_path}"); do
-        touch -ca "${object}"
+        touch -ca "${object}" &>/dev/null
         if [ $? -ne 0 ]; then
             error \
               "Access denied on '${object}', ${permission_issue}" 5
