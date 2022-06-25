@@ -371,7 +371,13 @@ fi
 mkdir -p ${update_path_x86}
 mkdir -p ${update_path_x64}
 
-# Default value for file verification
+# Default values for download status and file verification
+if [ ! "${skip_x86_download}" = "1" ]; then
+    status_download_fail_max=7
+else
+    status_download_fail_max=4
+fi
+status_download_fail_count=0
 status_verify_fail=0
 
 # Start time measurement here
