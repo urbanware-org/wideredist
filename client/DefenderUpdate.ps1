@@ -339,7 +339,7 @@ If ($DownloadErrors -gt 3) {
     Write-Event-Error 139 "All definition downloads have failed. Please check your network configuration."
 
     $ExitCode = -1
-    $ExitDelay = 10
+    $ExitDelay = $WaitOnError
 } ElseIf ($DownloadErrors -gt 0) {
     Write-Host
     Write-Host -ForegroundColor Yellow "At least one definition file download has failed. Trying to" `
