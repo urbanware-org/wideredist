@@ -385,23 +385,32 @@ echo -e "Version ${version} (Released ${timestamp})"
 echo -e "Copyright (c) 2022 by Ralf Kilian"
 echo -e "\e[0m"
 
-if [ $(whoami) = "root" ]; then
-    echo -e "Notice that you are running this script as \e[93mroot\e[0m" \
-            "which is a potential \e[91mrisk\e[0m."
-    echo -e "Due to this, it is strongly recommended to run it with a" \
-            "\e[96mdedicated user\e[0m"
-    echo -e "having the required permissions instead."
-    echo
-    cancel="Press \e[96mCtrl\e[37m+\e[0m\e[96mC\e[0m to \e[91mcancel\e[0m. "
-    for seconds in {10..1}; do
-        if [ ${seconds} -eq 1 ]; then
-            echo -ne "Proceeding in 1 second. ${cancel}  \r"
-        else
-            echo -ne "Proceeding in ${seconds} seconds. ${cancel} \r"
-        fi
-        sleep 1
-    done
-fi
+# By default, 'wget', which is used to download the definition files, checks
+# the certificate of the corresponding servers (accessed via HTTPS) from
+# which the files are downloaded, thus the use of a dedicated user is not
+# necessarily required. Furthermore, the servers from which the files are
+# retrieved belong to a trusted source as these are the original servers from
+# Microsoft (see 'wideredist.urls' for details).
+#
+# Due to this, the following block has been commented out.
+
+#if [ $(whoami) = "root" ]; then
+#    echo -e "Notice that you are running this script as \e[93mroot\e[0m" \
+#            "which is a potential \e[91mrisk\e[0m."
+#    echo -e "Due to this, it is strongly recommended to run it with a" \
+#            "\e[96mdedicated user\e[0m"
+#    echo -e "having the required permissions instead."
+#    echo
+#    cancel="Press \e[96mCtrl\e[37m+\e[0m\e[96mC\e[0m to \e[91mcancel\e[0m. "
+#    for seconds in {10..1}; do
+#        if [ ${seconds} -eq 1 ]; then
+#            echo -ne "Proceeding in 1 second. ${cancel}  \r"
+#        else
+#            echo -ne "Proceeding in ${seconds} seconds. ${cancel} \r"
+#        fi
+#        sleep 1
+#    done
+#fi
 
 if [ ${route} -eq 1 ]; then
     echo -e "Added route to \e[96m${route_target}\e[0m" \
