@@ -368,7 +368,8 @@ Try {
 }
 
 # If all definition file downloads have failed (see the download error handling code further up)
-# triggering a signature update does not make any sense at all
+# triggering a signature update does not make any sense at all, so only proceed if at least one
+# of the downloads was successful (which results in that the count of errors is less than 4)
 If ($DownloadErrors -lt 4) {
     Write-Host
     Write-Host "Installing definitions. Please wait, this may take a while."
