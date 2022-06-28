@@ -26,7 +26,8 @@ definition_path="/var/www/html/defender"
 # kept untainted.
 
 # User agent used for the download (required since version 1.2.0, otherwise
-# the downloads will not work), by default from Chrome on Windows 10
+# the downloads will not work). The user agent string is the one from Chrome
+# on Windows 10 by default.
 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
 
 # Skip definition download for the 32-bit platform:
