@@ -134,9 +134,17 @@ download_file() {
     fi
 
     if [ ${status_size} -eq 0 ] && [ ${status_wget} -eq 0 ]; then
-        echo -e "${output} ${download_completed}"
-        log "notice" "Download completed: '${outfile}'"
-        sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
+        get_mime_type "${outfile}"
+        if [ ${is_executable} -eq 1 ]; then
+            echo -e "${output} ${download_completed}"
+            log "notice" "Download completed: '${outfile}'"
+            sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
+        else
+            echo -e "${output} ${download_failed}"
+            reason="MIME type mismatch"
+            log "error" "Download failed (${reason}): '${outfile}'"
+            status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+        fi
     elif [ ${status_wget} -eq 3 ]; then
         echo -e "${output} ${download_failed}"
         reason="I/O error"
@@ -175,6 +183,16 @@ error() {
 
     clean_up
     exit ${exit_code}
+}
+
+get_mime_type() {
+    file_name="$1"
+
+    is_executable=0
+    file -b "${file_name}" | grep -i "exe" &>/dev/null
+    if [ $? -eq 0 ]; then
+        is_executable=1
+    fi
 }
 
 log() {
