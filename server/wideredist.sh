@@ -108,6 +108,7 @@ download_file() {
     download_running="\e[36mDownloading...\e[0m"
     download_file="$(sed -e "s#${update_path}##g" <<< ${outfile})"
     download_count="${file_current} of ${file_count}"
+    is_successful=0
     wget_timeout=120
 
     output="  File '${download_file}'\t(${download_count}):"
@@ -139,6 +140,7 @@ download_file() {
             echo -e "${output} ${download_completed}"
             log "notice" "Download completed: '${outfile}'"
             sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
+            is_successful=1
         else
             echo -e "${output} ${download_failed}"
             reason="MIME type mismatch"
@@ -165,6 +167,10 @@ download_file() {
         echo -e "${output} ${download_failed}"
         log "error" "Download failed: '${outfile}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+    fi
+
+    if [ -f ${outfile} ] && [ ${is_successful} -eq 0 ]; then
+        rm -f ${outfile}
     fi
 }
 
