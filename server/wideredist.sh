@@ -143,7 +143,8 @@ download_file() {
             echo -e "${output} ${download_failed}"
             reason="MIME type mismatch"
             log "error" "Download failed (${reason}): '${outfile}'"
-            status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+            status_download_fail_count=$((
+                ${status_download_fail_count} + 1 ))
         fi
     elif [ ${status_wget} -eq 3 ]; then
         echo -e "${output} ${download_failed}"
