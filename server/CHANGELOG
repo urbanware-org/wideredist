@@ -3,6 +3,9 @@ CHANGELOG (WiDeRedist)
 
     Next release (outstanding)
 
+        + Added the MIME check to the server-side script in order to verify
+          that the downloaded files are executables.
+
         * Revised the client-side script in general (some negligible changes).
         * Revised the download error handling inside the client-side script.
         * Revised the target directory content management code in the client-
