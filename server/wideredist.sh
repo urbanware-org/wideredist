@@ -10,8 +10,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 #
 
-version="1.5.3"
-timestamp="2022-03-17"
+version="1.6.0"
+timestamp="2022-07-04"
 
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')

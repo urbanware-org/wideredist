@@ -4,7 +4,7 @@ README (WiDeReDist)
     Project
 
         WiDeReDist
-        Version 1.5.3
+        Version 1.6.0
         Copyright (c) 2022 by Ralf Kilian and Simon Gauer
 
         GitHub: https://github.com/urbanware-org/wideredist

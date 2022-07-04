@@ -1,7 +1,7 @@
 
 CHANGELOG (WiDeRedist)
 
-    Next release (outstanding)
+    Version 1.6.0 (2022-07-04)
 
         + Added the MIME check to the server-side script in order to verify
           that the downloaded files are executables.
