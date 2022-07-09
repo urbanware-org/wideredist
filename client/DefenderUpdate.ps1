@@ -88,7 +88,9 @@ Function Exit-Script([Int]$ExitCode, [Int]$ExitDelay) {
 
 Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int]$FileCurrent,
                              [Int]$FileCount) {
-    Write-Host "  File '$FileDestination' `t($FileCurrent of $FileCount): " -NoNewline
+    Status-Output "  File '$FileDestination' `t($FileCurrent of $FileCount): " `
+                    "Fetching..." DarkCyan
+
     $FileChecksumSource = "$FileSource.sha256"
     $FileChecksumDestination = "$FileDestination.sha256"
     Try {
@@ -100,16 +102,21 @@ Function Get-Definition-File([String]$FileSource, [String]$FileDestination, [Int
                 $HashLocal = (Get-Content "$FileChecksumDestination")
                 $HashFromFile = (Get-FileHash "$FileDestination" -Algorithm SHA256).Hash
                 If ($HashLocal -eq $HashFromFile) {
-                    Write-Host -ForegroundColor Green "Already downloaded."
+                    Status-Output "  File '$FileDestination' `t($FileCurrent of $FileCount): " `
+                                    "Already downloaded." Green $True
                     Return
                 }
             }
         } Catch [System.Exception] { }
 
+        Status-Output "  File '$FileDestination' `t($FileCurrent of $FileCount): " `
+                        "Downloading..." DarkCyan
         Invoke-WebRequest -Uri "$FileSource" -OutFile "$FileDestination"
-        Write-Host -ForegroundColor Green "Download completed."
+        Status-Output "  File '$FileDestination' `t($FileCurrent of $FileCount): " `
+                        "Download completed." Green $True
     } Catch [System.Exception] {
-        Write-Host -ForegroundColor Red "Download failed."
+        Status-Output "  File '$FileDestination' `t($FileCurrent of $FileCount): " `
+                        "Download failed.   " Red $True
         Write-Event-Warn 131 "Definition file download failed for `"$FileDestination`"."
         $Script:DownloadErrors += 1
     }
@@ -130,6 +137,14 @@ Function Read-Config([String]$ConfigKey, [String]$Fallback) {
         Return $Fallback
     }
     Return $KeyLine.Split("=")[1].Replace("`"", "").Trim()
+}
+
+Function Status-Output([String]$StatusLine, [String]$Status, [String]$StatusColor, [Bool]$NewLine) {
+    Write-Host "$StatusLine" -NoNewline
+    Write-Host "$Status`r" -ForegroundColor $StatusColor -NoNewline
+    If ($NewLine) {
+        Write-Host
+    }
 }
 
 Function Write-Event($EventLogEntryType, [Int]$EventID, [String]$Message) {
