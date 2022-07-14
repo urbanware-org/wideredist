@@ -136,7 +136,7 @@ download_file() {
 
     if [ ${status_size} -eq 0 ] && [ ${status_wget} -eq 0 ]; then
         get_mime_type "${outfile}"
-        if [ ${is_executable} -eq 1 ]; then
+        if [ ${is_executable} -eq 1 ] || [ ${is_executable} -eq 2 ]; then
             echo -e "${output} ${download_completed}"
             log "notice" "Download completed: '${outfile}'"
             sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
@@ -195,10 +195,18 @@ error() {
 get_mime_type() {
     file_name="$1"
 
-    is_executable=0
-    file -b "${file_name}" | grep -i "exe" &>/dev/null
+    command -v file &>/dev/null
     if [ $? -eq 0 ]; then
-        is_executable=1
+        is_executable=0
+        file -b "${file_name}" | grep -i "exe" &>/dev/null
+        if [ $? -eq 0 ]; then
+            is_executable=1
+        fi
+    else
+        # Skip the MIME type check in case the 'file' tool is not installed on
+        # the system. Due to the fact that the actual file type cannot be
+        # determined without the tool, the value 2 is returned.
+        is_executable=2
     fi
 }
 
