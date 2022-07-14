@@ -34,6 +34,7 @@ The project does not have many requirements.
 
 *   ***Linux*** or ***BSD***:
     *   Some web server such as *Apache* or *nginx* (latter has been used in development)
+    *   The `file` tool (optional) to verify the MIME type of the downloaded files.
     *   The `rsync` package (should already be pre-installed, depending on the distribution)
     *   The `wget` package (should already be pre-installed, also depending on the distribution)
     *   The *Bash* shell (default in most *Linux* distributions, but usually not on *BSD*)

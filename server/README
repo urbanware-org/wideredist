@@ -36,6 +36,8 @@ README (WiDeReDist)
 
             - Some web server such as Apache or nginx (latter has been used in
               development)
+            - The 'file' tool (optional) to verify the MIME type of the
+              downloaded files.
             - The 'rsync' package (should already be pre-installed, depending
               on the distribution)
             - The 'wget' package (should already be pre-installed, also
