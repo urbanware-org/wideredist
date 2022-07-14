@@ -1,6 +1,15 @@
 
 CHANGELOG (WiDeRedist)
 
+    Version 1.6.1 (2022-07-14)
+
+        * Revised the download status output inside the client-side script
+          (negligible changes).
+
+        # Fixed the MIME type mismatch download failure inside the server-side
+          script (which occurred in case the 'file' tool is not installed on
+          the system).
+
     Version 1.6.0 (2022-07-04)
 
         + Added the MIME check to the server-side script in order to verify
