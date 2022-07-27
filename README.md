@@ -32,18 +32,18 @@ The project does not have many requirements.
 
 ### Server
 
-*   ***Linux*** or ***BSD***:
-    *   Some web server such as *Apache* or *nginx* (latter has been used in development)
-    *   The `file` tool (optional) to verify the MIME type of the downloaded files.
-    *   The `rsync` package (should already be pre-installed, depending on the distribution)
-    *   The `wget` package (should already be pre-installed, also depending on the distribution)
-    *   The *Bash* shell (default in most *Linux* distributions, but usually not on *BSD*)
+*   Either a ***Linux*** or ***BSD*** operating system
+*   Some web server such as *Apache* or *nginx* (latter has been used in development and in this guide)
+*   The *Bash* shell (must be installed, but it does not have to be set as the default one)
+*   The following tools or packages:
+    *   `file` (optional, used to verify the MIME type of the downloaded files)
+    *   `rsync`
+    *   `wget`
 
 ### Client
 
-*   ***Windows***:
-    *   *Windows* 7 or higher with 32-bit or 64-bit architecture
-    *   *PowerShell* 2.0 or higher
+*   *Windows* 7 or higher with 32-bit or 64-bit architecture
+*   *PowerShell* 2.0 or higher
 
 ## Installation
 
