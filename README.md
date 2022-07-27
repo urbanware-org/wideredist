@@ -33,7 +33,7 @@ The project does not have many requirements.
 ### Server
 
 *   Either a ***Linux*** or ***BSD*** operating system
-*   Some web server such as *Apache* or *nginx* (latter has been used in development and in this guide)
+*   Some web server such as *Apache* or *nginx* (latter has been used in development)
 *   The *Bash* shell (must be installed, but it does not have to be set as the default one)
 *   The following tools or packages:
     *   `file` (optional, used to verify the MIME type of the downloaded files)
