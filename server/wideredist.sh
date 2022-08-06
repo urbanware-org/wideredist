@@ -17,10 +17,21 @@ script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
 version_update=0
 
-check_command() {
-    command -v "$1" &>/dev/null
+check_requirements() {
+    command -v rsync &>/dev/null
     if [ $? -ne 0 ]; then
-        error "The '$1' tool does not seem to be installed" 7
+        error "The required 'rsync' tool does not seem to be installed" 7
+    fi
+
+    command -v wget &>/dev/null
+    if [ $? -ne 0 ]; then
+        use_wget=0
+        command -v curl &>/dev/null
+        if [ $? -ne 0 ]; then
+            error "Neither 'curl' nor 'wget' seems to be installed" 7
+        fi
+    else
+        use_wget=1
     fi
 }
 
@@ -284,8 +295,8 @@ fi
 
 log "notice" "Running WiDeRedist ${version} (${timestamp})"
 
-check_command rsync
-check_command wget
+use_wget=1  # default
+check_requirements
 
 if [ -f "${script_dir}/wideredist.conf" ]; then
     config_file="${script_dir}/wideredist.conf"
