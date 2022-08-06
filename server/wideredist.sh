@@ -124,15 +124,22 @@ download_file() {
 
     output="  File '${download_file}'\t(${download_count}):"
     echo -ne "${output} ${download_running}\r"
-    wget -T ${wget_timeout} -U "${user_agent}" "${weburl}" -q -O ${outfile}
-    status_wget=$?
+
+    if [ $use_wget -eq 1 ]; then
+        wget -T ${wget_timeout} -U "${user_agent}" "${weburl}" -q \
+             -O ${outfile}
+    else
+        curl --connect-timeout ${wget_timeout} -A "${user_agent}" \
+             -L "${weburl}" -s -o ${outfile}
+    fi
+    status_download=$?
 
     # In case the download succeeded, perform a verification by file size to
     # ensure that the downloaded file has actually been downloaded. In case
     # the link is broken, its size will be significantly less than the actual
     # definition update.
     status_size=1
-    if [ ${status_wget} -eq 0 ]; then
+    if [ ${status_download} -eq 0 ]; then
         if [ -z "${verify_size}" ]; then
             verify_size=100
         fi
@@ -145,7 +152,7 @@ download_file() {
         fi
     fi
 
-    if [ ${status_size} -eq 0 ] && [ ${status_wget} -eq 0 ]; then
+    if [ ${status_size} -eq 0 ] && [ ${status_download} -eq 0 ]; then
         get_mime_type "${outfile}"
         if [ ${is_executable} -eq 1 ] || [ ${is_executable} -eq 2 ]; then
             echo -e "${output} ${download_completed}"
@@ -159,17 +166,17 @@ download_file() {
             status_download_fail_count=$((
                 ${status_download_fail_count} + 1 ))
         fi
-    elif [ ${status_wget} -eq 3 ]; then
+    elif [ ${status_download} -eq 3 ]; then
         echo -e "${output} ${download_failed}"
         reason="I/O error"
         log "error" "Download failed (${reason}): '${outfile}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
-    elif [ ${status_wget} -eq 4 ]; then
+    elif [ ${status_download} -eq 4 ]; then
         echo -e "${output} ${download_failed}"
         reason="network failure"
         log "error" "Download failed (${reason}): '${outfile}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
-    elif [ ${status_wget} -eq 5 ]; then
+    elif [ ${status_download} -eq 5 ]; then
         echo -e "${output} ${download_failed}"
         reason="SSL verification failure"
         log "error" "Download failed (${reason}): '${outfile}'"
