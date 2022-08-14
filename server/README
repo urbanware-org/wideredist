@@ -40,7 +40,7 @@ README (WiDeReDist)
               set as the default one)
             - The following tools or packages:
                 - 'curl' or 'wget'
-                - 'file' (optional, used to verify the MIME type of the downloaded files)
+                - 'file' (optional, used to verify the MIME type of files)
                 - 'rsync'
 
     Usage
