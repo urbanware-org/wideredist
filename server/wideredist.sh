@@ -38,7 +38,14 @@ check_requirements() {
 check_version() {
     version_temp="/tmp/wideredist_version.tmp"
     rm -f ${version_temp}
-    wget -U "${user_agent}" "${version_json}" -q -O ${version_temp}
+
+    if [ $use_wget -eq 1 ]; then
+        wget -T ${wget_timeout} -U "${user_agent}" "${version_json}" -q \
+             -O ${version_temp}
+    else
+        curl --connect-timeout ${wget_timeout} -A "${user_agent}" \
+             -L "${version_json}" -s -o ${version_temp}
+    fi
 
     if [ -z "${wideredist_update_check}" ] ||
        [ ${wideredist_update_check} -eq 0 ]; then
