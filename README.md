@@ -36,9 +36,9 @@ The project does not have many requirements.
 *   Some web server such as *Apache* or *nginx* (latter has been used in development)
 *   The *Bash* shell (must be installed, but it does not have to be set as the default one)
 *   The following tools or packages:
+    *   `curl` or `wget`
     *   `file` (optional, used to verify the MIME type of the downloaded files)
     *   `rsync`
-    *   `wget`
 
 ### Client
 
