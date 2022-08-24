@@ -39,7 +39,7 @@ check_version() {
     version_temp="/tmp/wideredist_version.tmp"
     rm -f ${version_temp}
 
-    if [ $use_wget -eq 1 ]; then
+    if [ ${use_wget} -eq 1 ]; then
         wget -T ${wget_timeout} -U "${user_agent}" "${version_json}" -q \
              -O ${version_temp}
     else
@@ -132,7 +132,7 @@ download_file() {
     output="  File '${download_file}'\t(${download_count}):"
     echo -ne "${output} ${download_running}\r"
 
-    if [ $use_wget -eq 1 ]; then
+    if [ ${use_wget} -eq 1 ]; then
         wget -T ${wget_timeout} -U "${user_agent}" "${weburl}" -q \
              -O ${outfile}
     else
@@ -527,7 +527,7 @@ if [ ! "${skip_x86_download}" = "1" ]; then
     echo -e "\nDuplicated platform independent file for both platforms."
 fi
 
-if [ $status_verify_fail -eq 1 ]; then
+if [ ${status_verify_fail} -eq 1 ]; then
     echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
             "the problem persists, the\ndownload link may be broken. Check" \
             "the config and URL file for details."
