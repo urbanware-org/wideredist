@@ -150,12 +150,17 @@ download_file() {
         if [ -z "${verify_size}" ]; then
             verify_size=100
         fi
-        file_size=$(ls -s "${outfile}" | awk '{ print $1 }')
-        if [ ${file_size} -lt ${verify_size} ]; then
+        if [ -e "${outfile}" ]; then
+            file_size=$(ls -s "${outfile}" | awk '{ print $1 }')
+            if [ ${file_size} -lt ${verify_size} ]; then
+                log "warning" "File verification failed: '${outfile}'"
+                status_verify_fail=1
+            else
+                status_size=0
+            fi
+        else
             log "warning" "File verification failed: '${outfile}'"
             status_verify_fail=1
-        else
-            status_size=0
         fi
     fi
 
