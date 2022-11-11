@@ -516,7 +516,7 @@ elif [ ${status_download_fail_count} -gt 0 ]; then
       "\n\e[93mProceeding even though at least one download has failed.\e[0m"
     log "warning" "Proceeding even though at least one download has failed"
 else
-    log "notice" "Definition downloads have been finished."
+    log "notice" "Definition downloads have been finished"
 fi
 
 if [ ! "${skip_x86_download}" = "1" ]; then
