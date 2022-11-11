@@ -295,7 +295,7 @@ if [ -f "${script_dir}/wideredist.upd" ]; then
 
     if [ -f "${script_dir}/wideredist.conf.default" ] && \
        [ -f "${script_dir}/wideredist.conf.new" ]; then
-         rm -f ${script_dir}/wideredist.conf.new
+        rm -f ${script_dir}/wideredist.conf.new
     fi
 
     # Replace (overwrite to be precise) this script file on the fly and run
