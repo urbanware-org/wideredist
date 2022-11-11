@@ -164,38 +164,41 @@ download_file() {
         fi
     fi
 
+    # Remove double slashes from path for log entries
+    outfile_log=$(sed -e "s/\/\//\//g" <<< ${outfile})
+
     if [ ${status_size} -eq 0 ] && [ ${status_download} -eq 0 ]; then
         get_mime_type "${outfile}"
         if [ ${is_executable} -eq 1 ] || [ ${is_executable} -eq 2 ]; then
             echo -e "${output} ${download_completed}"
-            log "notice" "Download completed: '${outfile}'"
+            log "notice" "Download completed: '${outfile_log}'"
             sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
             is_successful=1
         else
             echo -e "${output} ${download_failed}"
             reason="MIME type mismatch"
-            log "error" "Download failed (${reason}): '${outfile}'"
+            log "error" "Download failed (${reason}): '${outfile_log}'"
             status_download_fail_count=$((
                 ${status_download_fail_count} + 1 ))
         fi
     elif [ ${status_download} -eq 3 ]; then
         echo -e "${output} ${download_failed}"
         reason="I/O error"
-        log "error" "Download failed (${reason}): '${outfile}'"
+        log "error" "Download failed (${reason}): '${outfile_log}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
     elif [ ${status_download} -eq 4 ]; then
         echo -e "${output} ${download_failed}"
         reason="network failure"
-        log "error" "Download failed (${reason}): '${outfile}'"
+        log "error" "Download failed (${reason}): '${outfile_log}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
     elif [ ${status_download} -eq 5 ]; then
         echo -e "${output} ${download_failed}"
         reason="SSL verification failure"
-        log "error" "Download failed (${reason}): '${outfile}'"
+        log "error" "Download failed (${reason}): '${outfile_log}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
     else
         echo -e "${output} ${download_failed}"
-        log "error" "Download failed: '${outfile}'"
+        log "error" "Download failed: '${outfile_log}'"
         status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
     fi
 
