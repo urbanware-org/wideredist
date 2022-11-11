@@ -568,8 +568,8 @@ if [ ! -z "${version_latest}" ]; then
             # as 'wideredist.conf.default', so the existing config file will
             # be kept untainted.
             #
-            # The update of the server-side script performed when it is being
-            # run again.
+            # The actual update of the server-side script is performed on the
+            # next startup.
 
             rm -fR /tmp/wideredist*
             tarfile="wideredist-${version_latest}.tar.gz"
