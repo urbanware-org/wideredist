@@ -1,6 +1,14 @@
 
 CHANGELOG (WiDeRedist)
 
+    Version 1.6.2 (2022-11-19)
+
+        + Added alternative download to the server-side script using 'curl' as
+          fallback if 'wget' is not installed.
+
+        * Revised some code of the server-side script (negligible changes).
+        * Revised the requirement check code inside the server-side script.
+
     Version 1.6.1 (2022-07-14)
 
         * Revised the download status output inside the client-side script
