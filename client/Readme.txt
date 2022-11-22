@@ -3,7 +3,7 @@ README (WiDeReDist)
 
     Project
 
-        WiDeReDist
+        WiDeReDist (client-side component)
         Version 1.6.2
         Copyright (c) 2022 by Ralf Kilian and Simon Gauer
 
