@@ -450,7 +450,7 @@ status_download_fail_count=0
 status_verify_fail=0
 
 # Start time measurement here
-timestamp_start="$(date -u +%s)"
+timestamp_start=$SECONDS
 
 echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
@@ -622,11 +622,11 @@ fi
 clean_up
 
 # Get current timestamp and consequential elapsed time
-timestamp_end="$(date -u +%s)"
-time_elapsed=$(( ${timestamp_end} - ${timestamp_start} ))
+timestamp_end=$(( SECONDS - start_time ))
+time_elapsed=$(date -ud "@$timestamp_end" +'%H:%M:%S')
 
 echo -e "Process finished."
-echo -e "Elapsed time: ${time_elapsed} seconds\n"
+echo -e "Elapsed time: ${time_elapsed}\n"
 log "notice" "Process finished (within ${time_elapsed} seconds)"
 log "notice" "Please check the log messages above for errors"
 log "notice" "Exiting"
