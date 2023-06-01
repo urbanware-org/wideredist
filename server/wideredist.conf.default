@@ -2,7 +2,7 @@
 #                                                                            #
 #  wideredist.conf                                                           #
 #                                                                            #
-#  Configuration file for the 'wideredist.sh' script.                        #
+#  Main configuration file for the 'wideredist.sh' script.                   #
 #                                                                            #
 #  The options inside this file cannot be set via command-line arguments.    #
 #                                                                            #
