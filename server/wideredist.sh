@@ -347,24 +347,6 @@ version_url="${wideredist_url}/releases/latest"
 version_json=$(sed -e "s/github\.com/api\.github\.com\/repos/g" \
                    <<< ${version_url})
 
-# The separate (and optional) file 'wideredist.urls' is intended to simply
-# contain the Microsoft URLs to the files downloaded by WiDeRedist. The main
-# purpose of this is that if these URLs have changed (quite unlikely, but has
-# happened once before), only this file must be replaced and the configuration
-# file 'wideredist.conf' can remain untainted.
-if [ -f "${script_dir}/wideredist.urls" ]; then
-    # This will overwrite the values given by 'wideredist.conf'
-    source ${script_dir}/wideredist.urls
-fi
-
-if [ -z "${mpam_fe_x86}" ] || [ -z "${mpam_fe_x64}" ]  || \
-   [ -z "${mpas_fe_x86}" ] || [ -z "${mpas_fe_x64}" ]  || \
-   [ -z "${nis_full_x86}" ] || [ -z "${nis_full_x64}" ] || \
-   [ -z "${mpam_d_ind}" ]; then
-    error \
-      "At least one Windows Defender definition download link is missing" 2
-fi
-
 # Just a supplement for repeating error messages
 permission_issue="most likely a permission issue"
 
@@ -452,6 +434,52 @@ status_verify_fail=0
 # Start time measurement here
 timestamp_start=$SECONDS
 
+# Since version 1.6.3 of WiDeRedist the separate and so called download URL
+# file 'wideredist.urls' is required and not optional anymore as before.
+#
+# The file contains all the Microsoft URLs to the files downloaded by
+# WiDeRedist. Before, those could also be set inside the main config file
+# 'wideredist.conf', but the URLs from that file will be ignored.
+#
+# The main purpose of the download URL file separate file is that if any of
+# the Microsoft URLs have changed (quite unlikely, but has happened once
+# before), only this file must be replaced and the main config file
+# 'wideredist.conf' can remain untainted.
+#
+# If the download URL file exists it will be updated (if necessary) and if
+# not, the latest version will be downloaded.
+wideredist_gh="https://raw.githubusercontent.com/urbanware-org/wideredist"
+urls_downloaded=0
+urls_updated=0
+if [ ! -f "${script_dir}/wideredist.urls" ]; then
+    wget "$wideredist_gh/main/server/wideredist.urls" \
+         -O "${script_dir}/wideredist.urls" &>/dev/null
+    urls_downloaded=1
+else
+    wget "$wideredist_gh/main/server/wideredist.urls" \
+         -O "${script_dir}/wideredist.urls.latest" &>/dev/null
+    diff "${script_dir}/wideredist.urls" \
+         "${script_dir}/wideredist.urls.latest" &>/dev/null
+    if [ $? -ne 0 ]; then
+        rm "${script_dir}/wideredist.urls"
+        mv "${script_dir}/wideredist.urls.latest" "${script_dir}/wideredist.urls"
+        urls_updated=1
+    else
+        urls_updated=0
+    fi
+fi
+source ${script_dir}/wideredist.urls
+rm -f "${script_dir}/wideredist.urls.latest"
+
+# Check if any of download link URLs is missing, as all are required
+if [ -z "${mpam_fe_x86}" ] || [ -z "${mpam_fe_x64}" ]  || \
+   [ -z "${mpas_fe_x86}" ] || [ -z "${mpas_fe_x64}" ]  || \
+   [ -z "${nis_full_x86}" ] || [ -z "${nis_full_x64}" ] || \
+   [ -z "${mpam_d_ind}" ]; then
+    error \
+      "At least one Windows Defender definition download link is missing" 2
+fi
+
 echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
@@ -486,6 +514,17 @@ echo -e "\e[0m"
 #        sleep 1
 #    done
 #fi
+
+if [ ${urls_downloaded} -eq 1 ]; then
+    echo -e "Downloading download link URL file.\n"
+    log "notice" "Downloading download link URL file"
+elif [ ${urls_updated} -eq 1 ]; then
+    echo -e "Updating download link URL file.\n"
+    log "notice" "Updating download link URL file"
+else
+    echo -e "Download link URL file is \e[92mup-to-date\e[0m.\n"
+    log "notice" "Download link URL file is up-to-date"
+fi
 
 if [ ${route} -eq 1 ]; then
     echo -e "Added route to \e[96m${route_target}\e[0m" \
