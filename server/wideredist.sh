@@ -504,7 +504,7 @@ if [ ! "${skip_x86_download}" = "1" ]; then
     download_file ${mpas_fe_x86}      ${update_path_x86}/mpas-fe.exe  2 3
     download_file ${nis_full_x86}     ${update_path_x86}/nis_full.exe 3 3
 else
-    echo -e "\nSkipping \e[96m32-bit\e[0m definition files."
+    echo -e "\nSkipping download of \e[96m32-bit\e[0m definition files."
     rm -f ${definition_path}/x86/*
 fi
 
