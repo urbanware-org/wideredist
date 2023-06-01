@@ -58,7 +58,7 @@ proxy_address=""
 # Gateway address for route to proxy
 route_gateway=""
 
-# Remove route again when after downloading the definition files:
+# Remove route again after downloading the definition files:
 #
 #   Options:
 #     0 = do not remove route
