@@ -539,15 +539,17 @@ echo -e "\e[0m"
 #    done
 #fi
 
-if [ ${urls_downloaded} -eq 1 ]; then
-    echo -e "Downloading download link URL file.\n"
-    log "notice" "Downloading download link URL file"
-elif [ ${urls_updated} -eq 1 ]; then
-    echo -e "Updating download link URL file.\n"
-    log "notice" "Updating download link URL file"
-else
-    echo -e "Download link URL file is \e[92mup-to-date\e[0m.\n"
-    log "notice" "Download link URL file is up-to-date"
+if [ ${url_update} -eq 1 ]; then
+    if [ ${urls_downloaded} -eq 1 ]; then
+        echo -e "Downloading download link URL file.\n"
+        log "notice" "Downloading download link URL file"
+    elif [ ${urls_updated} -eq 1 ]; then
+        echo -e "Updating download link URL file.\n"
+        log "notice" "Updating download link URL file"
+    else
+        echo -e "Download link URL file is \e[92mup-to-date\e[0m.\n"
+        log "notice" "Download link URL file is up-to-date"
+    fi
 fi
 
 if [ ${route} -eq 1 ]; then
