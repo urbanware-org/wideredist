@@ -40,10 +40,10 @@ check_version() {
     rm -f ${version_temp}
 
     if [ ${use_wget} -eq 1 ]; then
-        wget -T ${wget_timeout} -U "${user_agent}" "${version_json}" -q \
-             -O ${version_temp}
+        wget -T ${dl_timeout} -U "${user_agent}" "${version_json}" \
+             -O ${version_temp} -q
     else
-        curl --connect-timeout ${wget_timeout} -A "${user_agent}" \
+        curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
              -L "${version_json}" -s -o ${version_temp}
     fi
 
@@ -127,16 +127,15 @@ download_file() {
     download_file="$(sed -e "s#${update_path}##g" <<< ${outfile})"
     download_count="${file_current} of ${file_count}"
     is_successful=0
-    wget_timeout=120
 
     output="  File '${download_file}'\t(${download_count}):"
     echo -ne "${output} ${download_running}\r"
 
     if [ ${use_wget} -eq 1 ]; then
-        wget -T ${wget_timeout} -U "${user_agent}" "${weburl}" -q \
-             -O ${outfile}
+        wget -T ${dl_timeout} -U "${user_agent}" "${weburl}" \
+             -O ${outfile} -q
     else
-        curl --connect-timeout ${wget_timeout} -A "${user_agent}" \
+        curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
              -L "${weburl}" -s -o ${outfile}
     fi
     status_download=$?
@@ -317,7 +316,6 @@ fi
 
 log "notice" "Running WiDeRedist ${version} (${timestamp})"
 
-use_wget=1  # default
 check_requirements
 
 if [ -f "${script_dir}/wideredist.conf" ]; then
@@ -431,6 +429,9 @@ fi
 status_download_fail_count=0
 status_verify_fail=0
 
+# Timeout value for download tool
+dl_timeout=120
+
 # Start time measurement here
 timestamp_start=$SECONDS
 
@@ -496,10 +497,10 @@ fi
 rm -f "${script_dir}/wideredist.urls.latest"
 
 # Check if any of download link URLs is missing, as all are required
-if [ -z "${mpam_fe_x86}" ] || [ -z "${mpam_fe_x64}" ]  || \
-   [ -z "${mpas_fe_x86}" ] || [ -z "${mpas_fe_x64}" ]  || \
+if [ -z "${mpam_fe_x86}" ] || [ -z "${mpam_fe_x64}" ] || \
+   [ -z "${mpas_fe_x86}" ] || [ -z "${mpas_fe_x64}" ] || \
    [ -z "${nis_full_x86}" ] || [ -z "${nis_full_x64}" ] || \
-   [ -z "${mpam_d_ind}" ]; then
+   [ -z "${mpam_d_ind}" ] || [ ${url_read_error} -eq 1 ]; then
     error \
       "At least one Windows Defender definition download link is missing" 2
 fi
@@ -642,9 +643,16 @@ if [ ! -z "${version_latest}" ]; then
             rm -fR /tmp/wideredist*
             tarfile="wideredist-${version_latest}.tar.gz"
 
-            wget -U "${user_agent}" \
-                 "${wideredist_url}/archive/${version_latest}.tar.gz" -q \
-                 -O /tmp/${tarfile}
+            if [ ${use_wget} -eq 1 ]; then
+                wget -T ${dl_timeout} -U "${user_agent}" \
+                     ${wideredist_url}/archive/${version_latest}.tar.gz \
+                     -O /tmp/${tarfile} -q
+            else
+                curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
+                     -L "${wideredist_url}/archive/${version_latest}.tar.gz" \
+                     -s -o "/tmp/${tarfile}"
+            fi
+
             tar xfv /tmp/${tarfile} -C /tmp/ &>/dev/null
 
             # Client-side files
