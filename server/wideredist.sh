@@ -448,27 +448,51 @@ timestamp_start=$SECONDS
 #
 # If the download URL file exists it will be updated (if necessary) and if
 # not, the latest version will be downloaded.
-wideredist_gh="https://raw.githubusercontent.com/urbanware-org/wideredist"
-urls_downloaded=0
-urls_updated=0
-if [ ! -f "${script_dir}/wideredist.urls" ]; then
-    wget "$wideredist_gh/main/server/wideredist.urls" \
-         -O "${script_dir}/wideredist.urls" &>/dev/null
-    urls_downloaded=1
-else
-    wget "$wideredist_gh/main/server/wideredist.urls" \
-         -O "${script_dir}/wideredist.urls.latest" &>/dev/null
-    diff "${script_dir}/wideredist.urls" \
-         "${script_dir}/wideredist.urls.latest" &>/dev/null
-    if [ $? -ne 0 ]; then
-        rm "${script_dir}/wideredist.urls"
-        mv "${script_dir}/wideredist.urls.latest" "${script_dir}/wideredist.urls"
-        urls_updated=1
+if [ ${url_update} -eq 1 ]; then
+    wideredist_gh="https://raw.githubusercontent.com/urbanware-org/wideredist"
+    urls_downloaded=0
+    urls_updated=0
+    urls_error=0
+    if [ ! -f "${script_dir}/wideredist.urls" ]; then
+        if [ ${use_wget} -eq 1 ]; then
+            wget -T ${dl_timeout} -U "${user_agent}" \
+                 "${wideredist_gh}/main/server/wideredist.urls" \
+                 -O "${script_dir}/wideredist.urls" -q
+        else
+            curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
+                -L "${wideredist_gh}/main/server/wideredist.urls" -s \
+                -o "${script_dir}/wideredist.urls"
+        fi
+        urls_downloaded=1
     else
-        urls_updated=0
+        if [ ${use_wget} -eq 1 ]; then
+            wget -T ${dl_timeout} -U "${user_agent}" \
+                 "${wideredist_gh}/main/server/wideredist.urls" \
+                 -O "${script_dir}/wideredist.urls.latest" -q
+        else
+            curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
+                -L "${wideredist_gh}/main/server/wideredist.urls" -s \
+                -o "${script_dir}/wideredist.urls.latest"
+        fi
+
+        diff "${script_dir}/wideredist.urls" \
+             "${script_dir}/wideredist.urls.latest" &>/dev/null
+        if [ $? -ne 0 ]; then
+            rm "${script_dir}/wideredist.urls"
+            mv "${script_dir}/wideredist.urls.latest" "${script_dir}/wideredist.urls"
+            urls_updated=1
+        else
+            urls_updated=0
+        fi
     fi
 fi
-source ${script_dir}/wideredist.urls
+
+source ${script_dir}/wideredist.urls &>/dev/null
+if [ $? -eq 0 ]; then
+    url_read_error=0
+else
+    url_read_error=1
+fi
 rm -f "${script_dir}/wideredist.urls.latest"
 
 # Check if any of download link URLs is missing, as all are required
