@@ -3,14 +3,14 @@ CHANGELOG (WiDeRedist)
 
     Version 1.6.3 (2023-09-15)
 
-        + Added the URL file update option to the client-side script (to
+        + Added the URL file update option to the server-side script (to
           download the latest URL file).
 
-        * Revised the option descriptions inside the client-side config files.
-        * Revised the download tool related code inside the client-side script
+        * Revised the download tool related code inside the server-side script
           (added download timeout and further negligible changes).
-        * Revised the elapsed time measurement inside the client-side script
+        * Revised the elapsed time measurement inside the server-side script
           (less code and more readable output).
+        * Revised the option descriptions inside the server-side config files.
 
     Version 1.6.2 (2022-11-19)
 
