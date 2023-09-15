@@ -3,7 +3,7 @@ CHANGELOG (WiDeRedist)
 
     Version 1.6.3 (2023-09-15)
 
-        + Added the URL file update option to the client-side script (to
+        + Added the URL file update option to the server-side script (to
           download the latest URL file).
 
         * Revised the download tool related code inside the server-side script
