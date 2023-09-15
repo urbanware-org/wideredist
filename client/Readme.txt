@@ -4,8 +4,8 @@ README (WiDeReDist)
     Project
 
         WiDeReDist (client-side component)
-        Version 1.6.2
-        Copyright (c) 2022 by Ralf Kilian and Simon Gauer
+        Version 1.6.3
+        Copyright (c) 2023 by Ralf Kilian and Simon Gauer
 
         GitHub: https://github.com/urbanware-org/wideredist
         GitLab: https://gitlab.com/urbanware-org/wideredist

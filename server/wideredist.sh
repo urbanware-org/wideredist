@@ -3,15 +3,15 @@
 #
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Definition download and local redistribution script for Linux and BSD
-# Copyright (c) 2022 by Ralf Kilian
+# Copyright (c) 2023 by Ralf Kilian
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 #
 
-version="1.6.2"
-timestamp="2022-11-19"
+version="1.6.3"
+timestamp="2023-09-15"
 
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
@@ -513,7 +513,7 @@ echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
 echo -e "Definition download and local redistribution script"
 echo -e "Version ${version} (Released ${timestamp})"
-echo -e "Copyright (c) 2022 by Ralf Kilian"
+echo -e "Copyright (c) 2023 by Ralf Kilian"
 echo -e "\e[0m"
 
 # By default, 'wget' (or 'curl'), which is used to download the definition
