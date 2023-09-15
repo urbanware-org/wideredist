@@ -42,7 +42,7 @@ The project does not have many requirements.
 
 ### Client
 
-*   *Windows* 7 or higher with 32-bit or 64-bit architecture
+*   *Windows* 7 with Service Pack 2 or later versions with 32-bit or 64-bit architecture
 *   *PowerShell* 2.0 or higher
 
 ## Installation
