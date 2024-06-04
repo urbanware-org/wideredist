@@ -24,6 +24,8 @@ Nevertheless, this requires at least one system to access the internet, of cours
 
 This tool currently takes advantage of a *Linux* server (or alternatively *BSD*) which downloads the definition files and redistributes them using a web server and the *PowerShell* on the *Windows* systems to obtain the definition updates from that web server.
 
+As of June 2024, the project transitioned into maintenance mode. While this implies that no further features or enhancements will be introduced, the software continues to be actively maintained with regular bugfixes and updates.
+
 [Top](#wideredist-)
 
 ## Requirements
