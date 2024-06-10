@@ -24,7 +24,7 @@ Nevertheless, this requires at least one system to access the internet, of cours
 
 This tool currently takes advantage of a *Linux* server (or alternatively *BSD*) which downloads the definition files and redistributes them using a web server and the *PowerShell* on the *Windows* systems to obtain the definition updates from that web server.
 
-This project transitioned into maintenance mode. Details can be found [here](https://github.com/urbanware-org/wideredist/wiki#project-state).
+This project transitioned into maintenance mode. Details can be found [here](https://github.com/urbanware-org/wideredist/wiki#maintenance-mode).
 
 [Top](#wideredist-)
 
