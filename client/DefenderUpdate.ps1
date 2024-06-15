@@ -212,7 +212,7 @@ If (!$Platform.StartsWith("Win", "CurrentCultureIgnoreCase")) {
 }
 
 # Prevent the script from running multiple times simultaneously
-$RunningInstances = Get-WMIObject -Class Win32_Process | Select CommandLine `
+$RunningInstances = Get-WMIObject -Class Win32_Process | Select-Object CommandLine `
                                                        | Select-String -Pattern "DefenderUpdate.ps1" `
                                                        | Measure-Object
 If ($RunningInstances.Count -gt 1) {
