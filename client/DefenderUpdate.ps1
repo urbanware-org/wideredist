@@ -60,7 +60,6 @@ Function Check-Update() {
         Write-Host "as version" -NoNewLine
         Write-Host -ForegroundColor Yellow " $VersionLatest " -NoNewLine
         Write-Host "is available now."
-        $ExitDelay = $WaitOnError
         Write-Event-Info 101 "New WiDeRedist version ($VersionLatest) available."
     }
 }
@@ -471,6 +470,10 @@ If ($ExitCode -eq -1) {
 
 If ($Transcript -eq $True) {
     Stop-Transcript | Out-Null
+}
+
+If ($VersionUpdate -eq $True) {
+    $ExitDelay = $WaitOnError
 }
 
 Exit-Script $ExitCode $ExitDelay
