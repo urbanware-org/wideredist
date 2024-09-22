@@ -17,11 +17,9 @@ Dedicated tool to update the *Windows Defender* definitions in the local network
 
 ## Details
 
-This project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* definitions (or signatures) in internal environments that are completely separated from the internet.
+The *WiDeRedist* project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* definitions (or signatures) in internal environments that are completely separated from the internet. However, this requires at least one system with access to the internet, of course.
 
-Nevertheless, this requires at least one system to access the internet, of course.
-
-This tool currently takes advantage of a *Linux* server (or alternatively *BSD*) which downloads the definition files and redistributes them using a web server and the *PowerShell* on the *Windows* systems to obtain the definition updates from that web server.
+It consists of two components. The server-side component takes advantage of a *Linux* server (or alternatively *BSD*) which downloads the definition files and redistributes them using a web server. The client-side component on *Windows* uses the *PowerShell* to obtain and install the definition updates provided by the web server.
 
 This project transitioned into maintenance mode. Details can be found [here](https://github.com/urbanware-org/wideredist/wiki#maintenance-mode).
 
@@ -45,6 +43,8 @@ The project does not have many requirements.
 
 *   *Windows* 7 with Service Pack 2 or later versions with 32-bit or 64-bit architecture
 *   *PowerShell* 2.0 or higher
+
+In September 2024, it is still possible to manually update the *Windows Defender* definitions under *Windows* 7, even though its support has been discontinued in January 2020. Due to the fact, that *WiDeRedist* uses this method in the background to install the latest definitions, it works on *Windows* 7 and above.
 
 ## Installation
 
