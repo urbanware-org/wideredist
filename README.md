@@ -1,11 +1,12 @@
 # *WiDeRedist* <img src="https://raw.githubusercontent.com/urbanware-org/wideredist/master/wideredist.png" alt="WiDeRedist logo" height="128px" width="128px" align="right"/>
 
 **Table of contents**
-*   [Definition](#definition)
-*   [Details](#details)
-*   [Requirements](#requirements)
-*   [Installation](#installation)
-*   [Contact](#contact)
+
+* [Definition](#definition)
+* [Details](#details)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Contact](#contact)
 
 ----
 
@@ -31,18 +32,18 @@ The project does not have many requirements.
 
 ### Server
 
-*   Either a ***Linux*** or ***BSD*** operating system
-*   Some web server such as *Apache* or *nginx* (latter has been used in development)
-*   The *Bash* shell (must be installed, but it does not have to be set as the default one)
-*   The following tools or packages:
-    *   `curl` or `wget`
-    *   `file` (optional, used to verify the MIME type of the downloaded files)
-    *   `rsync`
+* Either a ***Linux*** or ***BSD*** operating system
+* Some web server such as *Apache* or *nginx* (latter has been used in development)
+* The *Bash* shell (must be installed, but it does not have to be set as the default one)
+* The following tools or packages:
+  * `curl` or `wget`
+  * `file` (optional, used to verify the MIME type of the downloaded files)
+  * `rsync`
 
 ### Client
 
-*   *Windows* 7 with Service Pack 2 or later versions with 32-bit or 64-bit architecture
-*   *PowerShell* 2.0 or higher
+* *Windows* 7 with Service Pack 2 or later versions with 32-bit or 64-bit architecture
+* *PowerShell* 2.0 or higher
 
 In September 2024, it is still possible to manually update the *Windows Defender* definitions under *Windows* 7 using the downloadable updates from the *Microsoft* website, even though the support of the operating was discontinued in January 2020.
 
