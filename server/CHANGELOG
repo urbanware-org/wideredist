@@ -1,6 +1,10 @@
 
 CHANGELOG (WiDeRedist)
 
+    Next release (outstanding)
+
+        * Revised the client-side script (negligible changes).
+
     Version 1.6.3 (2023-09-15)
 
         + Added the URL file update option to the server-side script (to
