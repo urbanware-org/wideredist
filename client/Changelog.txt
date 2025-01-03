@@ -4,6 +4,8 @@ CHANGELOG (WiDeRedist)
     Next release (outstanding)
 
         * Revised the client-side script (negligible changes).
+        * Revised the server-side script (replaced static with dynamic path
+          for temporary files).
 
     Version 1.6.3 (2023-09-15)
 
