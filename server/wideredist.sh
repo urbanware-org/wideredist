@@ -16,6 +16,7 @@ timestamp="2023-09-15"
 script_dir=$(dirname $(readlink -f $0))
 kernel_name=$(uname -s | tr '[:upper:]' '[:lower:]')
 version_update=0
+tmp=$(mktemp -d)
 
 check_requirements() {
     command -v rsync &>/dev/null
@@ -36,7 +37,7 @@ check_requirements() {
 }
 
 check_version() {
-    version_temp="/tmp/wideredist_version.tmp"
+    version_temp="${tmp}/wideredist_version.tmp"
     rm -f ${version_temp}
 
     if [ ${use_wget} -eq 1 ]; then
@@ -112,7 +113,7 @@ clean_up() {
     unset https_proxy
 
     rm -fR ${update_path}
-    rm -fR /tmp/wideredist*
+    rm -fR ${tmp}
 }
 
 download_file() {
@@ -270,7 +271,7 @@ fi
 # performing an automatic update, two instances of the script need to be run
 # simultaneously to perform the update process.
 already_running=1
-if [ ! -f "/tmp/wideredist.upd" ]; then
+if [ ! -f "${tmp}/wideredist.upd" ]; then
     for tries in {0..3}; do
         sleep 1
         ps a | grep "bash" | \
@@ -288,14 +289,14 @@ if [ ! -f "/tmp/wideredist.upd" ]; then
     fi
 fi
 
-rm -fR /tmp/wideredist*
+rm -fR ${tmp}/wideredist*
 if [ -f "${script_dir}/wideredist.upd" ]; then
     log "Installing WiDeRedist update"
     source ${script_dir}/wideredist.conf
     if [ -z "${keep_previous}" ]; then
         keep_previous=1
     fi
-    mv ${script_dir}/wideredist.upd /tmp/
+    mv ${script_dir}/wideredist.upd ${tmp}/
     if [ "${keep_previous}" = "1" ]; then
         cat ${script_dir}/wideredist.sh > ${script_dir}/wideredist.sh.bkp
     fi
@@ -309,7 +310,7 @@ if [ -f "${script_dir}/wideredist.upd" ]; then
     # the new (overwritten) version afterwards. As long as the new version has
     # not finished its duty, the previous script will be idle and exit as soon
     # as the new version is done (both scripts exit at the same time then).
-    cat /tmp/wideredist.upd > ${script_dir}/wideredist.sh
+    cat ${tmp}/wideredist.upd > ${script_dir}/wideredist.sh
     ${script_dir}/wideredist.sh
     exit
 fi
@@ -335,11 +336,12 @@ fi
 # it. Otherwise, the config file will just be read.
 touch ${config_file} &>/dev/null
 if [ $? -eq 0 ]; then
-    cat ${config_file} > /tmp/wideredist_config.tmp
-    (sed -e "/^#/! s/ *= */=/g") < /tmp/wideredist_config.tmp > ${config_file}
+    cat ${config_file} > ${tmp}/wideredist_config.tmp
+    (sed -e "/^#/! s/ *= */=/g") < ${tmp}/wideredist_config.tmp \
+                                 > ${config_file}
 fi
 source ${config_file}
-rm -f /tmp/wideredist_config.tmp
+rm -f ${tmp}/wideredist_config.tmp
 
 version_url="${wideredist_url}/releases/latest"
 version_json=$(sed -e "s/github\.com/api\.github\.com\/repos/g" \
@@ -483,7 +485,8 @@ if [ ${url_update} -eq 1 ]; then
              "${script_dir}/wideredist.urls.latest" &>/dev/null
         if [ $? -ne 0 ]; then
             rm "${script_dir}/wideredist.urls"
-            mv "${script_dir}/wideredist.urls.latest" "${script_dir}/wideredist.urls"
+            mv "${script_dir}/wideredist.urls.latest" \
+               "${script_dir}/wideredist.urls"
             urls_updated=1
         else
             urls_updated=0
@@ -643,32 +646,32 @@ if [ ! -z "${version_latest}" ]; then
             # The actual update of the server-side script is performed on the
             # next startup.
 
-            rm -fR /tmp/wideredist*
+            rm -fR ${tmp}/wideredist*
             tarfile="wideredist-${version_latest}.tar.gz"
 
             if [ ${use_wget} -eq 1 ]; then
                 wget -T ${dl_timeout} -U "${user_agent}" \
                      ${wideredist_url}/archive/${version_latest}.tar.gz \
-                     -O /tmp/${tarfile} -q
+                     -O ${tmp}/${tarfile} -q
             else
                 curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
                      -L "${wideredist_url}/archive/${version_latest}.tar.gz" \
-                     -s -o "/tmp/${tarfile}"
+                     -s -o "${tmp}/${tarfile}"
             fi
 
-            tar xfv /tmp/${tarfile} -C /tmp/ &>/dev/null
+            tar xfv ${tmp}/${tarfile} -C ${tmp}/ &>/dev/null
 
             # Client-side files
             mkdir -p ${definition_path}/client
-            mv /tmp/wideredist-${version_latest}/client/DefenderUpdate.ps1 \
+            mv ${tmp}/wideredist-${version_latest}/client/DefenderUpdate.ps1 \
                ${definition_path}/client/
-            mv /tmp/wideredist-${version_latest}/client/Update.ini \
+            mv ${tmp}/wideredist-${version_latest}/client/Update.ini \
                ${definition_path}/client/UpdateDefault.ini
 
             # Server-side files
-            mv /tmp/wideredist-${version_latest}/server/wideredist.sh \
+            mv ${tmp}/wideredist-${version_latest}/server/wideredist.sh \
                ${script_dir}/wideredist.upd
-            cat /tmp/wideredist-${version_latest}/server/wideredist.conf \
+            cat ${tmp}/wideredist-${version_latest}/server/wideredist.conf \
                > ${script_dir}/wideredist.conf.default
 
             echo -e "\e[93mWiDeRedist\e[0m will be updated to version" \
