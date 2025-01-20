@@ -42,12 +42,10 @@ The project does not have many requirements.
 
 ### Client
 
-* *Windows* 7 with Service Pack 2 or later versions with 32-bit or 64-bit architecture
+* *Windows* 7 and above or alternatively *Windows Server* 2003 and above
 * *PowerShell* 2.0 or higher
 
 In September 2024, it is still possible to manually update the *Windows Defender* definitions under *Windows* 7 using the downloadable updates from the *Microsoft* website, even though the support of the operating was discontinued in January 2020.
-
-Due to the fact, that *WiDeRedist* downloads those files to provide and perform the definition updates, it still works on *Windows* 7 (at least for now) and above.
 
 ## Installation
 
