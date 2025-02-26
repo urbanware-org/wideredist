@@ -1,7 +1,7 @@
 #
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
-# Copyright (c) 2023 by Ralf Kilian and Simon Gauer
+# Copyright (c) 2025 by Ralf Kilian and Simon Gauer
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
@@ -55,11 +55,11 @@ Function Check-Update() {
 
     If ($VersionUpdate -eq $True) {
         Write-Host
-        Write-Host "Please update" -NoNewLine
+        Write-Host "Please update the" -NoNewLine
         Write-Host -ForegroundColor Yellow " WiDeRedist " -NoNewLine
-        Write-Host "as version" -NoNewLine
+        Write-Host "client as version" -NoNewLine
         Write-Host -ForegroundColor Yellow " $VersionLatest " -NoNewLine
-        Write-Host "is available now."
+        Write-Host "is installed on the server."
         Write-Event-Info 101 "New WiDeRedist version ($VersionLatest) available."
     }
 }
@@ -306,7 +306,7 @@ Write-Host -ForegroundColor Yellow `
 Write-Host -ForegroundColor Yellow `
   "Local definition update script for Windows servers and clients"
 Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
-Write-Host -ForegroundColor Yellow "Copyright (c) 2023 by Ralf Kilian and Simon Gauer"
+Write-Host -ForegroundColor Yellow "Copyright (c) 2025 by Ralf Kilian and Simon Gauer"
 Write-Host
 
 If (![System.Environment]::Is64BitOperatingSystem) {
