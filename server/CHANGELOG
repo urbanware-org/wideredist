@@ -1,7 +1,7 @@
 
 CHANGELOG (WiDeRedist)
 
-    Next release (outstanding)
+    Version 1.6.4 (2025-02-26)
 
         * Revised the client-side script (negligible changes).
         * Revised the server-side script (revised the code for handling
