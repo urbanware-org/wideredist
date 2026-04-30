@@ -1,7 +1,7 @@
 #
 # WiDeRedist - Windows Defender definition download and redistribution tool
 # Local definition update script for Windows servers and clients
-# Copyright (c) 2025 by Ralf Kilian and Simon Gauer
+# Copyright (c) 2026 by Ralf Kilian and Simon Gauer
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/wideredist
