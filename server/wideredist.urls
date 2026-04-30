@@ -5,16 +5,11 @@
 #  Configuration file for the Microsoft URLs used by the 'wideredist.sh'     #
 #  script to download Windows Defender definitions.                          #
 #                                                                            #
-#  All download links for the Windows Defender definitions can be found      #
-#  below. In case the URLs should change again, only the URL file needs to   #
-#  be replaced and the 'wideredist.conf' file can be kept untainted.         #
+#  All of the download links for the Windows Defender definitions can be     #
+#  found below. In case Microsoft ever changes those URLs, only this file    #
+#  must be updated while 'wideredist.conf' remains unchanged.                #
 #                                                                            #
-#  This file makes the Microsoft URLs inside the 'wideredist.conf' files     #
-#  obsolete, so they can be removed from there. However, if this file is     #
-#  missing, WiDeRedist will try to read the URLs out of 'wideredist.conf'    #
-#  as a fallback (the way it did before this separate URL file existed).     #
-#                                                                            #
-#  URL file date:       2020-06-26                                           #
+#  Last updated (URLs): 2020-06-26                                           #
 #                                                                            #
 #  Important notice:    Ensure that there are no spaces around the equal     #
 #                       signs of all options. Otherwise settings will not    #
