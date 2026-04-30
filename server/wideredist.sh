@@ -458,7 +458,6 @@ if [ ${url_update} -eq 1 ]; then
     wideredist_gh="https://raw.githubusercontent.com/urbanware-org/wideredist"
     urls_downloaded=0
     urls_updated=0
-    urls_error=0
     if [ ! -f "${script_dir}/wideredist.urls" ]; then
         if [ ${use_wget} -eq 1 ]; then
             wget -T ${dl_timeout} -U "${user_agent}" \
