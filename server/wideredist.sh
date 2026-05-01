@@ -543,6 +543,13 @@ fi
 echo -e "Starting definition download. Please wait, this may take a while."
 log "notice" "Starting definition download"
 
+# Definition related files:
+#
+#   mpam_d.exe      = Antivirus definition updates (delta packages)
+#   mpam_fe.exe     = Antivirus definition updates (full packages)
+#   mpas_fe.exe     = Antispyware definition updates
+#   nis_full.exe    = Network Inspection System (NIS) definitions
+
 if [ ! "$skip_x86_download" = "1" ]; then
     echo -e "\nDownloading \e[96m32-bit\e[0m definition files."
     download_file $mpam_fe_x86      $update_path_x86/mpam-fe.exe  1 3
