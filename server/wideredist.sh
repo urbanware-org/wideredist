@@ -37,65 +37,65 @@ check_requirements() {
 }
 
 check_version() {
-    version_temp="${temp_dir}/wideredist_version.tmp"
-    rm -f ${version_temp}
+    version_temp="$temp_dir/wideredist_version.tmp"
+    rm -f $version_temp
 
-    if [ ${use_wget} -eq 1 ]; then
-        wget -T ${dl_timeout} -U "${user_agent}" "${version_json}" \
-             -O ${version_temp} -q
+    if [ $use_wget -eq 1 ]; then
+        wget -T $dl_timeout -U "$user_agent" "$version_json" \
+             -O $version_temp -q
     else
-        curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
-             -L "${version_json}" -s -o ${version_temp}
+        curl --connect-timeout $dl_timeout -A "$user_agent" \
+             -L "$version_json" -s -o $version_temp
     fi
 
-    if [ -z "${wideredist_update_check}" ] ||
-       [ ${wideredist_update_check} -eq 0 ]; then
-        rm -f ${definition_path}/version.dat
+    if [ -z "$wideredist_update_check" ] ||
+       [ $wideredist_update_check -eq 0 ]; then
+        rm -f $definition_path/version.dat
         version_latest=""
         return
     fi
 
-    version_latest=$(grep "tag_name" ${version_temp} | awk '{ print $2 }' \
-                                                     | sed -e "s/^\"//" \
-                                                     | sed -e "s/\".*//g")
-    if [ "${version}" = "${version_latest}" ]; then
+    version_latest=$(grep "tag_name" $version_temp | awk '{ print $2 }' \
+                                                   | sed -e "s/^\"//" \
+                                                   | sed -e "s/\".*//g")
+    if [ "$version" = "$version_latest" ]; then
         return
     fi
 
     version_major=$((sed -e "s/\./\ /g" | awk '{ print $1 }') \
-                                        <<< ${version})
+                                        <<< $version)
     version_minor=$((sed -e "s/\./\ /g" | awk '{ print $2 }') \
-                                        <<< ${version})
+                                        <<< $version)
     version_revis=$((sed -e "s/\./\ /g" | awk '{ print $3 }') \
-                                        <<< ${version} | sed -e "s/-.*//g")
+                                        <<< $version | sed -e "s/-.*//g")
 
     version_major_latest=$((sed -e "s/\./\ /g" | awk '{ print $1 }') \
-                                               <<< ${version_latest})
+                                               <<< $version_latest)
     version_minor_latest=$((sed -e "s/\./\ /g" | awk '{ print $2 }') \
-                                               <<< ${version_latest})
+                                               <<< $version_latest)
     version_revis_latest=$((sed -e "s/\./\ /g" | awk '{ print $3 }' \
                                                | cut -c1) \
-                                               <<< ${version_latest})
+                                               <<< $version_latest)
 
-    if [ -z "${version_major}" ] || \
-       [ -z "${version_minor}" ] || \
-       [ -z "${version_revis}" ] || \
-       [ -z "${version_major_latest}" ] || \
-       [ -z "${version_minor_latest}" ] || \
-       [ -z "${version_revis_latest}" ]; then
+    if [ -z "$version_major" ] || \
+       [ -z "$version_minor" ] || \
+       [ -z "$version_revis" ] || \
+       [ -z "$version_major_latest" ] || \
+       [ -z "$version_minor_latest" ] || \
+       [ -z "$version_revis_latest" ]; then
         return
     fi
 
-    if [ ${version_major_latest} -ge ${version_major} ]; then
-        if [ ${version_major_latest} -gt ${version_major} ]; then
+    if [ $version_major_latest -ge $version_major ]; then
+        if [ $version_major_latest -gt $version_major ]; then
             version_update=1
         else
-            if [ ${version_minor_latest} -ge ${version_minor} ]; then
-                if [ ${version_minor_latest} -gt ${version_minor} ]; then
+            if [ $version_minor_latest -ge $version_minor ]; then
+                if [ $version_minor_latest -gt $version_minor ]; then
                     version_update=1
                 else
-                    if [ ${version_revis_latest} -ge ${version_revis} ]; then
-                        if [ ${version_revis_latest} -gt ${version_revis} ];
+                    if [ $version_revis_latest -ge $version_revis ]; then
+                        if [ $version_revis_latest -gt $version_revis ];
                         then
                             version_update=1
                         fi
@@ -112,8 +112,8 @@ clean_up() {
     unset http_proxy
     unset https_proxy
 
-    rm -fR ${update_path}
-    rm -fR ${temp_dir}
+    rm -fR $update_path
+    rm -fR $temp_dir
 }
 
 download_file() {
@@ -125,19 +125,18 @@ download_file() {
     download_failed="\e[91mDownload failed.\e[0m"
     download_completed="\e[92mDownload completed.\e[0m"
     download_running="\e[36mDownloading...\e[0m"
-    download_file="$(sed -e "s#${update_path}##g" <<< ${outfile})"
-    download_count="${file_current} of ${file_count}"
+    download_file="$(sed -e "s#${update_path}##g" <<< $outfile)"
+    download_count="$file_current of $file_count"
     is_successful=0
 
-    output="  File '${download_file}'\t(${download_count}):"
-    echo -ne "${output} ${download_running}\r"
+    output="  File '$download_file'\t($download_count):"
+    echo -ne "$output $download_running\r"
 
-    if [ ${use_wget} -eq 1 ]; then
-        wget -T ${dl_timeout} -U "${user_agent}" "${weburl}" \
-             -O ${outfile} -q
+    if [ $use_wget -eq 1 ]; then
+        wget -T $dl_timeout -U "$user_agent" "$weburl" -O $outfile -q
     else
-        curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
-             -L "${weburl}" -s -o ${outfile}
+        curl --connect-timeout $dl_timeout -A "$user_agent" -L "$weburl" \
+             -s -o $outfile
     fi
     status_download=$?
 
@@ -146,64 +145,64 @@ download_file() {
     # the link is broken, its size will be significantly less than the actual
     # definition update.
     status_size=1
-    if [ ${status_download} -eq 0 ]; then
-        if [ -z "${verify_size}" ]; then
+    if [ $status_download -eq 0 ]; then
+        if [ -z "$verify_size" ]; then
             verify_size=100
         fi
-        if [ -e "${outfile}" ]; then
-            file_size=$(ls -s "${outfile}" | awk '{ print $1 }')
-            if [ ${file_size} -lt ${verify_size} ]; then
-                log "warning" "File verification failed: '${outfile}'"
+        if [ -e "$outfile" ]; then
+            file_size=$(ls -s "$outfile" | awk '{ print $1 }')
+            if [ $file_size -lt $verify_size ]; then
+                log "warning" "File verification failed: '$outfile'"
                 status_verify_fail=1
             else
                 status_size=0
             fi
         else
-            log "warning" "File verification failed: '${outfile}'"
+            log "warning" "File verification failed: '$outfile'"
             status_verify_fail=1
         fi
     fi
 
     # Remove double slashes from path for log entries
-    outfile_log=$(sed -e "s/\/\//\//g" <<< ${outfile})
+    outfile_log=$(sed -e "s/\/\//\//g" <<< $outfile)
 
-    if [ ${status_size} -eq 0 ] && [ ${status_download} -eq 0 ]; then
-        get_mime_type "${outfile}"
-        if [ ${is_executable} -eq 1 ] || [ ${is_executable} -eq 2 ]; then
-            echo -e "${output} ${download_completed}"
-            log "notice" "Download completed: '${outfile_log}'"
-            sha256sum "${outfile}" | awk '{ print $1 }' > "${outfile}.sha256"
+    if [ $status_size -eq 0 ] && [ $status_download -eq 0 ]; then
+        get_mime_type "$outfile"
+        if [ $is_executable -eq 1 ] || [ $is_executable -eq 2 ]; then
+            echo -e "$output $download_completed"
+            log "notice" "Download completed: '$outfile_log'"
+            sha256sum "$outfile" | awk '{ print $1 }' > "${outfile}.sha256"
             is_successful=1
         else
-            echo -e "${output} ${download_failed}"
+            echo -e "$output $download_failed"
             reason="MIME type mismatch"
-            log "error" "Download failed (${reason}): '${outfile_log}'"
+            log "error" "Download failed ($reason): '$outfile_log'"
             status_download_fail_count=$((
-                ${status_download_fail_count} + 1 ))
+                $status_download_fail_count + 1 ))
         fi
-    elif [ ${status_download} -eq 3 ]; then
-        echo -e "${output} ${download_failed}"
+    elif [ $status_download -eq 3 ]; then
+        echo -e "$output $download_failed"
         reason="I/O error"
-        log "error" "Download failed (${reason}): '${outfile_log}'"
-        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
-    elif [ ${status_download} -eq 4 ]; then
-        echo -e "${output} ${download_failed}"
+        log "error" "Download failed ($reason): '$outfile_log'"
+        status_download_fail_count=$(( $status_download_fail_count + 1 ))
+    elif [ $status_download -eq 4 ]; then
+        echo -e "$output $download_failed"
         reason="network failure"
-        log "error" "Download failed (${reason}): '${outfile_log}'"
-        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
-    elif [ ${status_download} -eq 5 ]; then
-        echo -e "${output} ${download_failed}"
+        log "error" "Download failed ($reason): '$outfile_log'"
+        status_download_fail_count=$(( $status_download_fail_count + 1 ))
+    elif [ $status_download -eq 5 ]; then
+        echo -e "$output $download_failed"
         reason="SSL verification failure"
-        log "error" "Download failed (${reason}): '${outfile_log}'"
-        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+        log "error" "Download failed ($reason): '$outfile_log'"
+        status_download_fail_count=$(( $status_download_fail_count + 1 ))
     else
-        echo -e "${output} ${download_failed}"
-        log "error" "Download failed: '${outfile_log}'"
-        status_download_fail_count=$(( ${status_download_fail_count} + 1 ))
+        echo -e "$output $download_failed"
+        log "error" "Download failed: '$outfile_log'"
+        status_download_fail_count=$(( $status_download_fail_count + 1 ))
     fi
 
-    if [ -f ${outfile} ] && [ ${is_successful} -eq 0 ]; then
-        rm -f ${outfile}
+    if [ -f $outfile ] && [ $is_successful -eq 0 ]; then
+        rm -f $outfile
     fi
 }
 
@@ -213,16 +212,16 @@ error() {
 
     # In case of an error the return code must not be zero, even if explicitly
     # set to zero or not given at all
-    if [ -z "${exit_code}" ] || [ ${exit_code} -eq 0 ]; then
+    if [ -z "$exit_code" ] || [ $exit_code -eq 0 ]; then
         exit_code=1
     fi
 
-    echo -e "\e[91merror:\e[0m ${message}."
-    log "error" "${message}"
+    echo -e "\e[91merror:\e[0m $message."
+    log "error" "$message"
     log "notice" "Exiting"
 
     clean_up
-    exit ${exit_code}
+    exit $exit_code
 }
 
 get_mime_type() {
@@ -231,7 +230,7 @@ get_mime_type() {
     command -v file &>/dev/null
     if [ $? -eq 0 ]; then
         is_executable=0
-        file -b "${file_name}" | grep -i "exe" &>/dev/null
+        file -b "$file_name" | grep -i "exe" &>/dev/null
         if [ $? -eq 0 ]; then
             is_executable=1
         fi
@@ -246,12 +245,12 @@ get_mime_type() {
 log() {
     prefix="$1"
     message="$2"
-    logger "wideredist[$$]: [${prefix}] ${message}."
+    logger "wideredist[$$]: [$prefix] $message."
 }
 
 if [ $# -gt 0 ]; then
     if [ "$1" = "--version" ]; then
-        echo "${version}"
+        echo "$version"
         exit 0
     else
         cat <<- end
@@ -271,7 +270,7 @@ fi
 # performing an automatic update, two instances of the script need to be run
 # simultaneously to perform the update process.
 already_running=1
-if [ ! -f "${temp_dir}/wideredist.upd" ]; then
+if [ ! -f "$temp_dir/wideredist.upd" ]; then
     for tries in {0..3}; do
         sleep 1
         ps a | grep "bash" | \
@@ -283,104 +282,104 @@ if [ ! -f "${temp_dir}/wideredist.upd" ]; then
             break
         fi
     done
-    if [ ${already_running} -eq 1 ]; then
+    if [ $already_running -eq 1 ]; then
         error \
           "Another instance of \e[93mWiDeRedist\e[0m is already running" 255
     fi
 fi
 
-rm -fR ${temp_dir}/wideredist*
-if [ -f "${script_dir}/wideredist.upd" ]; then
+rm -fR $temp_dir/wideredist*
+if [ -f "$script_dir/wideredist.upd" ]; then
     log "Installing WiDeRedist update"
-    source ${script_dir}/wideredist.conf
-    if [ -z "${keep_previous}" ]; then
+    source $script_dir/wideredist.conf
+    if [ -z "$keep_previous" ]; then
         keep_previous=1
     fi
-    mv ${script_dir}/wideredist.upd ${temp_dir}/
-    if [ "${keep_previous}" = "1" ]; then
-        cat ${script_dir}/wideredist.sh > ${script_dir}/wideredist.sh.bkp
+    mv $script_dir/wideredist.upd $temp_dir/
+    if [ "$keep_previous" = "1" ]; then
+        cat $script_dir/wideredist.sh > $script_dir/wideredist.sh.bkp
     fi
 
-    if [ -f "${script_dir}/wideredist.conf.default" ] && \
-       [ -f "${script_dir}/wideredist.conf.new" ]; then
-        rm -f ${script_dir}/wideredist.conf.new
+    if [ -f "$script_dir/wideredist.conf.default" ] && \
+       [ -f "$script_dir/wideredist.conf.new" ]; then
+        rm -f $script_dir/wideredist.conf.new
     fi
 
     # Replace (overwrite to be precise) this script file on the fly and run
     # the new (overwritten) version afterwards. As long as the new version has
     # not finished its duty, the previous script will be idle and exit as soon
     # as the new version is done (both scripts exit at the same time then).
-    cat ${temp_dir}/wideredist.upd > ${script_dir}/wideredist.sh
-    ${script_dir}/wideredist.sh
+    cat $temp_dir/wideredist.upd > $script_dir/wideredist.sh
+    $script_dir/wideredist.sh
     exit
 fi
 
-log "notice" "Running WiDeRedist ${version} (${timestamp})"
+log "notice" "Running WiDeRedist $version ($timestamp)"
 
 check_requirements
 
-if [ -f "${script_dir}/wideredist.conf" ]; then
-    config_file="${script_dir}/wideredist.conf"
-elif [ -f "${script_dir}/wideredist.conf.default" ]; then
+if [ -f "$script_dir/wideredist.conf" ]; then
+    config_file="$script_dir/wideredist.conf"
+elif [ -f "$script_dir/wideredist.conf.default" ]; then
     # Fallback with the default config
-    cp ${script_dir}/wideredist.conf.default \
-       ${script_dir}/wideredist.conf &>/dev/null
-    config_file="${script_dir}/wideredist.conf"
+    cp $script_dir/wideredist.conf.default \
+       $script_dir/wideredist.conf &>/dev/null
+    config_file="$script_dir/wideredist.conf"
 else
     error "No configuration file found" 1
 fi
 
 # Check if the user has write permissions on the config file. If so, read the
 # config file and remove spaces around the equals signs of the config values
-# (if existing). Afterwards, write the changes into the config file and parse
+# (if existing). Afterwards, write the changes into the coSnfig file and parse
 # it. Otherwise, the config file will just be read.
-touch ${config_file} &>/dev/null
+touch $config_file &>/dev/null
 if [ $? -eq 0 ]; then
-    cat ${config_file} > ${temp_dir}/wideredist_config.tmp
-    (sed -e "/^#/! s/ *= */=/g") < ${temp_dir}/wideredist_config.tmp \
-                                 > ${config_file}
+    cat $config_file > $temp_dir/wideredist_config.tmp
+    (sed -e "/^#/! s/ *= */=/g") < $temp_dir/wideredist_config.tmp \
+                                 > $config_file
 fi
-source ${config_file}
-rm -f ${temp_dir}/wideredist_config.tmp
+source $config_file
+rm -f $temp_dir/wideredist_config.tmp
 
-version_url="${wideredist_url}/releases/latest"
+version_url="$wideredist_url/releases/latest"
 version_json=$(sed -e "s/github\.com/api\.github\.com\/repos/g" \
-                   <<< ${version_url})
+                   <<< $version_url)
 
 # Just a supplement for repeating error messages
 permission_issue="most likely a permission issue"
 
-if [ ! -z "${proxy_address}" ] && [ ! -z "${route_gateway}" ]; then
-    route_target=$(sed -e "s/:.*$//g" <<< ${proxy_address})
-    if [[ ${kernel_name} =~ linux ]]; then
-        ip route delete ${route_target} via ${route_gateway} &>/dev/null
-        ip route add ${route_target} via ${route_gateway} &>/dev/null
+if [ ! -z "$proxy_address" ] && [ ! -z "$route_gateway" ]; then
+    route_target=$(sed -e "s/:.*$//g" <<< $proxy_address)
+    if [[ $kernel_name =~ linux ]]; then
+        ip route delete $route_target via $route_gateway &>/dev/null
+        ip route add $route_target via $route_gateway &>/dev/null
         if [ $? -eq 0 ]; then
             route=1
         else
             error \
-              "Failed to add the given route, ${permission_issue}" 3
+              "Failed to add the given route, $permission_issue" 3
         fi
     else  # BSD
-        route delete ${route_target} ${route_gateway} &>/dev/null
-        route add ${route_target} ${route_gateway} &>/dev/null
+        route delete $route_target $route_gateway &>/dev/null
+        route add $route_target $route_gateway &>/dev/null
         if [ $? -eq 0 ]; then
             route=1
         else
             error \
-              "Failed to add the given route, ${permission_issue}" 3
+              "Failed to add the given route, $permission_issue" 3
         fi
     fi
-    log "notice" "Added route to '${route_target}' via '${route_gateway}'"
+    log "notice" "Added route to '$route_target' via '$route_gateway'"
 else
     route=0
 fi
 
-if [ ! -z "${proxy_address}" ]; then
-    export http_proxy="${proxy_address}"
-    export https_proxy="${proxy_address}"
+if [ ! -z "$proxy_address" ]; then
+    export http_proxy="$proxy_address"
+    export https_proxy="$proxy_address"
     proxy=1
-    log "notice" "Using proxy server '${proxy_address}'"
+    log "notice" "Using proxy server '$proxy_address'"
 else
     proxy=0
 fi
@@ -389,41 +388,41 @@ fi
 # the web server provides the latest definitions, they will be downloaded into
 # this temporary path. This prevents (or at least reduces) the probability of
 # a client-side update failure due to incomplete data.
-update_path="${definition_path}/update"
-update_path_x86="${update_path}/x86"
-update_path_x64="${update_path}/x64"
+update_path="$definition_path/update"
+update_path_x86="$update_path/x86"
+update_path_x64="$update_path/x64"
 
 # Check permissions first. As a matter of fact, this script needs write access
 # to the definition path as well as its sub-directories.
-if [ -e "${definition_path}" ]; then
-    if [ ! -d "${definition_path}" ]; then
+if [ -e "$definition_path" ]; then
+    if [ ! -d "$definition_path" ]; then
         error "Definition path already exists, but is not a directory" 4
     fi
 
-    for object in $(find "${definition_path}"); do
-        touch -ca "${object}" &>/dev/null
+    for object in $(find "$definition_path"); do
+        touch -ca "$object" &>/dev/null
         if [ $? -ne 0 ]; then
             error \
-              "Access denied on '${object}', ${permission_issue}" 5
+              "Access denied on '$object', $permission_issue" 5
         fi
     done
 fi
 
 # Remove temporary path (if already existing) just to get sure that there are
 # no incomplete downloads present or whatever
-rm -fR ${update_path} &>/dev/null
+rm -fR $update_path &>/dev/null
 
 # Before downloading anything, ensure the target directories exist
-mkdir -p ${definition_path} &>/dev/null
+mkdir -p $definition_path &>/dev/null
 if [ $? -ne 0 ]; then
     error \
-      "Failed to create the definition path, ${permission_issue}" 6
+      "Failed to create the definition path, $permission_issue" 6
 fi
-mkdir -p ${update_path_x86}
-mkdir -p ${update_path_x64}
+mkdir -p $update_path_x86
+mkdir -p $update_path_x64
 
 # Default values for download status and file verification
-if [ ! "${skip_x86_download}" = "1" ]; then
+if [ ! "$skip_x86_download" = "1" ]; then
     status_download_fail_max=7
 else
     status_download_fail_max=4
@@ -453,38 +452,39 @@ if [ ! -f $script_dir/wideredist.urls ]; then
     url_update=1
 fi
 
-if [ ${url_update} -eq 1 ]; then
+if [ $url_update -eq 1 ]; then
     wideredist_gh="https://raw.githubusercontent.com/urbanware-org/wideredist"
     urls_downloaded=0
     urls_updated=0
-    if [ ! -f "${script_dir}/wideredist.urls" ]; then
-        if [ ${use_wget} -eq 1 ]; then
-            wget -T ${dl_timeout} -U "${user_agent}" \
-                 "${wideredist_gh}/main/server/wideredist.urls" \
-                 -O "${script_dir}/wideredist.urls" -q
+
+    if [ ! -f "$script_dir/wideredist.urls" ]; then
+        if [ $use_wget -eq 1 ]; then
+            wget -T $dl_timeout -U "$user_agent" \
+                 "$wideredist_gh/main/server/wideredist.urls" \
+                 -O "$script_dir/wideredist.urls" -q
         else
-            curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
-                -L "${wideredist_gh}/main/server/wideredist.urls" -s \
-                -o "${script_dir}/wideredist.urls"
+            curl --connect-timeout $dl_timeout -A "$user_agent" \
+                -L "$wideredist_gh/main/server/wideredist.urls" -s \
+                -o "$script_dir/wideredist.urls"
         fi
         urls_downloaded=1
     else
-        if [ ${use_wget} -eq 1 ]; then
-            wget -T ${dl_timeout} -U "${user_agent}" \
-                 "${wideredist_gh}/main/server/wideredist.urls" \
-                 -O "${script_dir}/wideredist.urls.latest" -q
+        if [ $use_wget -eq 1 ]; then
+            wget -T $dl_timeout -U "$user_agent" \
+                 "$wideredist_gh/main/server/wideredist.urls" \
+                 -O "$script_dir/wideredist.urls.latest" -q
         else
-            curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
-                -L "${wideredist_gh}/main/server/wideredist.urls" -s \
-                -o "${script_dir}/wideredist.urls.latest"
+            curl --connect-timeout $dl_timeout -A "$user_agent" \
+                -L "$wideredist_gh/main/server/wideredist.urls" -s \
+                -o "$script_dir/wideredist.urls.latest"
         fi
 
-        diff "${script_dir}/wideredist.urls" \
-             "${script_dir}/wideredist.urls.latest" &>/dev/null
+        diff "$script_dir/wideredist.urls" \
+             "$script_dir/wideredist.urls.latest" &>/dev/null
         if [ $? -ne 0 ]; then
-            rm "${script_dir}/wideredist.urls"
-            mv "${script_dir}/wideredist.urls.latest" \
-               "${script_dir}/wideredist.urls"
+            rm "$script_dir/wideredist.urls"
+            mv "$script_dir/wideredist.urls.latest" \
+               "$script_dir/wideredist.urls"
             urls_updated=1
         else
             urls_updated=0
@@ -492,77 +492,79 @@ if [ ${url_update} -eq 1 ]; then
     fi
 fi
 
-source ${script_dir}/wideredist.urls &>/dev/null
+source $script_dir/wideredist.urls &>/dev/null
 if [ $? -eq 0 ]; then
     url_read_error=0
 else
     url_read_error=1
 fi
-rm -f "${script_dir}/wideredist.urls.latest"
+rm -f "$script_dir/wideredist.urls.latest"
 
 # Check if any of download link URLs is missing, as all are required
-if [ -z "${mpam_fe_x86}" ] || [ -z "${mpam_fe_x64}" ] || \
-   [ -z "${mpas_fe_x86}" ] || [ -z "${mpas_fe_x64}" ] || \
-   [ -z "${nis_full_x86}" ] || [ -z "${nis_full_x64}" ] || \
-   [ -z "${mpam_d_ind}" ] || [ ${url_read_error} -eq 1 ]; then
+if [ -z "$mpam_fe_x86" ] || [ -z "$mpam_fe_x64" ] || \
+   [ -z "$mpas_fe_x86" ] || [ -z "$mpas_fe_x64" ] || \
+   [ -z "$nis_full_x86" ] || [ -z "$nis_full_x64" ] || \
+   [ -z "$mpam_d_ind" ] || [ $url_read_error -eq 1 ]; then
     error \
-      "At least one Windows Defender definition download link is missing" 2
+      "Either at least one Windows Defender definition download link is\
+\n       missing or the URL file cannot be parsed. Remove 'wideredist.urls' \
+\n       and run WiDeRedist again" 2
 fi
 
 echo -e "\e[93m"
 echo -e "WiDeRedist - Windows Defender definition download and" \
         "redistribution tool"
 echo -e "Definition download and local redistribution script"
-echo -e "Version ${version} (Released ${timestamp})"
-echo -e "Copyright (c) 2025 by Ralf Kilian"
+echo -e "Version $version (Released $timestamp)"
+echo -e "Copyright (c) 2026 by Ralf Kilian"
 echo -e "\e[0m"
 
-if [ ${url_update} -eq 1 ]; then
-    if [ ${urls_downloaded} -eq 1 ]; then
-        echo -e "Downloading download link URL file.\n"
-        log "notice" "Downloading download link URL file"
-    elif [ ${urls_updated} -eq 1 ]; then
-        echo -e "Updating download link URL file.\n"
+if [ $url_update -eq 1 ]; then
+    if [ $urls_downloaded -eq 1 ]; then
+        echo -e "Downloading definition link file.\n"
+        log "notice" "Downloading definition download link file"
+    elif [ $urls_updated -eq 1 ]; then
+        echo -e "Updating definition download link URL file.\n"
         log "notice" "Updating download link URL file"
     else
-        echo -e "Download link URL file is \e[92mup-to-date\e[0m.\n"
+        echo -e "Definition download link file is \e[92mup-to-date\e[0m.\n"
         log "notice" "Download link URL file is up-to-date"
     fi
 fi
 
-if [ ${route} -eq 1 ]; then
-    echo -e "Added route to \e[96m${route_target}\e[0m" \
-            "via \e[96m${route_gateway}\e[0m.\n"
+if [ $route -eq 1 ]; then
+    echo -e "Added route to \e[96m$route_target\e[0m" \
+            "via \e[96m$route_gateway\e[0m.\n"
 fi
-if [ ${proxy} -eq 1 ]; then
-    echo -e "Using proxy server \e[96m${http_proxy}\e[0m.\n"
+if [ $proxy -eq 1 ]; then
+    echo -e "Using proxy server \e[96m$http_proxy\e[0m.\n"
 fi
 
 echo -e "Starting definition download. Please wait, this may take a while."
 log "notice" "Starting definition download"
 
-if [ ! "${skip_x86_download}" = "1" ]; then
+if [ ! "$skip_x86_download" = "1" ]; then
     echo -e "\nDownloading \e[96m32-bit\e[0m definition files."
-    download_file ${mpam_fe_x86}      ${update_path_x86}/mpam-fe.exe  1 3
-    download_file ${mpas_fe_x86}      ${update_path_x86}/mpas-fe.exe  2 3
-    download_file ${nis_full_x86}     ${update_path_x86}/nis_full.exe 3 3
+    download_file $mpam_fe_x86      $update_path_x86/mpam-fe.exe  1 3
+    download_file $mpas_fe_x86      $update_path_x86/mpas-fe.exe  2 3
+    download_file $nis_full_x86     $update_path_x86/nis_full.exe 3 3
 else
     echo -e "\nSkipping download of \e[96m32-bit\e[0m definition files."
-    rm -f ${definition_path}/x86/*
+    rm -f $definition_path/x86/*
 fi
 
 echo -e "\nDownloading \e[96m64-bit\e[0m definition files."
-download_file ${mpam_fe_x64}      ${update_path_x64}/mpam-fe.exe  1 3
-download_file ${mpas_fe_x64}      ${update_path_x64}/mpas-fe.exe  2 3
-download_file ${nis_full_x64}     ${update_path_x64}/nis_full.exe 3 3
+download_file $mpam_fe_x64      $update_path_x64/mpam-fe.exe  1 3
+download_file $mpas_fe_x64      $update_path_x64/mpas-fe.exe  2 3
+download_file $nis_full_x64     $update_path_x64/nis_full.exe 3 3
 
 echo -e "\nDownloading \e[96mplatform independent\e[0m definition files."
-download_file ${mpam_d_ind}       ${update_path_x64}/mpam-d.exe   1 1
+download_file $mpam_d_ind       $update_path_x64/mpam-d.exe   1 1
 
-if [ ${status_download_fail_count} -eq ${status_download_fail_max} ]; then
+if [ $status_download_fail_count -eq $status_download_fail_max ]; then
     echo
     error "Aborting as all downloads have failed"
-elif [ ${status_download_fail_count} -gt 0 ]; then
+elif [ $status_download_fail_count -gt 0 ]; then
     echo -e \
       "\n\e[93mProceeding even though at least one download has failed.\e[0m"
     log "warning" "Proceeding even though at least one download has failed"
@@ -570,15 +572,15 @@ else
     log "notice" "Definition downloads have been finished"
 fi
 
-if [ ! "${skip_x86_download}" = "1" ]; then
+if [ ! "$skip_x86_download" = "1" ]; then
     # The file 'mpam-d.exe' is also required in the definition directory for
     # 32-bit environments. The file is platform independent, so it simply can
     # be copied to 'x86'.
-    cp -f ${update_path_x64}/mpam-d.* ${update_path_x86}/
+    cp -f $update_path_x64/mpam-d.* $update_path_x86/
     echo -e "\nDuplicated platform independent file for both platforms."
 fi
 
-if [ ${status_verify_fail} -eq 1 ]; then
+if [ $status_verify_fail -eq 1 ]; then
     echo -e "\nThe verification of at least one file \e[91mfailed\e[0m. If" \
             "the problem persists, the\ndownload link may be broken. Check" \
             "the config and URL file for details."
@@ -590,15 +592,15 @@ echo -e \
 log "notice" "Updating the definition files for redistribution"
 
 # Update the actual definitions. Temporary data will be deleted on exit.
-rsync -a ${update_path}/* ${definition_path}/
+rsync -a $update_path/* $definition_path/
 log "notice" "Definition files have been updated"
 
 check_version
-if [ ! -z "${version_latest}" ]; then
-    echo "${version_latest}" > ${definition_path}/version.dat
-    if [ ${version_update} -eq 1 ]; then
-        log "notice" "New WiDeRedist version (${version_latest}) available"
-        if [ ${wideredist_update} -eq 1 ]; then
+if [ ! -z "$version_latest" ]; then
+    echo "$version_latest" > $definition_path/version.dat
+    if [ $version_update -eq 1 ]; then
+        log "notice" "New WiDeRedist version ($version_latest) available"
+        if [ $wideredist_update -eq 1 ]; then
             log "notice" "Automatically updating WiDeRedist"
 
             # The update process does not need an additional update script.
@@ -617,55 +619,55 @@ if [ ! -z "${version_latest}" ]; then
             # The actual update of the server-side script is performed on the
             # next startup.
 
-            rm -fR ${temp_dir}/wideredist*
+            rm -fR $temp_dir/wideredist*
             tarfile="wideredist-${version_latest}.tar.gz"
 
-            if [ ${use_wget} -eq 1 ]; then
-                wget -T ${dl_timeout} -U "${user_agent}" \
-                     ${wideredist_url}/archive/${version_latest}.tar.gz \
-                     -O ${temp_dir}/${tarfile} -q
+            if [ $use_wget -eq 1 ]; then
+                wget -T $dl_timeout -U "$user_agent" \
+                     $wideredist_url/archive/${version_latest}.tar.gz \
+                     -O $temp_dir/$tarfile -q
             else
-                curl --connect-timeout ${dl_timeout} -A "${user_agent}" \
-                     -L "${wideredist_url}/archive/${version_latest}.tar.gz" \
-                     -s -o "${temp_dir}/${tarfile}"
+                curl --connect-timeout $dl_timeout -A "$user_agent" \
+                     -L "$wideredist_url/archive/${version_latest}.tar.gz" \
+                     -s -o "$temp_dir/$tarfile"
             fi
 
-            tar xfv ${temp_dir}/${tarfile} -C ${temp_dir}/ &>/dev/null
+            tar xfv $temp_dir/$tarfile -C $temp_dir/ &>/dev/null
 
             # Client-side files
             client_config="client/Update.ini"
             client_script="client/DefenderUpdate.ps1"
-            mkdir -p ${definition_path}/client
-            mv ${temp_dir}/wideredist-${version_latest}/${client_script} \
-               ${definition_path}/client/
-            mv ${temp_dir}/wideredist-${version_latest}/${client_config} \
-               ${definition_path}/client/UpdateDefault.ini
+            mkdir -p $definition_path/client
+            mv $temp_dir/wideredist-${version_latest}/$client_script \
+               $definition_path/client/
+            mv $temp_dir/wideredist-${version_latest}/$client_config \
+               $definition_path/client/UpdateDefault.ini
 
             # Server-side files
             server_config="server/wideredist.conf"
             server_script="server/wideredist.sh"
-            mv ${temp_dir}/wideredist-${version_latest}/${server_script} \
-               ${script_dir}/wideredist.upd
-            cat ${temp_dir}/wideredist-${version_latest}/${server_config} \
-                > ${script_dir}/wideredist.conf.default
+            mv $temp_dir/wideredist-${version_latest}/$server_script \
+               $script_dir/wideredist.upd
+            cat $temp_dir/wideredist-${version_latest}/$server_config \
+                > $script_dir/wideredist.conf.default
 
             echo -e "\e[93mWiDeRedist\e[0m will be updated to version" \
-                    "\e[93m${version_latest}\e[0m before the next run.\n"
+                    "\e[93m$version_latest\e[0m before the next run.\n"
             log "notice" "Start this script once again to finish the update"
         else
             echo -e "Please update \e[93mWiDeRedist\e[0m as version" \
-                    "\e[93m${version_latest}\e[0m is available now.\n"
+                    "\e[93m$version_latest\e[0m is available now.\n"
         fi
     fi
 fi
 
-if [ ${route} -eq 1 ]; then
-    if [ ! -z "${route_remove}" ]; then
-        if [ ${route_remove} -eq 1 ]; then
-            if [[ ${kernel_name} =~ linux ]]; then
-                ip route delete ${route_target} via ${route_gateway}
+if [ $route -eq 1 ]; then
+    if [ ! -z "$route_remove" ]; then
+        if [ $route_remove -eq 1 ]; then
+            if [[ $kernel_name =~ linux ]]; then
+                ip route delete $route_target via $route_gateway
             else
-                route delete ${route_target} ${route_gateway}
+                route delete $route_target $route_gateway
             fi
             echo -e "Removed previously added route.\n"
             log "notice" "Removed previously added route"
@@ -680,7 +682,7 @@ timestamp_end=$(( SECONDS - start_time ))
 time_elapsed=$(date -ud "@$timestamp_end" +'%H:%M:%S')
 
 echo -e "Process finished."
-echo -e "Elapsed time: ${time_elapsed}\n"
-log "notice" "Process finished (within ${time_elapsed} seconds)"
+echo -e "Elapsed time: $time_elapsed\n"
+log "notice" "Process finished (within $time_elapsed seconds)"
 log "notice" "Please check the log messages above for errors"
 log "notice" "Exiting"
