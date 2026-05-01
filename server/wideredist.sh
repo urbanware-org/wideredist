@@ -437,23 +437,22 @@ dl_timeout=120
 # Start time measurement here
 timestamp_start=$SECONDS
 
-# Since version 1.6.3 of WiDeRedist the separate and so called download URL
-# file 'wideredist.urls' is required and not optional anymore as before.
+# Since WiDeRedist version 1.6.3 all the URLs which are required URLs to
+# download the Windows Defender definitions can be found inside the file
+# 'wideredist.urls'.
 #
 # This file contains all the Microsoft URLs to the files downloaded by
 # WiDeRedist. Before, those could also be set inside the main config file
-# 'wideredist.conf', but the URLs from that file will be ignored since that
-# version.
+# 'wideredist.conf', but the URLs from that file will be ignored.
 #
-# The main purpose of the separate download URL file is that if any of the
-# Microsoft URLs have changed (quite unlikely, but has happened once before),
-# only this file must be replaced and the main config file 'wideredist.conf'
-# can remain untainted.
-#
-# If the download URL file exists it will be updated (if necessary) and if it
-# does not, the latest version will be downloaded.
-#
-# However, this feature must explicitly enabled inside 'wideredist.conf'.
+# If the file 'wideredist.urls' is missing, it will be downloaded regardless
+# of whether the option to automatically download the latest URL file is
+# disabled in the main config file.
+
+if [ ! -f $script_dir/wideredist.urls ]; then
+    url_update=1
+fi
+
 if [ ${url_update} -eq 1 ]; then
     wideredist_gh="https://raw.githubusercontent.com/urbanware-org/wideredist"
     urls_downloaded=0
