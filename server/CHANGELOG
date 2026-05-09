@@ -1,6 +1,11 @@
 
 CHANGELOG (WiDeRedist)
 
+    Next release (outstanding)
+
+        * Revised the server-side config and URLs file (negligible changes).
+        * Revised the server-side script in general (negligible changes).
+
     Version 1.6.4 (2025-02-26)
 
         * Revised the client-side script (negligible changes).
