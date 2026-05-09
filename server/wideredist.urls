@@ -23,6 +23,13 @@
 # Most of the links below are provided by this official Microsoft website:
 # https://www.microsoft.com/en-us/wdsi/defenderupdates
 
+# Definition related files:
+#
+#   mpam_d.exe      = Antivirus definition updates (delta packages)
+#   mpam_fe.exe     = Antivirus definition updates (full packages)
+#   mpas_fe.exe     = Antispyware definition updates
+#   nis_full.exe    = Network Inspection System (NIS) definitions
+
 # Download links for 32-bit files
 mpam_fe_x86="https://go.microsoft.com/fwlink/?linkid=121721&arch=x86"
 mpas_fe_x86="https://go.microsoft.com/fwlink/?linkid=70631"
