@@ -1,7 +1,7 @@
 
 CHANGELOG (WiDeRedist)
 
-    Next release (outstanding)
+    Version 1.7.0 (2026-05-10)
 
         * Revised the server-side config and URLs file (negligible changes).
         * Revised the server-side script in general (negligible changes).
