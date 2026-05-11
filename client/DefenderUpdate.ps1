@@ -8,8 +8,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 #
 
-$Version = "1.6.4"
-$TimeStamp = "2025-02-26"
+$Version = "1.7.0"
+$TimeStamp = "2026-05-10"
 
 Function Check-Update() {
     $VersionUpdate = $False
@@ -306,7 +306,7 @@ Write-Host -ForegroundColor Yellow `
 Write-Host -ForegroundColor Yellow `
   "Local definition update script for Windows servers and clients"
 Write-Host -ForegroundColor Yellow "Version $Version (Released $TimeStamp)"
-Write-Host -ForegroundColor Yellow "Copyright (c) 2025 by Ralf Kilian and Simon Gauer"
+Write-Host -ForegroundColor Yellow "Copyright (c) 2026 by Ralf Kilian and Simon Gauer"
 Write-Host
 
 If (![System.Environment]::Is64BitOperatingSystem) {

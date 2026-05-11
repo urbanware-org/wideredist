@@ -10,8 +10,8 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 #
 
-version="1.6.4"
-timestamp="2025-02-26"
+version="1.7.0"
+timestamp="2026-05-10"
 
 script_dir=$(dirname $(readlink -f $0))
 temp_dir=$(mktemp -d)
