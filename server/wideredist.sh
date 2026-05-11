@@ -10,7 +10,7 @@
 # GitLab: https://gitlab.com/urbanware-org/wideredist
 #
 
-version="1.7.0"
+version="1.6.5"
 timestamp="2026-05-10"
 
 script_dir=$(dirname $(readlink -f $0))
