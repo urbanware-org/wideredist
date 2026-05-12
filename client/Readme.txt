@@ -1,9 +1,9 @@
 
-README (WiDeReDist)
+README (WiDeRedist)
 
     Project
 
-        WiDeReDist (client-side component)
+        WiDeRedist (client-side component)
         Version 1.6.5
         Copyright (c) 2026 by Ralf Kilian and Simon Gauer
 
@@ -12,7 +12,7 @@ README (WiDeReDist)
 
     Definition
 
-        The WiDeReDist project updates Windows Defender definitions (or
+        The WiDeRedist project updates Windows Defender definitions (or
         signatures) in internal environments that are completely separated
         from the internet.
 
@@ -42,7 +42,7 @@ README (WiDeReDist)
         You can find the documentation for installation and usage inside the
         official project wiki:
 
-            https://github.com/urbanware-org/wideredist/wiki
+            https://github.com/urbanware-org/WiDeRedist/wiki
 
     Contact
 
