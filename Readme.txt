@@ -1,20 +1,11 @@
 
 README (WiDeRedist)
 
-    This archive simply contains all files of the WiDeRedist repository, but
-    without any documentation. Latter as well as the separate downloads for
-    the corresponding server and client components can be found inside the
-    official repository, see below.
+    This archive simply contains all files of the GitHub repository without
+    any documentation or releases.
 
-        Repository:
+    Project details, the documentation as well as corresponding server and
+    client components can be found inside the official repository:
 
-            https://github.com/urbanware-org/wideredist
-
-        Releases (downloads for the latest version):
-
-            https://github.com/urbanware-org/wideredist/releases/latest
-
-        Documentation:
-
-            https://github.com/urbanware-org/wideredist/wiki
+        https://github.com/urbanware-org/wideredist
 
