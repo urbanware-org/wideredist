@@ -3,7 +3,7 @@ README (WiDeRedist)
 
     This archive simply contains all files of the WiDeRedist repository, but
     without any documentation. Latter as well as the separate downloads for
-    the correspnding server and client components can be found inside the
+    the corresponding server and client components can be found inside the
     official repository, see below.
 
         Repository:
