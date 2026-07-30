@@ -23,9 +23,10 @@ The *WiDeRedist* project was not developed to lock out or even screw *Microsoft*
 It consists of two components. The server-side component takes advantage of a *Linux* server (or alternatively *BSD*) which downloads the definition files and redistributes them using a web server. The client-side component on *Windows* uses the *PowerShell* to obtain and install the definition updates provided by the web server.
 
 > [!IMPORTANT]
-> Notice that *WiDeRedist* updates only the *Microsoft Defender* virus definitions and scan engine, but does **not** update the *Microsoft Defender* platform itself.
+> Notice that *WiDeRedist* updates only the *Microsoft Defender* virus definitions and scan engine, but does **not** update the *Microsoft Defender* platform itself. Details about the *WiDeRedist* update scope can be found [here](https://github.com/urbanware-org/wideredist/wiki#wideredist-update-scope).
 
-This project transitioned into maintenance mode. Details can be found [here](https://github.com/urbanware-org/wideredist/wiki#maintenance-mode).
+> [!NOTE]
+> This project transitioned into maintenance mode. Further information can be found [here](https://github.com/urbanware-org/wideredist/wiki#maintenance-mode).
 
 [Top](#wideredist-)
 
