@@ -55,9 +55,7 @@ As of April 2026, it is still possible to manually update the *Windows Defender*
 
 You can find the documentation containing the installation instructions and further information inside the [wiki](https://github.com/urbanware-org/wideredist/wiki).
 
-Please keep *WiDeRedist* up to date, as earlier versions may not work anymore. Usually, outdated versions should not be a problem, but in the past there was the case that *WiDeRedist* did not download the definition files correctly, obviously because of a change on the side of the *Microsoft* servers. Details can be found [here](https://github.com/urbanware-org/wideredist/wiki#required-update-for-old-versions)</a>.
-
-Anyway, it is recommended to run either the server-side or client-side script manually once in a while. Since version 1.2.9 both of the scripts return if a newer version is available, unless the update check was disabled.
+Please keep *WiDeRedist* up to date, as earlier versions may not work anymore. It is recommended to run either the server-side or client-side script manually once in a while to check if a newer version is available, unless the update check is disabled.
 
 [Top](#wideredist-)
 
