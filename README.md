@@ -18,7 +18,7 @@ Dedicated tool to update the *Windows Defender* definitions in the local network
 
 ## Details
 
-The *WiDeRedist* project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* definitions (or signatures) in internal environments that are completely separated from the internet. However, this requires at least one system with access to the internet, of course.
+The *WiDeRedist* project was not developed to lock out or even screw *Microsoft*, rather than for updating *Windows Defender* (officially known as *Microsoft Defender*) definitions (or signatures) in internal environments that are completely separated from the internet. However, this requires at least one system with access to the internet, of course.
 
 It consists of two components. The server-side component takes advantage of a *Linux* server (or alternatively *BSD*) which downloads the definition files and redistributes them using a web server. The client-side component on *Windows* uses the *PowerShell* to obtain and install the definition updates provided by the web server.
 
